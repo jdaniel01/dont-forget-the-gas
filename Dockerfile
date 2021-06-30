@@ -4,13 +4,14 @@ WORKDIR /react-app
 COPY react-app/. .
 
 # You have to set this because it should be set during build time.
-ENV REACT_APP_BASE_URL=<Your REACT_APP_BASE_URL here>
+ENV REACT_APP_BASE_URL=https://git.heroku.com/dont-forget-the-gas.git
+
 
 # Build our React App
 RUN npm install
 RUN npm run build
 
-FROM python:3.8
+FROM python:3.9
 
 # Setup Flask environment
 ENV FLASK_APP=app
@@ -25,7 +26,7 @@ COPY --from=build-stage /react-app/build/* app/static/
 
 # Install Python Dependencies
 RUN pip install -r requirements.txt
-RUN pip install psycopg2
+RUN pip install psycopg2-binary
 
 # Run flask environment
 CMD gunicorn app:app
