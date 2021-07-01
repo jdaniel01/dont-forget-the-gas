@@ -7,6 +7,7 @@ class Vehicle(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     make = db.Column(db.String, nullable=False)
     model = db.Column(db.String, nullable=False)
+    body = db.Column(db.String, nullable=False)
     storage = db.Column(db.Float, nullable=False)
     owner_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     color = db.Column(db.String, nullable=False)
@@ -23,6 +24,7 @@ class Vehicle(db.Model):
             "id": self.id,
             "make": self.make,
             "model": self.model,
+            "body": self.body,
             "storage": self.storage,
             "owner": self.owner.to_dict(),
             "color": self.color,

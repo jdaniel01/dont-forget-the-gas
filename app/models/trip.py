@@ -14,6 +14,10 @@ class Trip(db.Model):
     distance = db.Column(db.Float, nullable=False)
     description = db.Column(db.Text, nullable=False)
 
+    lead = db.relationship('User', back_populates='trip')
+    start = db.relationship("Stop", back_populates="trip")
+    end = db.relationship("Stop", back_populates="trip")
+
     def to_dict(self):
         return {
             "id": self.id,

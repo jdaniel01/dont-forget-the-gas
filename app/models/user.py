@@ -13,11 +13,6 @@ class User(db.Model, UserMixin):
     on_trip = db.Column(db.Boolean, nullable=False)
     about = db.Column(db.Text)
 
-    lead = db.relationship('Trip', back_populates='user')
-    owner = db.relationship('List', back_populates="user")
-    author = db.relationship("Comment", back_populates="user")
-    owner = db.relationship('Vehicle', back_populates="user")
-
     @property
     def password(self):
         return self.hashed_password

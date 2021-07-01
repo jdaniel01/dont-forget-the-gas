@@ -12,6 +12,7 @@ class Photo(db.Model):
     alt_txt = db.Column(db.String, nullable=False)
 
     def to_dict(self):
+
         return {
             "id": self.id,
             "url": self.url,
