@@ -6,8 +6,9 @@ class Stop(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     trip_id = db.Column(db.Integer, db.ForeignKey("trips.id"), nullable=False)
-    lat = db.Column(db.Numeric(scale=13, asdecimal=False), nullable=False)
-    lon = db.Column(db.Numeric(scale=13, asdecimal=False), nullable=False)
+    location_id = db.Column(db.Integer, db.ForeignKey(
+        "locations.id"), nullable=False)
+    next_stop_id = db.Column(db.Integer, db.ForeignKey("locations.id"))
     name = db.Column(db.String, nullable=False)
     description = db.Column(db.Text)
 
@@ -17,9 +18,8 @@ class Stop(db.Model):
     def to_dict(self):
         return {
             "id": self.id,
-            "trip_id": self.trip_id,
-            "lat": self.lat,
-            "lon": self.lon,
-            "name": self.name,
+            "location": self.location.to_dict()
+            "name": self.name
             "description": self.description
+            "next_stop": self.location.to_dict()
         }
