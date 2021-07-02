@@ -14,8 +14,8 @@ class User(db.Model, UserMixin):
     about = db.Column(db.Text)
 
     vehicle = db.relationship("Vehicle", back_populates="owner")
-    trip = db.relationship("Trip", back_populates="lead")
-    comment = db.relationship("Comment", back_populates="author")
+    trips = db.relationship("Trip", back_populates="lead")
+    comments = db.relationship("Comment", back_populates="author")
     lists = db.relationship("List", back_populates="owner")
 
     @property

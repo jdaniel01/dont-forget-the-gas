@@ -14,7 +14,7 @@ class Trip(db.Model):
     distance = db.Column(db.Float, nullable=False)
     description = db.Column(db.Text, nullable=False)
 
-    lead = db.relationship('User', back_populates='trip')
+    lead = db.relationship('User', back_populates='trips')
     start = db.relationship("Stop", back_populates="trip")
     end = db.relationship("Stop", back_populates="trip")
 

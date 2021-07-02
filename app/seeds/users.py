@@ -5,15 +5,15 @@ from app.models import db, User
 def seed_users():
 
     demo = User(username='test', email='test@email.com',
-                password=generate_password_hash('password'),
+                hashed_password=generate_password_hash('password'),
                 on_trip=False,
                 about="1 This is a story all about how ...")
     demo2 = User(username='test2', email='test2@email.com',
-                password=generate_password_hash('password'),
+                hashed_password=generate_password_hash('password'),
                 on_trip=False,
                 about="2 This is a story all about how ...")
     demo3 = User(username='test3', email='test3@email.com',
-                password=generate_password_hash('password'),
+                hashed_password=generate_password_hash('password'),
                 on_trip=False,
                 about="3 This is a story all about how ...")
     
@@ -29,5 +29,5 @@ def seed_users():
 # TRUNCATE Removes all the data from the table, and resets
 # the auto incrementing primary key
 def undo_users():
-    db.session.execute('TRUNCATE users;')
+    db.session.execute('TRUNCATE TABLE users RESTART IDENTITY CASCADE;')
     db.session.commit()
