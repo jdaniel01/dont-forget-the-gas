@@ -8,7 +8,7 @@ import UsersList from "./components/UsersList";
 import User from "./components/User";
 import Map from './components/Map';
 import About from './components/About';
-
+import List from './components/List';
 import { authenticate } from "./services/auth";
 
 function App() {
@@ -55,6 +55,9 @@ function App() {
         <Route path="/about" exact={true}>
           <About />
         </Route>
+        <ProtectedRoute path="/users/:userId/lists" exact={true} authenticated={authenticated}>
+          <List />
+        </ProtectedRoute>
       </Switch>
     </BrowserRouter>
   );
