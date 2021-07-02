@@ -22,3 +22,47 @@ class Comment(db.Model):
             "body": self.body,
             "author": self.author.to_dict()
         }
+
+    @property
+    def title(self):
+        return self.title
+
+    @title.setter
+    def title(self, title):
+        self.title = title
+    
+
+    @property
+    def body(self):
+        return self.body
+    
+    @body.setter
+    def body(self, body):
+        self.body = body
+
+
+    @property
+    def photo_id(self):
+        return self.photo_id
+    
+    @photo_id.setter
+    def photo_id(self, photo_id):
+        self.photo_id = photo_id
+
+
+    @property
+    def trip_id(self):
+        return self.trip_id
+    
+    @trip_id.setter
+    def trip_id(self, trip_id):
+        self.trip_id = trip_id
+
+    
+    @property
+    def stop_id(self):
+        return self.stop_id
+    
+    @stop_id.setter
+    def stop_id(self, stop_id):
+        self.stop_id = stop_id

@@ -19,6 +19,38 @@ class User(db.Model, UserMixin):
     lists = db.relationship("List", back_populates="owner")
 
     @property
+    def username(self):
+        return self.username
+    
+    @username.setter
+    def username(self, username):
+        self.username = username
+    
+    @property
+    def email(self):
+        return self.email
+    
+    @email.setter
+    def email(self, email):
+        self.email = email
+
+    @property
+    def on_trip(self):
+        return self.on_trip
+    
+    @on_trip.setter
+    def on_trip(self):
+        self.on_trip = on_trip
+    
+    @property
+    def about(self):
+        return self.about
+    
+    @about.setter
+    def about(self, about):
+        self.about = about
+
+    @property
     def password(self):
         return self.hashed_password
 

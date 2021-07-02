@@ -9,7 +9,6 @@ class ListType(db.Model):
     description = db.Column(db.Text, nullable=False)
     color = db.Column(db.String, nullable=False)
 
-    lists = db.relationship("List", back_populates="type_of")
 
     def to_dict(self):
         return {
@@ -18,3 +17,27 @@ class ListType(db.Model):
             "description": self.description,
             "color": self.color
         }
+
+    @property
+    def name(self):
+        return self.name
+
+    @name.setter
+    def name(self, name):
+        self.name = name
+    
+    @property
+    def description(self):
+        return self.description
+
+    @description.setter
+    def description(self, description):
+        self.description = description
+    
+    @property
+    def color(self):
+        return self.color
+
+    @color.setter
+    def color(self, color):
+        self.color = color

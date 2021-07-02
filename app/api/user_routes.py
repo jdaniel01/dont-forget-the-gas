@@ -2,7 +2,9 @@ from flask import Blueprint, jsonify, request
 from flask_login import login_required
 from sqlalchemy import desc
 from app.models import User, List
-from app.forms import list_form, edit_list_form
+from app.forms.list_form import ListForm
+from app.forms.edit_list_form import EditListForm
+
 
 user_routes = Blueprint('users', __name__)
 
@@ -25,7 +27,7 @@ def user(id):
 @login_required
 def addAndAllList(id):
 
-    form = list_form()
+    form = ListForm()
 
     if form.validate_on_submit():
         newList = List()
@@ -37,35 +39,5 @@ def addAndAllList(id):
     else:
         print("#####ERROR FORM DID NOT VALIDATE####")
         return "Error: Form did not validate or no form was submitted"
-    lists = List.query.filter_by(desc(owner_id=id)).all()
-    return lists
-
-
-
-@user_routes.route('/<int:id/lists/<int:listId>', methods=["PUT", "DELETE"])
-@login_required
-def updateAndDeleteList(id, listId):
-
-    form = edit_list_form()
-
-    if form.validate_on_submit():
-        print("####/users/id/lists######### UPDATING LIST")
-        oldList = List.query.get(id)
-        if oldList:
-            oldList["name"] = form["name"]
-            oldList["list_type"] = form["list_type"]
-            oldList["notes"] = form["notes"]
-
-            db.session.commit()
-            print("####SUCCESS!! USER HAS BEEN UPDATED#####")
-
-        else:
-            print("###ERROR##ERROR## unable to locate list by primary key")
-            return "There was an Error"
-    else:
-        deleting = List.query.get(id)
-        print("#####DELETING LIST #####", deleting)
-        db.session.delete(deleting)
-        db.session.commit()
     lists = List.query.filter_by(desc(owner_id=id)).all()
     return lists
