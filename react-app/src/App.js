@@ -7,6 +7,7 @@ import ProtectedRoute from "./components/auth/ProtectedRoute";
 import UsersList from "./components/UsersList";
 import User from "./components/User";
 import Map from './components/Map';
+import About from './components/About';
 
 import { authenticate } from "./services/auth";
 
@@ -51,6 +52,9 @@ function App() {
           <h1>My Home Page</h1>
           <Map />
         </ProtectedRoute>
+        <Route path="/about" exact={true}>
+          <About />
+        </Route>
       </Switch>
     </BrowserRouter>
   );
