@@ -7,8 +7,10 @@ class Location(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     lat = db.Column(db.Numeric(scale=13, asdecimal=False), nullable=False)
     lon = db.Column(db.Numeric(scale=13, asdecimal=False), nullable=False)
-    name = db.Column(db.String, unique=True, nullable=False)
+    name = db.Column(db.String(100), unique=True, nullable=False)
     description = db.Column(db.Text, nullable=False)
+
+    stop = db.relationship("Stop", back_populates="location")
 
     def to_dict(self):
         return {

@@ -2,16 +2,18 @@ import React, { useState } from "react";
 import { Redirect } from 'react-router-dom';
 import { signUp } from '../../services/auth';
 
-const SignUpForm = ({authenticated, setAuthenticated}) => {
+const SignUpForm = ({ authenticated, setAuthenticated }) => {
+
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
+  const [about, setAbout] = useState("");
 
   const onSignUp = async (e) => {
     e.preventDefault();
     if (password === repeatPassword) {
-      const user = await signUp(username, email, password);
+      const user = await signUp(username, email, password, about, false);
       if (!user.errors) {
         setAuthenticated(true);
       }
@@ -33,6 +35,10 @@ const SignUpForm = ({authenticated, setAuthenticated}) => {
   const updateRepeatPassword = (e) => {
     setRepeatPassword(e.target.value);
   };
+
+  const updateAbout = (e) => {
+    setAbout(e.target.value);
+  }
 
   if (authenticated) {
     return <Redirect to="/" />;
@@ -57,6 +63,10 @@ const SignUpForm = ({authenticated, setAuthenticated}) => {
           onChange={updateEmail}
           value={email}
         ></input>
+      </div>
+      <div>
+        <label>About</label>
+        <textarea type="text" name="about" onChange={updateAbout} value={about} />
       </div>
       <div>
         <label>Password</label>

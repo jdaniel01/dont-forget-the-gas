@@ -9,6 +9,8 @@ class Photo(db.Model):
     trip_id = db.Column(db.Integer, db.ForeignKey("trips.id"))
     stop_id = db.Column(db.Integer, db.ForeignKey("stops.id"))
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    location_id = db.Column(db.Integer, db.ForeignKey("locations.id"))
+    vehicle_id = db.Column(db.Integer, db.ForeignKey('vehicles.id'))
     alt_txt = db.Column(db.String, nullable=False)
 
     def to_dict(self):

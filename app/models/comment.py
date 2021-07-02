@@ -14,7 +14,7 @@ class Comment(db.Model):
         db.Integer, db.ForeignKey("users.id"), nullable=False)
 
     author = db.relationship("User", back_populates="comment")
-
+    
     def to_dict(self):
         return {
             "id": self.id,

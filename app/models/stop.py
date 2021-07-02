@@ -8,10 +8,12 @@ class Stop(db.Model):
     trip_id = db.Column(db.Integer, db.ForeignKey("trips.id"), nullable=False)
     location_id = db.Column(db.Integer, db.ForeignKey(
         "locations.id"), nullable=False)
-    name = db.Column(db.String, nullable=False)
+    name = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text)
 
     location = db.relationship("Location", back_populates="stop")
+    trip = db.relationship("Trip", back_populates="start")
+    trip = db.relationship("Trip", back_populates="end")
 
     def to_dict(self):
         return {
