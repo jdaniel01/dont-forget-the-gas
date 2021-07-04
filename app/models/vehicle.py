@@ -17,8 +17,12 @@ class Vehicle(db.Model):
     fuel_tank = db.Column(db.Float, nullable=False)
     avg_mpg = db.Column(db.Float)
 
-    photos = db.relationship("Photo", back_populates="vehicle")
-    owner = db.relationship("User", back_populates="vehicles")
+#1
+    # photos = db.relationship("Photo", back_populates="vehicle")
+    # owner = db.relationship("User", back_populates="vehicles")
+#2
+    photos = db.relationship("Photo", backref="vehicle")
+    owner = db.reltionship("owner")
 
     def to_dict(self):
         return {

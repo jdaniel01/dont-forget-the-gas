@@ -12,9 +12,15 @@ class Trip(db.Model):
     distance = db.Column(db.Float, nullable=False)
     description = db.Column(db.Text, nullable=False)
 
-    photos = db.relationship("Photo", back_populates="trip")
-    comments = db.relationship("Comment", back_populates="trip")
-    leader = db.relationship("User", back_populates="trips")
+#1
+    # photos = db.relationship("Photo", back_populates="trip")
+    # comments = db.relationship("Comment", back_populates="trip")
+    # leader = db.relationship("User", back_populates="trips")
+#2
+    photos = db.relationship("Photo", backref="trip")
+    comments = db.relationship("Comment", backref="trip")
+    leader = db.relationship("User")
+    stops = db.relationship("Stop", backref="trip")
 
     def to_dict(self):
         return {
@@ -24,5 +30,4 @@ class Trip(db.Model):
             "days": self.days,
             "distance": self.distance,
             "description": self.description,
-            "photos": self.photos.to_dict()
         }

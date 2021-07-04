@@ -13,11 +13,18 @@ class User(db.Model, UserMixin):
     on_trip = db.Column(db.Boolean, nullable=False)
     about = db.Column(db.Text)
 
-    vehicles = db.relationship("Vehicle", back_populates="owner")
-    trips = db.relationship("Trip", back_populates="leader")
-    comments = db.relationship("Comment", back_populates="author")
-    lists = db.relationship("List", back_populates="owner")
-    photos = db.relationship("Photo", back_populates="user")
+#1
+    # vehicles = db.relationship("Vehicle", back_populates="owner")
+    # trips = db.relationship("Trip", back_populates="leader")
+    # comments = db.relationship("Comment", back_populates="author")
+    # lists = db.relationship("List", back_populates="owner")
+    # photos = db.relationship("Photo", back_populates="user")
+#2
+    vehicles = db.relationship("Vehicle", backref="owner", lazy="dynamic")
+    trips = db.relationship("Trip", backref="leader")
+    comments = db.relationship("Comment", backref="author", lazy="dynamic")
+    lists = db.relationship("List", backref="owner")
+    photos = db.relationship("Photo", backref="user", lazy="dynamic")
 
     @property
     def username(self):
@@ -73,16 +80,16 @@ class User(db.Model, UserMixin):
         }
 
     
-    def profile_load(self):
+    # def profile_load(self):
 
-        return {
-             "id": self.id,
-            "username": self.username,
-            "email": self.email,
-            "on_trip": self.on_trip,
-            "about": self.about,
-            "lists": self.lists.to_dict(),
-            "vehicles": self.vehicles.to_dict(),
-            "photos": self.photos.to_dict(),
-            "trips": self.trips.to_dict(),
-        }
+    #     return {
+    #          "id": self.id,
+    #         "username": self.username,
+    #         "email": self.email,
+    #         "on_trip": self.on_trip,
+    #         "about": self.about,
+    #         "lists": self.lists.to_dict(),
+    #         "vehicles": self.vehicles.to_dict(),
+    #         "photos": self.photos.to_dict(),
+    #         "trips": self.trips.to_dict(),
+    #     }
