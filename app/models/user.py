@@ -7,17 +7,17 @@ class User(db.Model, UserMixin):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(40), nullable=False, unique=True)
-    email = db.Column(db.String(255), nullable=False, unique=True)
+    username = db.Column(db.String(40), unique=True, nullable=False)
+    email = db.Column(db.String(255), unique=True, nullable=False)
     hashed_password = db.Column(db.String(255), nullable=False)
     on_trip = db.Column(db.Boolean, nullable=False)
     about = db.Column(db.Text)
 
-    vehicles = db.relationship("Vehicle", backref="user", lazy=True)
-    trips = db.relationship("Trip", backref="user", lazy=True)
-    comments = db.relationship("Comment", backref="user", lazy=True)
-    lists = db.relationship("List", backref="user", lazy=True)
-    photos = db.relationship("Photo", backref="user", lazy=True)
+    vehicles = db.relationship("Vehicle", back_populates="owner")
+    trips = db.relationship("Trip", back_populates="leader")
+    comments = db.relationship("Comment", back_populates="author")
+    lists = db.relationship("List", back_populates="owner")
+    photos = db.relationship("Photo", back_populates="user")
 
     @property
     def username(self):

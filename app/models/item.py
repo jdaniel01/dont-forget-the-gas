@@ -6,10 +6,13 @@ class Item(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, nullable=False)
-    owner_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     list_id = db.Column(db.Integer, db.ForeignKey("lists.id"), nullable=False)
     notes = db.Column(db.Text(500))
 
+#1
+    # list_info = db.relationship("List", back_populates="items")
+#2
+    list_info = db.relationship("List")
 
     def to_dict(self):
         return {

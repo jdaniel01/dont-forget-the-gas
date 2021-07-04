@@ -11,14 +11,26 @@ class List(db.Model):
     owner_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     notes = db.Column(db.Text)
 
-    items = db.relationship("Item", backref="list", lazy=True)
+#1
+    # items = db.relationship("Item", back_populates="list_info")
+#2
+    items = db.relationship("Item", backref="list_info")
+#1
+    # list_type = db.relationship("ListType", back_populates="lists")
+#2
+    list_type = db.relationship("ListType")
+    comments = db.relationship("Comment", back_populates="list_info")
+    owner = db.relationship("User", back_populates="lists")
+    
+
+
 
     def to_dict(self):
         return {
             "id": self.id,
             "name": self.name,
             "notes": self.notes,
-            "type_of": self.type_of.to_dict(),
+            "list_type": self.list_type.to_dict(),
             "items": self.items.to_dict()
         }
 

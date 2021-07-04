@@ -7,13 +7,19 @@ class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, nullable=False)
     body = db.Column(db.Text, nullable=False)
-    photo_id = db.Column(db.Integer, db.ForeignKey("photos.id"))
+    location_id = db.Column(db.Integer, db.ForeignKey("locations.id"))
+    list_id = db.Column(db.Integer, db.ForeignKey("lists.id"))
     trip_id = db.Column(db.Integer, db.ForeignKey("trips.id"))
     stop_id = db.Column(db.Integer, db.ForeignKey("stops.id"))
     author_id = db.Column(
         db.Integer, db.ForeignKey("users.id"), nullable=False)
 
-    
+    location = db.relationship("Location", back_populates="comments")
+    list_info = db.relationship("List", back_populates="comments")
+    trip = db.relationship("Trip", back_populates="comments")
+    stop = db.relationship("Stop", back_populates="comments")
+    author = db.relationship("User", back_populates="comments")
+
     def to_dict(self):
         return {
             "id": self.id,

@@ -9,8 +9,11 @@ class ListType(db.Model):
     description = db.Column(db.Text, nullable=False)
     color = db.Column(db.String, nullable=False)
 
-    lists = db.relationship("List", backref="list_type", lazy=True)
-
+#1
+    #lists = db.relationship("List", back_populates="list_type")
+#2
+    lists = db.relationship("List", backref="list_type")
+    
     def to_dict(self):
         return {
             "id": self.id,
