@@ -13,10 +13,11 @@ class User(db.Model, UserMixin):
     on_trip = db.Column(db.Boolean, nullable=False)
     about = db.Column(db.Text)
 
-    vehicle = db.relationship("Vehicle", back_populates="owner")
-    trips = db.relationship("Trip", back_populates="lead")
-    comments = db.relationship("Comment", back_populates="author")
-    lists = db.relationship("List", back_populates="owner")
+    vehicles = db.relationship("Vehicle", backref="user", lazy=True)
+    trips = db.relationship("Trip", backref="user", lazy=True)
+    comments = db.relationship("Comment", backref="user", lazy=True)
+    lists = db.relationship("List", backref="user", lazy=True)
+    photos = db.relationship("Photo", backref="user", lazy=True)
 
     @property
     def username(self):
@@ -68,5 +69,20 @@ class User(db.Model, UserMixin):
             "username": self.username,
             "email": self.email,
             "on_trip": self.on_trip,
-            "about": self.about
+            "about": self.about,
+        }
+
+    
+    def profile_load(self):
+
+        return {
+             "id": self.id,
+            "username": self.username,
+            "email": self.email,
+            "on_trip": self.on_trip,
+            "about": self.about,
+            "lists": self.lists.to_dict(),
+            "vehicles": self.vehicles.to_dict(),
+            "photos": self.photos.to_dict(),
+            "trips": self.trips.to_dict(),
         }

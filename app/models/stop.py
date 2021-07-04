@@ -11,10 +11,8 @@ class Stop(db.Model):
     name = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text)
 
-    location = db.relationship("Location", back_populates="stop")
-    trip = db.relationship("Trip", back_populates="start")
-    trip = db.relationship("Trip", back_populates="end")
-
+    photos = db.relationship("Photo", backref="stop", lazy=True)
+    
     def to_dict(self):
         return {
             "id": self.id,

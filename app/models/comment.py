@@ -13,7 +13,6 @@ class Comment(db.Model):
     author_id = db.Column(
         db.Integer, db.ForeignKey("users.id"), nullable=False)
 
-    author = db.relationship("User", back_populates="comments")
     
     def to_dict(self):
         return {

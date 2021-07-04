@@ -9,6 +9,7 @@ class ListType(db.Model):
     description = db.Column(db.Text, nullable=False)
     color = db.Column(db.String, nullable=False)
 
+    lists = db.relationship("List", backref="list_type", lazy=True)
 
     def to_dict(self):
         return {

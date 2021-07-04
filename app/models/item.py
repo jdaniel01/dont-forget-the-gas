@@ -10,7 +10,6 @@ class Item(db.Model):
     list_id = db.Column(db.Integer, db.ForeignKey("lists.id"), nullable=False)
     notes = db.Column(db.Text(500))
 
-    list_info = db.relationship("List", back_populates="items")
 
     def to_dict(self):
         return {

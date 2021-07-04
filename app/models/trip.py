@@ -14,19 +14,19 @@ class Trip(db.Model):
     distance = db.Column(db.Float, nullable=False)
     description = db.Column(db.Text, nullable=False)
 
-    lead = db.relationship('User', back_populates='trips')
-    start = db.relationship("Stop", back_populates="trip")
-    end = db.relationship("Stop", back_populates="trip")
+    start = db.relationship("Stop", backref="trip", lazy=True, uselist=False)
+    end = db.relationship("Stop", backref="trip", lazy=True, uselist=False)
+    photos = db.relationship("Photo", backref="trip", lazy=True)
 
     def to_dict(self):
         return {
             "id": self.id,
-            "lead": self.lead.to_dict(),
             "start": self.stop.to_dict(),
             "end": self.stop.to_dict(),
             "departure": self.departure,
             "arrival": self.arrival,
             "days": self.days,
             "distance": self.distance,
-            "description": self.description
+            "description": self.description,
+            "photos": self.photos.to_dict()
         }
