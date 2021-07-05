@@ -15,7 +15,7 @@ class User(db.Model, UserMixin):
 
     vehicle = db.relationship("Vehicle", back_populates="owner")
     trip = db.relationship("Trip", back_populates="lead")
-    comment = db.relationship("Comment", back_populates="author")
+    # comment = db.relationship("Comment", back_populates="author")
     lists = db.relationship("List", back_populates="owner")
 
     @property
