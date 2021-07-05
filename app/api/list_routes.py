@@ -4,6 +4,12 @@ from flask_login import login_required, current_user
 
 list_routes = Blueprint("lists", __name__)
 
+@list_routes.route('/<int:id>')
+@login_required
+def getOneList(id):
+    
+
+
 @list_routes.route('/<int:id>', methods=["PUT", "DELETE"])
 @login_required
 def updateAndDeleteList(id):

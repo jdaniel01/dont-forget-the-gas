@@ -34,8 +34,8 @@ def upgrade():
     sa.Column('type_id', sa.Integer(), nullable=False),
     sa.Column('owner_id', sa.Integer(), nullable=False),
     sa.Column('notes', sa.Text(), nullable=True),
-    sa.ForeignKeyConstraint(['type_id'], ['list_types.id'], ),
     sa.ForeignKeyConstraint(['owner_id'], ['users.id'], ),
+    sa.ForeignKeyConstraint(['type_id'], ['list_types.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('trips',
@@ -69,7 +69,6 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('trip_id', sa.Integer(), nullable=False),
-    sa.Column('role', sa.String(), nullable=False),
     sa.ForeignKeyConstraint(['trip_id'], ['trips.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id', 'user_id', 'trip_id')
@@ -78,7 +77,6 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('list_id', sa.Integer(), nullable=False),
-    sa.Column('needs_approval', sa.Boolean(), nullable=False),
     sa.ForeignKeyConstraint(['list_id'], ['lists.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id', 'user_id', 'list_id')
@@ -86,8 +84,6 @@ def upgrade():
     op.create_table('items',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('list_id', sa.Integer(), nullable=False),
-    sa.Column('title', sa.String(), nullable=False),
-    sa.Column("notes", sa.Text()),
     sa.ForeignKeyConstraint(['list_id'], ['lists.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
