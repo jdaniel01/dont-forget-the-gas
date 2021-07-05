@@ -8,5 +8,6 @@ from .stop import Stop
 from .list import List
 from .item import Item
 from .companion import Companion
+from .editor import Editor
 # from .comment import Comment
 # from .photo import Photo
