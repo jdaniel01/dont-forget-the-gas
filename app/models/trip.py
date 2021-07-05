@@ -17,13 +17,54 @@ class Trip(db.Model):
     # comments = db.relationship("Comment", back_populates="trip")
     # leader = db.relationship("User", back_populates="trips")
 #2
-    photos = db.relationship("Photo", backref="trip")
-    comments = db.relationship("Comment", backref="trip")
+    # photos = db.relationship("Photo", backref="trip")
     # leader = db.relationship("User", backref="trips")
     # stops = db.relationship("Stop", backref="trip")
 #3
     # companions = db.relationship("Companion", secondary=subs, backref=db.backref("trip", lazy="dynamic"))
 
+
+    @property
+    def departure(self):
+        return self.departure
+
+    @departure.setter
+    def departure(self, newDeparture):
+        self.departure = newDeparture
+
+    @property
+    def arrival(self):
+        return self.arrival
+
+    @arrival.setter
+    def arrival(self, newArrival):
+        self.arrival = newArrival
+
+    @property
+    def days(self):
+        return self.days
+
+    @days.setter
+    def days(self, newDays):
+        self.days = newDays
+
+    @property
+    def distance(self):
+        return self.distance
+
+    @distance.setter
+    def distance(self, newDistance):
+        self.distance = newDistance
+
+
+    @property
+    def description(self):
+        return self.description
+
+
+    @description.setter
+    def description(self, newDescription):
+        self.description = newDescription
 
     def to_dict(self):
         return {
@@ -34,3 +75,4 @@ class Trip(db.Model):
             "distance": self.distance,
             "description": self.description,
         }
+

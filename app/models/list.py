@@ -19,7 +19,6 @@ class List(db.Model):
     # list_type = db.relationship("ListType", back_populates="lists")
 #2
     # list_type = db.relationship("ListType")
-    comments = db.relationship("Comment", backref="list_info")
     # owner = db.relationship("User")
     
 

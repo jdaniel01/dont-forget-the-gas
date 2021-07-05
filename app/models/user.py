@@ -22,9 +22,8 @@ class User(db.Model, UserMixin):
 #2
     # vehicles = db.relationship("Vehicle", backref="owner", lazy="dynamic")
     trips = db.relationship("Trip", backref="leader")
-    comments = db.relationship("Comment", backref="author", lazy="dynamic")
     lists = db.relationship("List", backref="owner")
-    photos = db.relationship("Photo", backref="user", lazy="dynamic")
+    # photos = db.relationship("Photo", backref="user", lazy="dynamic")
 #3
     companions = db.relationship("Trip", secondary="companions", backref=db.backref("companions", lazy="dynamic"))
     
@@ -34,40 +33,40 @@ class User(db.Model, UserMixin):
         return self.username
     
     @username.setter
-    def username(self, username):
-        self.username = username
+    def username(self, newUsername):
+        self.username = newUsername
     
     @property
     def email(self):
         return self.email
     
     @email.setter
-    def email(self, email):
-        self.email = email
+    def email(self, newEmail):
+        self.email = newEmail
 
     @property
     def on_trip(self):
         return self.on_trip
     
     @on_trip.setter
-    def on_trip(self):
-        self.on_trip = on_trip
+    def on_trip(self, newOnTrip):
+        self.on_trip = newOnTrip
     
     @property
     def about(self):
         return self.about
     
     @about.setter
-    def about(self, about):
-        self.about = about
+    def about(self, newAbout):
+        self.about = newAbout
 
     @property
     def password(self):
         return self.hashed_password
 
     @password.setter
-    def password(self, password):
-        self.hashed_password = generate_password_hash(password)
+    def password(self, newPassword):
+        self.hashed_password = generate_password_hash(newPassword)
 
     def check_password(self, password):
         return check_password_hash(self.password, password)

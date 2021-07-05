@@ -15,8 +15,7 @@ class Location(db.Model):
     # comments = db.relationship("Comment", back_populates="location")
 #2
     # stops = db.relationship("Stop")
-    photos = db. relationship("Photo", backref="location")
-    comments = db.relationship("Comment", backref="location")
+    # photos = db. relationship("Photo", backref="location")
     stops = db.relationship("Trip", secondary="stops", backref=db.backref("stops", lazy="dynamic"))
 
     def to_dict(self):

@@ -14,8 +14,7 @@ class Stop(db.Model):
     # photos = db.relationship("Photo", back_populates="stop")
     # location = db.relationship("Location", back_populates="stops")
 #2
-    photos = db.relationship("Photo", backref="stop")
-    comments = db.relationship("Comment", backref="stop")
+    # photos = db.relationship("Photo", backref="stop")
     # location = db.relationship("Location")
     # trip = db.relationship("Trip")
 

@@ -6,7 +6,5 @@ from .location import Location
 from .stop import Stop
 from .trip import Trip
 from .list import List
-from .comment import Comment
-from .photo import Photo
 from .item import Item
 from .companion import Companion
