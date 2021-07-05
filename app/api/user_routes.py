@@ -1,19 +1,36 @@
-from flask import Blueprint, jsonify
-from flask_login import login_required
+from flask import Blueprint, jsonify, request
+from flask_login import login_required, current_user
 from app.models import User
+
 
 user_routes = Blueprint('users', __name__)
 
 
-@user_routes.route('/')
-@login_required
-def users():
-    users = User.query.all()
-    return {"users": [user.to_dict() for user in users]}
 
-
-@user_routes.route('/<int:id>')
+@list_routes.route('/<int:id>', methods=["PUT", "DELETE"])
 @login_required
-def user(id):
-    user = User.query.get(id)
-    return user.to_dict()
+def updateAndDeleteList(id):
+
+    form = EditListForm()
+
+    if form.validate_on_submit():
+        print("####/lists/id######### UPDATING LIST")
+        oldList = List.query.get(id)
+        if oldList:
+            oldList["name"] = form["name"]
+            oldList["list_type"] = form["list_type"]
+            oldList["notes"] = form["notes"]
+
+            db.session.commit()
+            print("####SUCCESS!! USER HAS BEEN UPDATED#####")
+
+        else:
+            print("###ERROR##ERROR## unable to locate list by primary key")
+            return "There was an Error"
+    else:
+        deleting = List.query.get(id)
+        print("#####DELETING LIST #####", deleting)
+        db.session.delete(deleting)
+        db.session.commit()
+    lists = List.query.filter_by(desc(owner_id=current_user.id)).all()
+    return lists
