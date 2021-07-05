@@ -2,8 +2,7 @@ from flask import Blueprint, jsonify, request
 from flask_login import login_required
 from sqlalchemy import desc
 from app.models import User, List
-from app.forms.list_form import ListForm
-from app.forms.edit_list_form import EditListForm
+from app.forms import ListForm
 
 
 user_routes = Blueprint('users', __name__)

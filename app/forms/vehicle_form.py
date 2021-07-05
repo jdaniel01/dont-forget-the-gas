@@ -9,7 +9,7 @@ class VehicleForm(FlaskForm):
     body = StringField("body", validators=[DataRequired()])
     storage = FloatField("storage", validators=[DataRequired()])
     color = StringField("color", validators=[DataRequired()])
-    capacity = Integer("capacity", validators=[DataRequired()])
+    capacity = IntegerField("capacity", validators=[DataRequired()])
     total_miles = FloatField("storage", validators=[DataRequired()])
     fuel_type = StringField("fuel_type", validators=[DataRequired()])
     fuel_tank = FloatField("fuel_tank", validators=[DataRequired()])
