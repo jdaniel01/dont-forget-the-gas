@@ -17,6 +17,8 @@ class User(db.Model, UserMixin):
     trip = db.relationship("Trip", back_populates="lead")
     # comment = db.relationship("Comment", back_populates="author")
     lists = db.relationship("List", back_populates="owner")
+    companions = db.relationship("Trip", secondary="companions", backref=db.backref("companions"))
+    editors = db.relationship("List", secondary="editors", backref=db.backref("editors"))
 
     @property
     def password(self):
