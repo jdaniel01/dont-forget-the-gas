@@ -20,11 +20,14 @@ class User(db.Model, UserMixin):
     # lists = db.relationship("List", back_populates="owner")
     # photos = db.relationship("Photo", back_populates="user")
 #2
-    vehicles = db.relationship("Vehicle", backref="owner", lazy="dynamic")
+    # vehicles = db.relationship("Vehicle", backref="owner", lazy="dynamic")
     trips = db.relationship("Trip", backref="leader")
     comments = db.relationship("Comment", backref="author", lazy="dynamic")
     lists = db.relationship("List", backref="owner")
     photos = db.relationship("Photo", backref="user", lazy="dynamic")
+#3
+    companions = db.relationship("Trip", secondary="companions", backref=db.backref("companions", lazy="dynamic"))
+    
 
     @property
     def username(self):

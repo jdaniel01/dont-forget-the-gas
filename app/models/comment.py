@@ -7,18 +7,28 @@ class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, nullable=False)
     body = db.Column(db.Text, nullable=False)
-    location_id = db.Column(db.Integer, db.ForeignKey("locations.id"))
-    list_id = db.Column(db.Integer, db.ForeignKey("lists.id"))
-    trip_id = db.Column(db.Integer, db.ForeignKey("trips.id"))
-    stop_id = db.Column(db.Integer, db.ForeignKey("stops.id"))
+    location_id = db.Column(db.Integer, db.ForeignKey("locations.id"), primary_key=True, nullable=True)
+    list_id = db.Column(db.Integer, db.ForeignKey("lists.id"), primary_key=True, nullable=True)
+    trip_id = db.Column(db.Integer, db.ForeignKey("trips.id"), primary_key=True, nullable=True)
+    stop_id = db.Column(db.Integer, db.ForeignKey("stops.id"), primary_key=True, nullable=True)
     author_id = db.Column(
-        db.Integer, db.ForeignKey("users.id"), nullable=False)
+        db.Integer, db.ForeignKey("users.id"), primary_key=True, nullable=False)
 
-    location = db.relationship("Location", back_populates="comments")
-    list_info = db.relationship("List", back_populates="comments")
-    trip = db.relationship("Trip", back_populates="comments")
-    stop = db.relationship("Stop", back_populates="comments")
-    author = db.relationship("User", back_populates="comments")
+#1
+    # location = db.relationship("Location", back_populates="comments")
+    # list_info = db.relationship("List", back_populates="comments")
+    # trip = db.relationship("Trip", back_populates="comments")
+    # stop = db.relationship("Stop", back_populates="comments")
+    # author = db.relationship("User", back_populates="comments")
+#2
+    # location = db.relationship("Location")
+    # list_info = db.relationship("List")
+    # trip = db.relationship("Trip")
+    # stop = db.relationship("Stop")
+    # author = db.relationship("User")
+
+#3
+    
 
     def to_dict(self):
         return {

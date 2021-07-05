@@ -12,7 +12,7 @@ class Item(db.Model):
 #1
     # list_info = db.relationship("List", back_populates="items")
 #2
-    list_info = db.relationship("List")
+    # list_info = db.relationship("List")
 
     def to_dict(self):
         return {

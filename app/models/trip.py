@@ -19,8 +19,11 @@ class Trip(db.Model):
 #2
     photos = db.relationship("Photo", backref="trip")
     comments = db.relationship("Comment", backref="trip")
-    leader = db.relationship("User")
-    stops = db.relationship("Stop", backref="trip")
+    # leader = db.relationship("User", backref="trips")
+    # stops = db.relationship("Stop", backref="trip")
+#3
+    # companions = db.relationship("Companion", secondary=subs, backref=db.backref("trip", lazy="dynamic"))
+
 
     def to_dict(self):
         return {

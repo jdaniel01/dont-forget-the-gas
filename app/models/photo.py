@@ -20,11 +20,11 @@ class Photo(db.Model):
     # stop = db.relationship("Stop", back_populates="photos")
     # location = db.relationship("Location", back_populates="photos")
 #2
-    user = db.relationship("User")
-    vehicle = db.relationship("Vehicle")
-    trip = db.relationship("Trip")
-    stop = db.relationship("Stop")
-    location = db.relationship("Location")
+    # user = db.relationship("User")
+    # vehicle = db.relationship("Vehicle")
+    # trip = db.relationship("Trip")
+    # stop = db.relationship("Stop")
+    # location = db.relationship("Location")
 
     def to_dict(self):
 

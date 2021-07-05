@@ -22,7 +22,8 @@ class Vehicle(db.Model):
     # owner = db.relationship("User", back_populates="vehicles")
 #2
     photos = db.relationship("Photo", backref="vehicle")
-    owner = db.reltionship("owner")
+    
+    # owner = db.relationship("owner")
 
     def to_dict(self):
         return {
