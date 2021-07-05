@@ -66,20 +66,40 @@ const ListForm = () => {
 
 
     useEffect(() => {
-        // if 
-        // Redirect(`/api/lists/`)
-    }, [dispatch, newList])
+
+        console.log("#######New List Was Added#####ListForm.js#####", lists[0], newList)
+
+    }, [newList])
+
 
     return (
         <div className="list-form-container">
             <div className="list-form_header-container">
                 <h2>The List Form</h2>
             </div>
+            <div className="list-form_errors-container">
+                {errors.length && errors.map(error => <li className="list-form_error">{error}</li>)}
+            </div>
             <div className="list-form_form-container">
                 <form onSubmit={onSubmit} className="list-form">
                     <div className="list-form_field-container">
                         <label htmlFor="name">List Name: </label>
                         <input name="name" id="name" placeholder="Your List Name Here..." onChange={(e) => updateName(e.target.value)} value={name} />
+                    </div>
+                    <div className="list-form_field-container">
+                        <label htmlFor="type_id">List Type: </label>
+                        <select id="type_id" name="type_id" value={typeId} onChange={(e) => updateType(e.target.value)}>
+                            {list_types && list_types.map(listType =>
+                                <option value={listType.id}>{listType.name}</option>
+                            )}
+                        </select>
+                    </div>
+                    <div className="list-form_field-container">
+                        <label htmlFor="notes">List Notes: </label>
+                        <textarea type="text" id="notes" name="notes" value={notes} onChange={(e) => updateNotes(e.target.value)} />
+                    </div>
+                    <div className="list-form_submit-button-container">
+                        <button type="submit">Confirm New List</button>
                     </div>
                 </form>
             </div>

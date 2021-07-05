@@ -10,6 +10,7 @@ import Map from './components/Map';
 import About from './components/About';
 import List from './components/List';
 import Profile from './components/User/Profile'
+
 import { authenticate } from "./services/auth";
 
 function App() {
@@ -47,7 +48,7 @@ function App() {
           <UsersList />
         </ProtectedRoute>
         <ProtectedRoute path="/users/:userId" exact={true} authenticated={authenticated}>
-          <User />
+          <Profile />
         </ProtectedRoute>
         <ProtectedRoute path="/" exact={true} authenticated={authenticated}>
           <h1>My Home Page</h1>
@@ -57,7 +58,10 @@ function App() {
           <About />
         </Route>
         <ProtectedRoute path="/users/:userId/lists" exact={true} authenticated={authenticated}>
-          <List />
+          <ListsView />
+        </ProtectedRoute>
+        <ProtectedRoute path="users/:userId/lists/:listId" exact={true} authenticated={authenticated}>
+
         </ProtectedRoute>
       </Switch>
     </BrowserRouter>
