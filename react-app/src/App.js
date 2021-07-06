@@ -11,8 +11,11 @@ import About from './components/About';
 import List from './components/List';
 import Profile from './components/User/Profile';
 import ListsView from './components/List/ListsView';
+import Splash from "./components/Splash";
 
 import { authenticate } from "./services/auth";
+import "./index.css"
+
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
@@ -34,7 +37,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <NavBar setAuthenticated={setAuthenticated} />
+      <NavBar setAuthenticated={setAuthenticated} authenticated={authenticated} />
       <Switch>
         <Route path="/login" exact={true}>
           <LoginForm
@@ -52,7 +55,7 @@ function App() {
           <Profile />
         </ProtectedRoute>
         <ProtectedRoute path="/" exact={true} authenticated={authenticated}>
-          <h1>My Home Page</h1>
+          <h1>TODO: Create non-user splash</h1>
           <Map />
         </ProtectedRoute>
         <Route path="/about" exact={true}>
@@ -61,9 +64,12 @@ function App() {
         <ProtectedRoute path="/users/:userId/lists" exact={true} authenticated={authenticated}>
           <ListsView />
         </ProtectedRoute>
-        <ProtectedRoute path="users/:userId/lists/:listId" exact={true} authenticated={authenticated}>
-
+        <ProtectedRoute path="/lists/:listId" exact={true} authenticated={authenticated}>
+          <List />
         </ProtectedRoute>
+        <Route path="/" exact={true}>
+          <Splash />
+        </Route>
       </Switch>
     </BrowserRouter>
   );
