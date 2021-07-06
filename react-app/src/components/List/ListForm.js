@@ -89,7 +89,7 @@ const ListForm = () => {
                     <div className="list-form_field-container">
                         <label htmlFor="type_id">List Type: </label>
                         <select id="type_id" name="type_id" value={typeId} onChange={(e) => updateType(e.target.value)}>
-                            {list_types && list_types.map(listType =>
+                            {types && types.map(listType =>
                                 <option value={listType.id}>{listType.name}</option>
                             )}
                         </select>
@@ -106,3 +106,6 @@ const ListForm = () => {
         </div>
     )
 }
+
+
+export default ListForm;

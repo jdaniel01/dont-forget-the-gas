@@ -9,7 +9,8 @@ import User from "./components/User";
 import Map from './components/Map';
 import About from './components/About';
 import List from './components/List';
-import Profile from './components/User/Profile'
+import Profile from './components/User/Profile';
+import ListsView from './components/List/ListsView';
 
 import { authenticate } from "./services/auth";
 

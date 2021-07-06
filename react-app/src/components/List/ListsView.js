@@ -50,3 +50,5 @@ const ListsView = () => {
         </div>
     )
 }
+
+export default ListsView;

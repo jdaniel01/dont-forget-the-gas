@@ -3,7 +3,7 @@ import { Redirect, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getList, addList, dropList, getCollection } from "../../store/list";
 import ItemForm from "../Item"
-
+import ListForm from "./ListForm"
 
 const ListDetails = ({ adding, setAdding }) => {
 

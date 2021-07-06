@@ -21,7 +21,7 @@ export const getCollection = (userId) => async (dispatch) => {
 
 export const getList = (id) => async (dispatch) => {
     const res = await fetch(`/api/lists/${id}`)
-    aList = await res.json()
+    const aList = await res.json()
     dispatch(setList(aList))
 }
 
