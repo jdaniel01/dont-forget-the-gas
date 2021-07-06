@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from sqlalchemy import desc
 from app.models.trip import Trip
-from app.forms import TripFrom
+from app.forms.trip_form import TripForm
 
 
 trip_routes = Blueprint("trips", __name__)
@@ -24,12 +24,15 @@ def updateAndDeletetrip(id):
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         print("####/trips/id######### UPDATING trip")
+
         oldTrip = Trip.query.get(id)
         if oldTrip:
-            # oldTrip["name"] = form["name"]
-            # oldTrip["trip_type"] = form["trip_type"]
-            # oldTrip["notes"] = form["notes"]
-
+            #NOTE need to update later to allow the change of trip leads.
+            oldTrip["departure"] = form["departure"]
+            oldTrip["arrival"] = form["arrival"]
+            oldTrip["days"] = form["days"]
+            oldTrip["distance"] = form["distance"]
+            oldTrip["description"] = form["description"]
             db.session.commit()
             print("####SUCCESS!! USER HAS BEEN UPDATED#####")
 
