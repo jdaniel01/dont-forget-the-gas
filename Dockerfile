@@ -4,7 +4,7 @@ WORKDIR /react-app
 COPY react-app/. .
 
 # You have to set this because it should be set during build time.
-ENV REACT_APP_BASE_URL=https://git.heroku.com/dont-forget-the-gas.git
+ENV REACT_APP_BASE_URL=https://dont-forget-the-gas.herokuapp.com/
 
 
 # Build our React App
