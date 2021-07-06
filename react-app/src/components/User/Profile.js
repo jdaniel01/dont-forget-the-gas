@@ -19,6 +19,9 @@ function Profile() {
     return (
         <div>
             <div>{user.username}</div>
+            <div>{user.email}</div>
+            <div>{user.on_trip}</div>
+            <div>{user.about}</div>
         </div>
     )
 }

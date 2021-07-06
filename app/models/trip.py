@@ -5,6 +5,7 @@ class Trip(db.Model):
     __tablename__ = "trips"
 
     id = db.Column(db.Integer, primary_key=True)
+    #need to add trip name
     lead_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     # start = db.Column(db.Integer, db.ForeignKey("stops.id"), nullable=False)
     # end = db.Column(db.Integer, db.ForeignKey("stops.id"), nullable=False)

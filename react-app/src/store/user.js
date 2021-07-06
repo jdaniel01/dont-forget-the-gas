@@ -1,26 +1,35 @@
 const SET_USER = "user/SET_USER";
 const EDIT_USER = "user/EDIT_USER";
 
-const setUser = (user) => ({
+
+
+const set_User = (user) => ({
     type: SET_USER,
     user
 })
 
-const editedUser = (user) => ({
-    type: EDIT_USER,
-    user
-})
+export const setUser = (user) => async (dispatch) => {
+    // const res = await fetch(`/api/users/${id}`)
+    // if (res.ok) {
+    //     const user = await res.json();
+    //     if (user.errors) {
+    //         return user
+    //     }
+    dispatch(set_User(user))
+    // }
+}
 
-export const getUser = (id) => async (dispatch) => {
-    const res = await fetch(`/api/users/${id}`)
+export const getUser = () => async (dispatch) => {
+    const res = await fetch(`/api/auth/`)
     if (res.ok) {
         const user = await res.json();
         if (user.errors) {
             return user
         }
-        dispatch(setUser(user))
+        dispatch(set_User(user))
     }
 }
+
 
 export const editUser = (user) => async (dispatch) => {
     const res = await fetch(`/api/users/${user.id}`, {
@@ -35,7 +44,7 @@ export const editUser = (user) => async (dispatch) => {
         if (user.errors.length) {
             return user
         }
-        dispatch(editedUser(user))
+        dispatch(set_User(user))
     }
 }
 

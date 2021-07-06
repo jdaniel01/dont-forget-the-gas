@@ -9,15 +9,14 @@ const ListForm = () => {
 
     const user = useSelector(state => state.user);
     const types = useSelector(state => state.list_types);
-    const lists = useSelector(state => state.lists.collections)
+    const lists = useSelector(state => state.list.collections)
 
     const [name, setName] = useState("");
-    const [typeId, setTypeId] = useState(types[0]);
+    const [typeId, setTypeId] = useState();
     const [notes, setNotes] = useState("");
     const [errors, setErrors] = useState([]);
     const [wasAlerted, setAlerted] = useState(false)
     const [ownerId, setOwnerId] = useState(user.id)
-    const newList = lists[0]
 
     const updateName = (someText) => {
         setName(someText)
@@ -64,12 +63,6 @@ const ListForm = () => {
         }
     }
 
-
-    useEffect(() => {
-
-        console.log("#######New List Was Added#####ListForm.js#####", lists[0], newList)
-
-    }, [newList])
 
 
     return (

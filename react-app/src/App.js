@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import LoginForm from "./components/auth/LoginForm";
 import SignUpForm from "./components/auth/SignUpForm";
@@ -14,20 +15,25 @@ import ListsView from './components/List/ListsView';
 import Splash from "./components/Splash";
 import Trip from "./components/Trip"
 import TripsView from "./components/Trip/TripsView"
+import { setUser } from "./store/user";
 
 import { authenticate } from "./services/auth";
 import "./index.css"
 
 
 function App() {
+  const dispatch = useDispatch()
+
   const [authenticated, setAuthenticated] = useState(false);
   const [loaded, setLoaded] = useState(false);
+
 
   useEffect(() => {
     (async () => {
       const user = await authenticate();
       console.log("******************USER******", user)
       if (!user.errors) {
+        dispatch(setUser(user))
         setAuthenticated(true);
       }
       setLoaded(true);

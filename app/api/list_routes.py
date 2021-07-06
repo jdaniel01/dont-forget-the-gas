@@ -10,7 +10,7 @@ list_routes = Blueprint("lists", __name__)
 @list_routes.route('/<int:id>')
 @login_required
 def getOneList(id):
-    alist = List.query.get(id)
+    alist = List.query.get(int(id))
     print("######LIST##id######", alist, id)
     return alist
 
@@ -22,7 +22,7 @@ def updateAndDeleteList(id):
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         print("####/lists/id######### UPDATING LIST")
-        oldList = List.query.get(id)
+        oldList = List.query.get(int(id))
         if oldList:
             oldList["name"] = form["name"]
             oldList["list_type"] = form["list_type"]
@@ -35,7 +35,7 @@ def updateAndDeleteList(id):
             print("###ERROR##ERROR## unable to locate list by primary key")
             return "There was an Error"
     else:
-        deleting = List.query.get(id)
+        deleting = List.query.get(int(id))
         print("#####DELETING LIST #####", deleting)
         db.session.delete(deleting)
         db.session.commit()
