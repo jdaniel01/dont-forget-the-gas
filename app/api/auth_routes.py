@@ -42,9 +42,26 @@ def login():
     if form.validate_on_submit():
         # Add the user to the session, we are logged in!
         user = User.query.filter(User.email == form.data['email']).first()
-        print('UUUUSSSSSEEEEEERRRRRR', type(user), user)
+        print('UUUUSSSSSEEEEEERRRRRR', type(user), user.to_dict())
         login_user(user)
-        return user.to_dict()
+        dict_user = user.to_dict()
+        lists = List.query.filter(List.owner_id == dict_user.id).all()
+        print("$$$$$$$$$$$$$LISTS$$$$$$$$$$$$$", lists)
+        vehicles = Vehicle.query.filter(Vehicle.owner_id == dict_user.id).all()
+        print("$$$$$$$$$$$$$vehicles$$$$$$$$$$$$$", vehicles)
+        trips = Trip.query.filter(Trip.lead_id == dict_user.id).all()
+        print("$$$$$$$$$$$$$trips$$$$$$$$$$$$$", trips)
+        newUser = {
+            "id": dict_user.id,
+            "username": dict_user.username,
+            "email": dict_user.email,
+            "on_trip": dict_user.on_trip,
+            "about": dict_user.about,
+            "lists": lists,
+            "trips": trips,
+            "vehicles": vehicles
+        }
+        return newUser
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 
