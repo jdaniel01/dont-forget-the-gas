@@ -3,6 +3,7 @@ from app.models import User, db
 from app.forms import LoginForm
 from app.forms import SignUpForm
 from flask_login import current_user, login_user, logout_user, login_required
+from werkzeug.security import generate_password_hash
 
 auth_routes = Blueprint('auth', __name__)
 
@@ -64,10 +65,12 @@ def sign_up():
     form = SignUpForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
+        newPassword = generate_password_hash(form.data["password"])
+        print("^^^^^^^^^^PASSWORD^^^^^^^^^^", newPassword)
         user = User(
             username=form.data['username'],
             email=form.data['email'],
-            hashed_password=form.data['password'],
+            hashed_password=newPassword,
             about=form.data['about'],
             on_trip=False
         )

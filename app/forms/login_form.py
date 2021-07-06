@@ -13,8 +13,8 @@ def user_exists(form, field):
 
 
 def password_matches(form, field):
-    print("Checking if password matches")
-    password = field.data
+    print("Checking if password matches", form.data, field.data, type(field.data), type(form.data["password"]))
+    password = form.data["password"]
     email = form.data['email']
     user = User.query.filter(User.email == email).first()
     if not user:
