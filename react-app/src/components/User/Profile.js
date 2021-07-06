@@ -12,12 +12,13 @@ function Profile() {
     useEffect(() => {
         if (!user.id) {
             dispatch(getUser())
+            console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^USER^^^^^^^^", user)
         }
     }, [dispatch])
 
     return (
         <div>
-            printing objects.
+            <div>{user.username}</div>
         </div>
     )
 }

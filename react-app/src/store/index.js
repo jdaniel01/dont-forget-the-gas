@@ -2,11 +2,14 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import userReducer from './user';
 import listReducer from './list';
+import tripReducer from './trip';
+import itemReducer from "./item";
 
 const rootReducer = combineReducers({
     user: userReducer,
     list: listReducer,
-
+    trip: tripReducer,
+    item: itemReducer
 })
 
 let enhancer;

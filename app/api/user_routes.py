@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from flask_login import login_required
+from flask_login import login_required, current_user
 from sqlalchemy import desc
 from app.models import User, List
 from app.forms import ListForm
@@ -27,7 +27,7 @@ def user(id):
 def addAndAllList(id):
 
     form = ListForm()
-
+    form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         newList = List()
         form.populate_obj(newList)
@@ -38,5 +38,6 @@ def addAndAllList(id):
     else:
         print("#####ERROR FORM DID NOT VALIDATE####")
         return "Error: Form did not validate or no form was submitted"
-    lists = List.query.filter_by(desc(owner_id=int(id))).all()
+        #NOTE Need to come back and add query below to show all lists for user id in 'params' so friends can see their friends profiles.
+    lists = List.query.filter_by(desc(owner_id=current_user.id)).all()
     return lists
