@@ -15,6 +15,7 @@ export const getTrips = (userId) => async (dispatch) => {
     const res = await fetch(`/api/users/${userId}/trips`)
     if (res.ok) {
         const trips = await res.json()
+        console.log('TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT', trips, typeof trips)
         dispatch(setTrips(trips))
     }
 }
@@ -30,7 +31,7 @@ export const addtrip = (trip) => async (dispatch) => {
     const res = await fetch(`/api/users/${trip.owner_id}/trips`, {
         method: "POST",
         headers: {
-            "Content_Type": "application/json"
+            "Content-Type": "application/json"
         },
         body: JSON.stringify(trip)
     })

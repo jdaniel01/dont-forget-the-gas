@@ -25,7 +25,7 @@ def user(id):
 
 @user_routes.route('/<int:id>/lists', methods=["GET", "POST"])
 @login_required
-def addAndAllList(id):
+def addAndAllLists(id):
 
     form = ListForm()
     form['csrf_token'].data = request.cookies['csrf_token']
@@ -42,3 +42,25 @@ def addAndAllList(id):
         #NOTE Need to come back and add query below to show all lists for user id in 'params' so friends can see their friends profiles.
     lists = List.query.filter_by(desc(owner_id=current_user.id)).all()
     return lists
+
+
+
+@user_routes.route('/<int:id>/trips', methods=["GET", "POST"])
+@login_required
+def addAndAllTrips(id):
+
+    form = TripForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        newTrip = Trip()
+        form.populate_obj(newTrip)
+        print("######/users/id/trips########### populated new object preparing to commit.")
+        db.session.add(newTrip)
+        db.session.commit()  
+        print("#########users/id/trips########## SUCCESS! ADDED NEW TRIP")
+    else:
+        print("#####ERROR FORM DID NOT VALIDATE####")
+        return "Error: Form did not validate or no form was submitted"
+        #NOTE Need to come back and add query below to show all trips for user id in 'params' so friends can see their friends profiles.
+    trips = Trip.query.filter_by(desc(lead_id=current_user.id)).all()
+    return trips

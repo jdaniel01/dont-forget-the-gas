@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Redirect, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { addtrip } from "../../store/trip";
+import { addTrip } from "../../store/trip";
 
-const tripForm = () => {
+const TripForm = () => {
 
     const dispatch = useDispatch();
 
     const user = useSelector(state => state.user);
-    const types = useSelector(state => state.trip_types);
-    const trips = useSelector(state => state.trip.collections)
+
+    const [departure, setDeparture] = useState()
+
 
     const [name, setName] = useState("");
     const [typeId, setTypeId] = useState();
