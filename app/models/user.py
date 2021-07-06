@@ -13,63 +13,23 @@ class User(db.Model, UserMixin):
     on_trip = db.Column(db.Boolean, nullable=False)
     about = db.Column(db.Text)
 
-#1
-    # vehicles = db.relationship("Vehicle", back_populates="owner")
-    # trips = db.relationship("Trip", back_populates="leader")
-    # comments = db.relationship("Comment", back_populates="author")
-    # lists = db.relationship("List", back_populates="owner")
-    # photos = db.relationship("Photo", back_populates="user")
-#2
-    # vehicles = db.relationship("Vehicle", backref="owner", lazy="dynamic")
-    trips = db.relationship("Trip", backref="leader")
-    lists = db.relationship("List", backref="owner")
-    # photos = db.relationship("Photo", backref="user", lazy="dynamic")
-#3
-    companions = db.relationship("Trip", secondary="companions", backref=db.backref("companions", lazy="dynamic"))
-    
-
-    @property
-    def username(self):
-        return self.username
-    
-    @username.setter
-    def username(self, newUsername):
-        self.username = newUsername
-    
-    @property
-    def email(self):
-        return self.email
-    
-    @email.setter
-    def email(self, newEmail):
-        self.email = newEmail
-
-    @property
-    def on_trip(self):
-        return self.on_trip
-    
-    @on_trip.setter
-    def on_trip(self, newOnTrip):
-        self.on_trip = newOnTrip
-    
-    @property
-    def about(self):
-        return self.about
-    
-    @about.setter
-    def about(self, newAbout):
-        self.about = newAbout
+    vehicles = db.relationship("Vehicle", back_populates="owner")
+    trips = db.relationship("Trip", back_populates="lead")
+    # comment = db.relationship("Comment", back_populates="author")
+    lists = db.relationship("List", back_populates="owner")
+    companions = db.relationship("Trip", secondary="companions", backref=db.backref("companions"))
+    editors = db.relationship("List", secondary="editors", backref=db.backref("editors"))
 
     @property
     def password(self):
         return self.hashed_password
 
     @password.setter
-    def password(self, newPassword):
-        self.hashed_password = generate_password_hash(newPassword)
+    def password(self, password):
+        self.hashed_password = password
 
     def check_password(self, password):
-        return check_password_hash(self.password, password)
+        return check_password_hash(self.hashed_password, password)
 
     def to_dict(self):
 

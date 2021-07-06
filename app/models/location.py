@@ -22,7 +22,7 @@ class Location(db.Model):
         return {
             "id": self.id,
             "lat": self.lat,
-            "lon": self.lon,
+            "lng": self.lng,
             "name": self.name,
             "description": self.description
         }

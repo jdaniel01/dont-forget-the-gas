@@ -5,7 +5,7 @@ from app.models import User
 
 
 def user_exists(form, field):
-    print("Checking if user exists", field.data)
+    print("Checking if user exists")
     email = field.data
     user = User.query.filter(User.email == email).first()
     if not user:

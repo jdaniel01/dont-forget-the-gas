@@ -4,11 +4,14 @@ import LoginForm from "./components/auth/LoginForm";
 import SignUpForm from "./components/auth/SignUpForm";
 import NavBar from "./components/NavBar";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
-import UsersList from "./components/UsersList";
+import UsersList from "./components/User/UsersList";
 import User from "./components/User";
 import Map from './components/Map';
 import About from './components/About';
 import List from './components/List';
+import Profile from './components/User/Profile';
+import ListsView from './components/List/ListsView';
+
 import { authenticate } from "./services/auth";
 
 function App() {
@@ -16,7 +19,7 @@ function App() {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    (async() => {
+    (async () => {
       const user = await authenticate();
       if (!user.errors) {
         setAuthenticated(true);
@@ -43,10 +46,10 @@ function App() {
           <SignUpForm authenticated={authenticated} setAuthenticated={setAuthenticated} />
         </Route>
         <ProtectedRoute path="/users" exact={true} authenticated={authenticated}>
-          <UsersList/>
+          <UsersList />
         </ProtectedRoute>
         <ProtectedRoute path="/users/:userId" exact={true} authenticated={authenticated}>
-          <User />
+          <Profile />
         </ProtectedRoute>
         <ProtectedRoute path="/" exact={true} authenticated={authenticated}>
           <h1>My Home Page</h1>
@@ -56,7 +59,10 @@ function App() {
           <About />
         </Route>
         <ProtectedRoute path="/users/:userId/lists" exact={true} authenticated={authenticated}>
-          <List />
+          <ListsView />
+        </ProtectedRoute>
+        <ProtectedRoute path="/lists/:listId" exact={true} authenticated={authenticated}>
+          <List/>
         </ProtectedRoute>
       </Switch>
     </BrowserRouter>

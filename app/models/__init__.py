@@ -3,8 +3,11 @@ from .user import User
 from .vehicle import Vehicle
 from .list_type import ListType
 from .location import Location
-from .stop import Stop
 from .trip import Trip
+from .stop import Stop
 from .list import List
 from .item import Item
 from .companion import Companion
+from .editor import Editor
+# from .comment import Comment
+# from .photo import Photo

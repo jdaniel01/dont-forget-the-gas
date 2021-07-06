@@ -105,6 +105,7 @@ class Vehicle(db.Model):
     @avg_mpg.setter
     def avg_mpg(self, newMpg):
         self.avg_mpg = newMpg
+    owner = db.relationship("User", back_populates="vehicles")
 
     def to_dict(self):
         return {
