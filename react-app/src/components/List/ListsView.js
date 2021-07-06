@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Redirect, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { addList, dropList, getCollection } from "../../store/list";
-
+import { getUser } from "../../store/user";
+import ListForm from "./ListForm";
 
 const ListPeek = ({ list }) => {
 
@@ -38,15 +39,34 @@ const ListsView = () => {
     const lists = useSelector(state => state.user.lists)
     const user = useSelector(state => state.user)
 
+    const [adding, setAdding] = useState(false)
+
+    const updateAdding = () => {
+        setAdding(true)
+    }
+
+    useEffect(() => {
+        if (!user) {
+            dispatch(getUser())
+        }
+    })
 
     return (
         <div className="lists-view-container">
             <div className="lists-view_header-container">
                 <h2>Your Lists</h2>
             </div>
-            <div className="lists-container">
-                {lists && lists.map(list => <ListPeek key={list.id} list={list} />)}
+            <div className="new-list-button" onClick={updateAdding}>
+                Add New List
             </div>
+            {!adding &&
+                <div className="lists-container">
+                    {lists && lists.map(list => <ListPeek key={list.id} list={list} />)}
+                </div>
+            }
+            {adding &&
+                <ListForm />
+            }
         </div>
     )
 }

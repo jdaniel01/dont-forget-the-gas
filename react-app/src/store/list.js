@@ -65,7 +65,7 @@ export const dropList = (list) => async (dispatch) => {
 }
 
 
-function listReducer(state = { collection: [] }, action) {
+function listReducer(state = { collection: [], list: {} }, action) {
     switch (action.type) {
         case SET_COLLECTION:
             let newCollection = []
@@ -73,6 +73,8 @@ function listReducer(state = { collection: [] }, action) {
                 newCollection.push(action.collection[list])
             }
             return { ...state, collection: newCollection }
+        case SET_LIST:
+            return { ...state, list: action.list }
         default:
             return state;
     }

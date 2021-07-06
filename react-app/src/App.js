@@ -12,6 +12,8 @@ import List from './components/List';
 import Profile from './components/User/Profile';
 import ListsView from './components/List/ListsView';
 import Splash from "./components/Splash";
+import Trip from "./components/Trip"
+import TripsView from "./components/Trip/TripsView"
 
 import { authenticate } from "./services/auth";
 import "./index.css"
@@ -48,8 +50,20 @@ function App() {
         <Route path="/sign-up" exact={true}>
           <SignUpForm authenticated={authenticated} setAuthenticated={setAuthenticated} />
         </Route>
-        <ProtectedRoute path="/users" exact={true} authenticated={authenticated}>
-          <UsersList />
+        <Route path="/about" exact={true}>
+          <About />
+        </Route>
+        <ProtectedRoute path="/users/:userId/lists" exact={true} authenticated={authenticated}>
+          <ListsView />
+        </ProtectedRoute>
+        <ProtectedRoute path="/users/:userId/trips" exact={true} authenticated={authenticated}>
+          <TripsView />
+        </ProtectedRoute>
+        <ProtectedRoute path="/lists/:listId" exact={true} authenticated={authenticated}>
+          <List />
+        </ProtectedRoute>
+        <ProtectedRoute path="/trips/:tripId" exact={true} authenticated={authenticated}>
+          <Trip />
         </ProtectedRoute>
         <ProtectedRoute path="/users/:userId" exact={true} authenticated={authenticated}>
           <Profile />
@@ -57,15 +71,6 @@ function App() {
         <ProtectedRoute path="/" exact={true} authenticated={authenticated}>
           <h1>TODO: Create non-user splash</h1>
           <Map />
-        </ProtectedRoute>
-        <Route path="/about" exact={true}>
-          <About />
-        </Route>
-        <ProtectedRoute path="/users/:userId/lists" exact={true} authenticated={authenticated}>
-          <ListsView />
-        </ProtectedRoute>
-        <ProtectedRoute path="/lists/:listId" exact={true} authenticated={authenticated}>
-          <List />
         </ProtectedRoute>
         <Route path="/" exact={true}>
           <Splash />
