@@ -1,12 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { login } from "../../services/auth";
-import { setUser } from "../../store/user"
+import { getUser } from "../../store/user"
+import { getCollection, getTypes } from "../../store/list";
+import { getTrips } from "../../store/trip";
+// import { setVehicles } from "../../store/vehicle";
 
 const LoginForm = ({ authenticated, setAuthenticated }) => {
 
   const dispatch = useDispatch();
+
+  const sessionUser = useSelector(state => state.user);
 
   const [errors, setErrors] = useState([]);
   const [email, setEmail] = useState("");
@@ -15,10 +20,17 @@ const LoginForm = ({ authenticated, setAuthenticated }) => {
   const onLogin = async (e) => {
     e.preventDefault();
     const user = await login(email, password);
+    console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$", user)
     if (!user.errors) {
-      if (!user) {
-        dispatch(setUser(user))
+
+      if (!sessionUser) {
+        dispatch(getUser(user.id))
+        dispatch(getCollection(user.id))
+        dispatch(getTrips(user.id))
+        dispatch(getTypes())
+        // dispatch(setVehicles(user.id))
       }
+
       setAuthenticated(true);
     } else {
       setErrors(user.errors);

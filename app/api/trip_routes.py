@@ -8,6 +8,7 @@ from app.forms.trip_form import TripForm
 trip_routes = Blueprint("trips", __name__)
 
 
+
 @trip_routes.route('/<int:id>')
 @login_required
 def getOneTrip(id):

@@ -11,6 +11,8 @@ const setTrip = (trip) => ({
     trip
 })
 
+
+
 export const getTrips = (userId) => async (dispatch) => {
     const res = await fetch(`/api/users/${userId}/trips`)
     if (res.ok) {

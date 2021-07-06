@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, session, request
-from app.models import User, db
+from app.models import User, db, List, Trip, Vehicle
 from app.forms import LoginForm
 from app.forms import SignUpForm
 from flask_login import current_user, login_user, logout_user, login_required
@@ -44,24 +44,7 @@ def login():
         user = User.query.filter(User.email == form.data['email']).first()
         print('UUUUSSSSSEEEEEERRRRRR', type(user), user.to_dict())
         login_user(user)
-        dict_user = user.to_dict()
-        lists = List.query.filter(List.owner_id == dict_user.id).all()
-        print("$$$$$$$$$$$$$LISTS$$$$$$$$$$$$$", lists)
-        vehicles = Vehicle.query.filter(Vehicle.owner_id == dict_user.id).all()
-        print("$$$$$$$$$$$$$vehicles$$$$$$$$$$$$$", vehicles)
-        trips = Trip.query.filter(Trip.lead_id == dict_user.id).all()
-        print("$$$$$$$$$$$$$trips$$$$$$$$$$$$$", trips)
-        newUser = {
-            "id": dict_user.id,
-            "username": dict_user.username,
-            "email": dict_user.email,
-            "on_trip": dict_user.on_trip,
-            "about": dict_user.about,
-            "lists": dict_user.lists,
-            "trips": dict_user.trips,
-            "vehicles": dict_user.vehicles
-        }
-        return newUser
+        return user.to_dict()
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 
@@ -83,7 +66,6 @@ def sign_up():
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         newPassword = generate_password_hash(form.data["password"])
-        print("^^^^^^^^^^PASSWORD^^^^^^^^^^", newPassword)
         user = User(
             username=form.data['username'],
             email=form.data['email'],
@@ -91,7 +73,6 @@ def sign_up():
             about=form.data['about'],
             on_trip=False
         )
-        print("#########################", user.hashed_password, user.to_dict())
         db.session.add(user)
         db.session.commit()
         login_user(user)
