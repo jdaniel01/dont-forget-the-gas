@@ -1,9 +1,14 @@
 const SET_COLLECTION = "list/SET_COLLECTION"
-
+const SET_LIST = 'list/SET_LIST'
 
 const setCollection = (collection) => ({
     type: SET_COLLECTION,
     collection
+})
+
+const setList = (list) => ({
+    type: SET_LIST,
+    list
 })
 
 export const getCollection = (userId) => async (dispatch) => {
@@ -13,6 +18,13 @@ export const getCollection = (userId) => async (dispatch) => {
         dispatch(setCollection(lists))
     }
 }
+
+export const getList = (id) => async (dispatch) => {
+    const res = await fetch(`/api/lists/${id}`)
+    aList = await res.json()
+    dispatch(setList(aList))
+}
+
 
 export const addList = (list) => async (dispatch) => {
     const res = await fetch(`/api/users/${list.owner_id}/lists`, {

@@ -1,14 +1,18 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
+from sqlalchemy import desc
+from app.models.list import List
 
 
 list_routes = Blueprint("lists", __name__)
 
+
 @list_routes.route('/<int:id>')
 @login_required
 def getOneList(id):
-    
-
+    alist = List.query.get(id)
+    print("######LIST##id######", alist)
+    return alist
 
 @list_routes.route('/<int:id>', methods=["PUT", "DELETE"])
 @login_required
