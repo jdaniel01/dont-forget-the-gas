@@ -8,7 +8,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-        HEROKU_API_KEY: ${{ secrets.d6e19ee7-97f5-4e44-ab05-6de1460b829e }}
+        HEROKU_API_KEY: ${{ secrets.9d969c52-060d-4312-9e1d-bcf28e562f89 }}
     steps:
     - uses: actions/checkout@v2
     - name: Login to Heroku Container registry
