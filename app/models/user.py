@@ -38,5 +38,8 @@ class User(db.Model, UserMixin):
             "username": self.username,
             "email": self.email,
             "on_trip": self.on_trip,
-            "about": self.about
+            "about": self.about,
+            "vehicles": self.vehicles,
+            "trips": self.trips,
+            "lists": self.lists
         }

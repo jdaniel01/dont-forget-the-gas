@@ -57,9 +57,9 @@ def login():
             "email": dict_user.email,
             "on_trip": dict_user.on_trip,
             "about": dict_user.about,
-            "lists": lists,
-            "trips": trips,
-            "vehicles": vehicles
+            "lists": dict_user.lists,
+            "trips": dict_user.trips,
+            "vehicles": dict_user.vehicles
         }
         return newUser
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
