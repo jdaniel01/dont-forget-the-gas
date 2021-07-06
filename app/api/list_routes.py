@@ -6,6 +6,11 @@ from app.models.list import List
 
 list_routes = Blueprint("lists", __name__)
 
+@list_routes.route('/types')
+@login_required
+def getAllTypes():
+    types = ListType.query.all()
+    print ("#############TYPES############", types, type(types))
 
 @list_routes.route('/<int:id>')
 @login_required

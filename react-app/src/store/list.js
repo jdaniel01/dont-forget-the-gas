@@ -90,7 +90,7 @@ function listReducer(state = { collection: [], list: {}, types: [] }, action) {
         case SET_TYPES:
             let newTypes = []
             for (let type in action.types) {
-                newTypes.push(type)
+                newTypes.push(type.to_dict())
             }
             return { ...state, types: newTypes }
         default:
