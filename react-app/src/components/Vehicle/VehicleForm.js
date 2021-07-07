@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Redirect, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { addVehicle, dropVehicle, editVehicle } from "../../store/user";
+import { addVehicle, dropVehicle, editVehicle, getUser } from "../../store/user";
 
 
 
-const VehicleForm = () => {
+function VehicleForm() {
 
-    const user = useDispatch()
     const dispatch = useDispatch()
 
     const user = useSelector(state => state.user.user)
@@ -24,7 +23,11 @@ const VehicleForm = () => {
     const [mpg, setMpg] = useState(0)
     const [errors, setErrors] = useState([])
 
-
+    useEffect(() => {
+        if (!user) {
+            dispatch(getUser())
+        }
+    }, [user])
 
     const onVehicleSubmit = (e) => {
         e.preventDefault()
@@ -45,14 +48,17 @@ const VehicleForm = () => {
         if (!color) {
             newErrors.push("Please enter your vehicle's color.")
         }
-        if (!storage) {
+        if (!fuelType) {
             newErrors.push("Please enter your vehicle's storage.")
         }
         if (!miles) {
             newErrors.push("Please enter your vehicle's odometer reading.")
         }
-        if (!tank) {
+        if (!fuelTank) {
             newErrors.push("Please enter your vehicle's fuel tank capacity.")
+        }
+        if (!capacity) {
+            newErrors.push("Please enter the storage capacity of your vehicle.")
         }
         // if (!mpg) {
         //     newErrors.push("Please enter your vehicle's average MPG, if you don't know just guess.")
