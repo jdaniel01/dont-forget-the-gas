@@ -1,7 +1,7 @@
 const SET_TRIPS = "trip/SET_TRIPS"
 const SET_TRIP = 'trip/SET_TRIP'
 
-const setTrips = (trips) => ({
+const set_Trips = (trips) => ({
     type: SET_TRIPS,
     trips
 })
@@ -13,13 +13,13 @@ const setTrip = (trip) => ({
 
 
 
-export const getTrips = (userId) => async (dispatch) => {
-    const res = await fetch(`/api/users/${userId}/trips`)
-    if (res.ok) {
-        const trips = await res.json()
-        console.log('TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT', trips, typeof trips)
-        dispatch(setTrips(trips))
-    }
+export const setTrips = (trips) => async (dispatch) => {
+    // const res = await fetch(`/api/users/${userId}/trips`)
+    // if (res.ok) {
+    //     const trips = await res.json()
+    //     console.log('TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT', trips, typeof trips)
+    dispatch(set_Trips(trips))
+
 }
 
 export const getTrip = (id) => async (dispatch) => {

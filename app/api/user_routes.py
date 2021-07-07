@@ -64,3 +64,25 @@ def addAndAllTrips(id):
         #NOTE Need to come back and add query below to show all trips for user id in 'params' so friends can see their friends profiles.
     trips = Trip.query.filter_by(desc(lead_id=current_user.id)).all()
     return trips
+
+
+
+@user_routes.route('/<int:id>/vehicles', methods=["GET", "POST"])
+@login_required
+def addAndAllvehicles(id):
+
+    form = VehicleForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        newVehicle = Vehicle()
+        form.populate_obj(newVehicle)
+        print("######/users/id/vehicles########### populated new object preparing to commit.")
+        db.session.add(newVehicle)
+        db.session.commit()  
+        print("#########users/id/vehicles########## SUCCESS! ADDED NEW Vehicle")
+    else:
+        print("#####ERROR FORM DID NOT VALIDATE####")
+        return "Error: Form did not validate or no form was submitted"
+        #NOTE Need to come back and add query below to show all vehicles for user id in 'params' so friends can see their friends profiles.
+    vehicles = Vehicle.query.filter_by(desc(owner_id=current_user.id)).all()
+    return vehicles[0]

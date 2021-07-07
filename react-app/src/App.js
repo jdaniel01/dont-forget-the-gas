@@ -16,6 +16,10 @@ import Splash from "./components/Splash";
 import Trip from "./components/Trip"
 import TripsView from "./components/Trip/TripsView"
 import { setUser } from "./store/user";
+import { setLists } from "./store/list";
+import { setTrips } from "./store/trip";
+import { setVehicles } from "./store/user";
+import { setTypes } from "./store/list";
 
 import { authenticate } from "./services/auth";
 import "./index.css"
@@ -33,7 +37,11 @@ function App() {
       const user = await authenticate();
       console.log("******************USER******", user)
       if (!user.errors) {
-        dispatch(setUser(user))
+        dispatch(setUser(user.user))
+        dispatch(setLists(user.lists))
+        dispatch(setVehicles(user.vehicles))
+        dispatch(setTrips(user.trips))
+        dispatch(setTypes(user.types))
         setAuthenticated(true);
       }
       setLoaded(true);

@@ -4,6 +4,7 @@ from wtforms.validators import DataRequired
 
 class VehicleForm(FlaskForm):
 
+    owner_id = IntegerField('owner_id', validators=[DataRequired()])
     make = StringField("make", validators=[DataRequired()])
     model = StringField("model", validators=[DataRequired()])
     body = StringField("body", validators=[DataRequired()])

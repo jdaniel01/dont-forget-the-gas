@@ -25,7 +25,22 @@ def authenticate():
     Authenticates a user.
     """
     if current_user.is_authenticated:
-        return current_user.to_dict()
+        # print("$$$$$$$444444444444 USER AUTHENTICATED, AUTH ROUTES /", current_user, type(current_user), current_user)
+        
+        trips = Trip.query.filter_by(lead_id=current_user.id).all()
+        lists = List.query.filter_by(owner_id=current_user.id).all()
+        vehicles = Vehicle.query.filter_by(owner_id=current_user.id).all()
+        types = ListType.query.all()
+        user = current_user.to_dict()
+
+        test = {
+            "user": user, 
+            "trips": [trip.to_dict() for trip in trips], 
+            "lists": [aList.to_dict() for aList in lists], 
+            "vehicles": [vehicle.to_dict() for vehicle in vehicles]
+            }
+        print("###########TEST$$$$$$$$$$$$", test)
+        return test
     return {'errors': ['Unauthorized']}
 
 

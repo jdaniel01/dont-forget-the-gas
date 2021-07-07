@@ -3,8 +3,8 @@ import { Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { login } from "../../services/auth";
 import { getUser } from "../../store/user"
-import { getCollection, getTypes } from "../../store/list";
-import { getTrips } from "../../store/trip";
+import { setLists, setTypes } from "../../store/list";
+// import { getTrips } from "../../store/trip";
 // import { setVehicles } from "../../store/vehicle";
 
 const LoginForm = ({ authenticated, setAuthenticated }) => {
@@ -23,13 +23,13 @@ const LoginForm = ({ authenticated, setAuthenticated }) => {
     console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$", user)
     if (!user.errors) {
 
-      if (!sessionUser) {
-        dispatch(getUser(user.id))
-        dispatch(getCollection(user.id))
-        dispatch(getTrips(user.id))
-        dispatch(getTypes())
-        // dispatch(setVehicles(user.id))
-      }
+      // if (!sessionUser) {
+      //   dispatch(getUser(user.id))
+      //   dispatch(setLists(user.id))
+      //   dispatch(getTrips(user.id))
+      //   dispatch(getTypes())
+      //   // dispatch(setVehicles(user.id))
+      // }
 
       setAuthenticated(true);
     } else {

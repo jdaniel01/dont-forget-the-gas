@@ -63,3 +63,4 @@ export const dropList = (list) => async (dispatch) => {
         dispatch(setTypes(lists))
     }
 }
+

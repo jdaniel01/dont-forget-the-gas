@@ -1,10 +1,10 @@
-const SET_COLLECTION = "list/SET_COLLECTION"
+const SET_LISTS = "list/SET_LISTS"
 const SET_LIST = 'list/SET_LIST'
 const SET_TYPES = 'list/SET_TYPES'
 
-const setCollection = (collection) => ({
-    type: SET_COLLECTION,
-    collection
+const setAll = (LISTS) => ({
+    type: SET_LISTS,
+    LISTS
 })
 
 const setList = (list) => ({
@@ -12,23 +12,27 @@ const setList = (list) => ({
     list
 })
 
-const setTypes = (types) => ({
+const set_Types = (types) => ({
     type: SET_TYPES,
     types
 })
 
-export const getTypes = () => async (dispatch) => {
-    const res = await fetch('/api/lists/types')
-    dispatch(setTypes(await res.json()))
-    return await res.json()
+export const setTypes = (types) => async (dispatch) => {
+    // const res = await fetch('/api/lists/types')
+    // dispatch(set_Types(await res.json()))
+    // return await res.json()
+    dispatch(set_Types(types))
+
 }
 
-export const getCollection = (userId) => async (dispatch) => {
-    const res = await fetch(`/api/users/${userId}/lists`)
-    if (res.ok) {
-        const lists = await res.json()
-        dispatch(setCollection(lists))
-    }
+export const setLists = (lists) => async (dispatch) => {
+
+    // async (dispatch) => {
+    // const res = await fetch(`/api/users/${userId}/lists`)
+    // if (res.ok) {
+    //     const lists = await res.json()
+    dispatch(setAll(lists))
+
 }
 
 export const getList = (id) => async (dispatch) => {
@@ -48,7 +52,7 @@ export const addList = (list) => async (dispatch) => {
     })
     if (res.ok) {
         const lists = await res.json()
-        dispatch(setCollection(lists))
+        dispatch(setAll(lists))
     }
 }
 
@@ -62,7 +66,7 @@ export const editList = (list) => async (dispatch) => {
     })
     if (res.ok) {
         const lists = await res.json()
-        dispatch(setCollection(lists))
+        dispatch(setAll(lists))
     }
 }
 
@@ -72,19 +76,19 @@ export const dropList = (list) => async (dispatch) => {
     })
     if (res.ok) {
         const lists = await res.json()
-        dispatch(setCollection(lists))
+        dispatch(setAll(lists))
     }
 }
 
 
-function listReducer(state = { collection: [], list: {}, types: [] }, action) {
+function listReducer(state = { lists: [], types: [] }, action) {
     switch (action.type) {
-        case SET_COLLECTION:
-            let newCollection = []
-            for (let list in action.collection) {
-                newCollection.push(action.collection[list.to_dict()])
+        case SET_LISTS:
+            let newLists = []
+            for (let list in action.lists) {
+                newLists.push(action.LISTS[list.to_dict()])
             }
-            return { ...state, collection: newCollection }
+            return { ...state, lists: newLists }
         case SET_LIST:
             return { ...state, list: action.list }
         case SET_TYPES:

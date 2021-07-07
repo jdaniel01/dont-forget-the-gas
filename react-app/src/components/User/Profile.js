@@ -6,7 +6,7 @@ import List from "../List"
 
 function Profile() {
     const dispatch = useDispatch();
-    const user = useSelector(state => state.user)
+    const user = useSelector(state => state.user.user)
     const [vehicle, setVehicle] = useState(user.vehicles)
 
     useEffect(() => {
