@@ -36,8 +36,8 @@ const ListsView = () => {
 
     const dispatch = useDispatch();
 
-    const lists = useSelector(state => state.user.lists)
-    const user = useSelector(state => state.user)
+    const lists = useSelector(state => state.list.collection)
+    const user = useSelector(state => state.user.user)
 
     const [adding, setAdding] = useState(false)
 

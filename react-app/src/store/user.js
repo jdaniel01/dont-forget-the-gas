@@ -38,6 +38,7 @@ export const setUser = (user) => async (dispatch) => {
 }
 
 export const addVehicle = (vehicle) => async (dispatch) => {
+    console.log("^^^^^^^^^^^^^^^^Vehicle", vehicle)
     const res = await fetch(`/api/users/${vehicle.owner_id}/vehicles`, {
         method: "POST",
         headers: {
@@ -46,9 +47,10 @@ export const addVehicle = (vehicle) => async (dispatch) => {
         body: JSON.stringify(vehicle)
     })
     if (res.ok) {
-        let newCar = await res.json()
-        dispatch(addCar(newCar))
-        return Redirect(`/users/${newCar.owner_id}`)
+        let newCars = await res.json()
+        console.log(newCars)
+        dispatch(set_vehicles(newCars))
+        return Redirect(`/users/${newCars[0].owner_id}`)
     }
 }
 

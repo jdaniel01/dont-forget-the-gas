@@ -2,9 +2,9 @@ const SET_LISTS = "list/SET_LISTS"
 const SET_LIST = 'list/SET_LIST'
 const SET_TYPES = 'list/SET_TYPES'
 
-const setAll = (LISTS) => ({
+const setAll = (lists) => ({
     type: SET_LISTS,
-    LISTS
+    lists
 })
 
 const setList = (list) => ({
@@ -57,7 +57,7 @@ export const addList = (list) => async (dispatch) => {
 }
 
 export const editList = (list) => async (dispatch) => {
-    const res = await fetch(`/api/users/${list.owner_id}/lists/${list.id}`, {
+    const res = await fetch(`/api/lists/${list.id}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json"
@@ -71,7 +71,7 @@ export const editList = (list) => async (dispatch) => {
 }
 
 export const dropList = (list) => async (dispatch) => {
-    const res = await fetch(`/api/users/${list.owner_id}/lists/${list.id}`, {
+    const res = await fetch(`/api/lists/${list.id}`, {
         method: "DELETE"
     })
     if (res.ok) {
@@ -85,16 +85,16 @@ function listReducer(state = { lists: [], types: [] }, action) {
     switch (action.type) {
         case SET_LISTS:
             let newLists = []
-            for (let list in action.lists) {
-                newLists.push(action.LISTS[list.to_dict()])
+            for (let i = 0; i < action.lists.length; i++) {
+                newLists.push(action.lists[i])
             }
             return { ...state, lists: newLists }
         case SET_LIST:
             return { ...state, list: action.list }
         case SET_TYPES:
             let newTypes = []
-            for (let type in action.types) {
-                newTypes.push(type.to_dict())
+            for (let i = 0; i < action.types.length; i++) {
+                newTypes.push(action.types[i])
             }
             return { ...state, types: newTypes }
         default:

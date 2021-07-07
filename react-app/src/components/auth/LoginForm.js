@@ -11,7 +11,7 @@ const LoginForm = ({ authenticated, setAuthenticated }) => {
 
   const dispatch = useDispatch();
 
-  const sessionUser = useSelector(state => state.user);
+  const sessionUser = useSelector(state => state.user.user);
 
   const [errors, setErrors] = useState([]);
   const [email, setEmail] = useState("");

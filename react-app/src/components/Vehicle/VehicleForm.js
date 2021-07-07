@@ -72,12 +72,46 @@ function VehicleForm() {
                 owner_id: user.id,
                 color: color,
                 capacity: capacity,
-                total_miles: total_miles,
-                fuel_type: fuel_type,
-                fuel_tank: fuel_tank,
-                avg_mpg: avg_mpg
+                total_miles: miles,
+                fuel_type: fuelType,
+                fuel_tank: fuelTank,
+                avg_mpg: mpg
             }))
         }
+        else {
+            setErrors(newErrors)
+        }
+    }
+
+    const updateMake = (e) => {
+        setMake(e.target.value)
+    }
+    const updateModel = (e) => {
+        setModel(e.target.value)
+    }
+    const updateColor = (e) => {
+        setColor(e.target.value)
+    }
+    const updateStorage = (e) => {
+        setStorage(e.target.value)
+    }
+    const updateBody = (e) => {
+        setBody(e.target.value)
+    }
+    const updateCapacity = (e) => {
+        setCapacity(e.target.value)
+    }
+    const updateMiles = (e) => {
+        setMiles(e.target.value)
+    }
+    const updateTank = (e) => {
+        setTank(e.target.value)
+    }
+    const updateType = (e) => {
+        setType(e.target.value)
+    }
+    const updateMpg = (e) => {
+        setMpg(e.target.value)
     }
 
     return (
@@ -88,12 +122,40 @@ function VehicleForm() {
             <div className="form-container">
                 <form onSubmit={() => onVehicleSubmit} className="vehicle-form">
                     <div className="vehicle-form_section">
-                        <label htmlFor="title">Vehicle Name: </label>
-                        <input type="text" id="title" name="title" value={title} onChange={(e) => updateTitle(e.target.value)} />
+                        <label htmlFor="make">Vehicle Make: </label>
+                        <input type="text" id="make" name="make" value={make} onChange={updateMake} />
                     </div>
                     <div className="vehicle-form_section">
-                        <label htmlFor="notes">Vehicle Notes: </label>
-                        <textarea type="text" id="notes" name="notes" value={notes} onChange={(e) => updateNotes(e.target.value)} maxLength={500} />
+                        <label htmlFor="model">Vehicle Model: </label>
+                        <input type="text" id="model" name="model" value={model} onChange={updateModel} maxLength={500} />
+                    </div>
+                    <div className="vehicle-form_section">
+                        <label htmlFor="body">Body Style: </label>
+                        <input type="text" id="body" name="body" value={body} onChange={updateBody} />
+                    </div>
+                    <div className="vehicle-form_section">
+                        <label htmlFor="storage">Storage Capacity: </label>
+                        <input type="number" step={.1} id="storage" name="storage" value={storage} onChange={updateStorage} />
+                    </div>
+                    <div className="vehicle-form_section">
+                        <label htmlFor="color">Vehicle Color: </label>
+                        <input type="text" id="color" name="color" value={color} onChange={updateColor} />
+                    </div>
+                    <div className="vehicle-form_section">
+                        <label htmlFor="total_miles">Odemeter: </label>
+                        <input type="number" step={.1} id="total_miles" name="total_miles" value={miles} onChange={updateMiles} />
+                    </div>
+                    <div className="vehicle-form_section">
+                        <label htmlFor="fuel_type">Fuel Type: </label>
+                        <input type="text" step={.1} id="fuel_type" name="fuel_type" value={fuelType} onChange={updateType} />
+                    </div>
+                    <div className="vehicle-form_section">
+                        <label htmlFor="fuel_tank">Fuel Capacity(gal): </label>
+                        <input type="number" step={.1} id="fuel_tank" name="fuel_tank" value={fuelTank} onChange={updateTank} />
+                    </div>
+                    <div className="vehicle-form_section">
+                        <label htmlFor="avg_mpg">Average Miles Per Gallon(mpg): </label>
+                        <input type="number" step={.1} id="avg_mpg" name="avg_mpg" value={mpg} onChange={updateMpg} />
                     </div>
                     <div className="vehicle-form_submit-button-container">
                         <button type="submit">Add It To The Garage!</button>

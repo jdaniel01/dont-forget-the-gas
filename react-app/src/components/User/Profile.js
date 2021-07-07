@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getUser } from "../../store/user"
-import List from "../List"
 import VehicleForm from "../Vehicle/VehicleForm";
+
 
 function Profile() {
     const dispatch = useDispatch();

@@ -7,7 +7,7 @@ import "../index.css";
 
 const NavBar = ({ setAuthenticated, authenticated }) => {
   const dispatch = useDispatch();
-  const user = useSelector(state => state.user)
+  const user = useSelector(state => state.user.user)
 
   const onLogout = async () => {
     await logout()

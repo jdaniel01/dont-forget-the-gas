@@ -7,7 +7,7 @@ const TripForm = () => {
 
     const dispatch = useDispatch();
 
-    const user = useSelector(state => state.user);
+    const user = useSelector(state => state.user.user);
 
     const [departure, setDeparture] = useState()
 

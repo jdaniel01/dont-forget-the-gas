@@ -37,7 +37,8 @@ def authenticate():
             "user": user, 
             "trips": [trip.to_dict() for trip in trips], 
             "lists": [aList.to_dict() for aList in lists], 
-            "vehicles": [vehicle.to_dict() for vehicle in vehicles]
+            "vehicles": [vehicle.to_dict() for vehicle in vehicles],
+            "types": [typer.to_dict() for typer in types]
             }
         print("###########TEST$$$$$$$$$$$$", test)
         return test

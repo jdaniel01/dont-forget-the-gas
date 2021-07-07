@@ -3,13 +3,13 @@ import { Redirect, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { addList } from "../../store/list";
 
-const ListForm = () => {
+const ListForm = ({ setAdding }) => {
 
     const dispatch = useDispatch();
 
-    const user = useSelector(state => state.user);
-    const types = useSelector(state => state.list_types);
-    const lists = useSelector(state => state.list.collections)
+    const user = useSelector(state => state.user.user);
+    const types = useSelector(state => state.list.types);
+    const lists = useSelector(state => state.list.lists)
 
     const [name, setName] = useState("");
     const [typeId, setTypeId] = useState();
@@ -36,6 +36,13 @@ const ListForm = () => {
 
     const onSubmit = (e) => {
         e.preventDefault()
+        if (!errors.length) {
+            dispatch(addList({ "name": name, "type_id": typeId, "owner_id": ownerId, "notes": notes }))
+            setAdding(false)
+        }
+    }
+
+    useEffect(() => {
         let newErrors = []
 
         if (!name) {
@@ -53,15 +60,12 @@ const ListForm = () => {
         if (!typeId) {
             newErrors.push("Please choose a category for your list")
         }
-        if (!wasAlerted) {
-            window.alert("I just wanted you to know that you didn't provide a description for your new list. You really should.")
-            setAlerted(true)
-        }
         setErrors(newErrors)
-        if (!errors.length) {
-            dispatch(addList({ "name": name, "type_id": typeId, "owner_id": ownerId, "notes": notes }))
-        }
-    }
+    }, [name, typeId])
+
+    useEffect(() => {
+        setOwnerId(user.id)
+    }, [user])
 
 
 
@@ -71,7 +75,7 @@ const ListForm = () => {
                 <h2>The List Form</h2>
             </div>
             <div className="list-form_errors-container">
-                {errors.length && errors.map(error => <li className="list-form_error">{error}</li>)}
+                {errors && errors.map(error => <li className="list-form_error">{error}</li>)}
             </div>
             <div className="list-form_form-container">
                 <form onSubmit={onSubmit} className="list-form">

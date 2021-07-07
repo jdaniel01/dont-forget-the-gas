@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Redirect, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getList, addList, dropList, getCollection } from "../../store/list";
+import { getList, addList, dropList, getLists } from "../../store/list";
 import ItemForm from "../Item"
 import ListForm from "./ListForm"
 

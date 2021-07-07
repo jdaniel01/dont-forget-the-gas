@@ -5,5 +5,6 @@ from wtforms.validators import DataRequired
 class ListForm(FlaskForm):
     
     name = StringField("name", validators=[DataRequired()])
+    owner_id = IntegerField("owner_id", validators=[DataRequired()])
     type_id = IntegerField("type_id", validators=[DataRequired()])
     notes = TextAreaField("notes")
