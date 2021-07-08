@@ -5,35 +5,38 @@ class Item(db.Model):
     __tablename__ = "items"
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String, nullable=False)
-    list_id = db.Column(db.Integer, db.ForeignKey("lists.id"), nullable=False)
-    notes = db.Column(db.Text, nullable=True)
+    # name = db.Column(db.String(50), nullable=False)
+    list_id = db.Column(db.Integer, db.ForeignKey(
+        "lists.id"), nullable=False)
+    itemNotes = db.Column(db.Text)
+    itemName = db.Column(db.String(50), nullable=False)
+
 
 #1
-    lists = db.relationship("List", back_populates="items")
+    lists = db.relationship("List", back_populates="listItems")
 #2
     # list_info = db.relationship("List")
 
     def to_dict(self):
         return {
             "id": self.id,
-            "list_id": self.list_id
-            # "name": self.name,
-            # "notes": self.notes
+            "list_id": self.list_id,
+            "name": self.itemName,
+            "itemNotes": self.itemNotes
         }
 
     @property
-    def name(self):
-        return self.name
+    def itemName(self):
+        return self.itemName
     
-    @name.setter
-    def name(self, name):
-        self.name = name
+    @itemName.setter
+    def itemName(self, name):
+        self.itemName = name
     
     @property
-    def notes(self):
-        return self.notes
+    def itemNotes(self):
+        return self.itemNotes
 
-    @notes.setter
-    def notes(self, notes):
-        self.notes = notes
+    @itemNotes.setter
+    def itemNotes(self, notes):
+        self.itemNotes = notes

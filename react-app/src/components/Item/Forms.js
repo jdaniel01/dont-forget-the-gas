@@ -11,11 +11,12 @@ export const NewItem = ({ item, list_id, updateItems }) => {
 
     const dispatch = useDispatch()
     const history = useHistory()
+
     const user = useSelector(state => state.user.user)
 
     const [name, setName] = useState("")
     const [notes, setNotes] = useState("")
-
+    const [errors, setErrors] = useState([])
 
     useEffect(() => {
         if (!user) {
@@ -32,19 +33,23 @@ export const NewItem = ({ item, list_id, updateItems }) => {
 
     const onItemSubmit = (e) => {
         e.preventDefault()
+        console.log("################$$$$$$$$", notes, name, list_id)
         let newErrors = []
         if (!name) {
             newErrors.push("Please provide a name for your new list item.")
         }
         if (!newErrors.length) {
             const newItem = {
-                // name: name,
-                // notes,
-                list_id
+                itemName: name,
+                itemNotes: notes,
+                list_id: list_id
             }
+
+            console.log("$$$$$$$$$$$$$$$$$$$$$$$$", list_id)
             dispatch(addItem(newItem))
             updateItems(false)
         }
+        setErrors(newErrors)
     }
 
     return (
@@ -56,14 +61,14 @@ export const NewItem = ({ item, list_id, updateItems }) => {
                 Cancel
             </div>
             <div className="form-container">
-                <form onSubmit={() => onItemSubmit} className="item-form">
+                <form onSubmit={onItemSubmit} className="item-form">
                     <div className="item-form_section">
-                        <label htmlFor="name">Item Name: </label>
-                        <input type="text" id="name" name="name" value={name} onChange={updatename} />
+                        <label htmlFor="itemName">Item Name: </label>
+                        <input type="text" id="itemName" name="itemName" value={name} onChange={updatename} />
                     </div>
                     <div className="item-form_section">
-                        <label htmlFor="notes">Item Notes: </label>
-                        <textarea type="text" id="notes" name="notes" value={notes} onChange={updateNotes} maxLength={500} />
+                        <label htmlFor="itemNotes">Item Notes: </label>
+                        <textarea type="text" id="itemNotes" name="itemNotes" value={notes} onChange={updateNotes} maxLength={500} />
                     </div>
                     <div className="item-form_submit-button-container">
                         <button type="submit">Add It To The List!</button>
@@ -86,11 +91,11 @@ export const EditItem = ({ item, list_id, setEditing }) => {
     const [name, setName] = useState(item.name)
     const [notes, setNotes] = useState(item.notes)
 
-    useEffect(() => {
-        if (!user) {
-            dispatch(getUser())
-        }
-    }, [dispatch, item])
+    // useEffect(() => {
+    //     if (!user) {
+    //         dispatch(getUser())
+    //     }
+    // }, [dispatch, item])
 
     const updatename = (e) => {
         setName(e.target.value)
@@ -101,15 +106,15 @@ export const EditItem = ({ item, list_id, setEditing }) => {
 
     const onItemSubmit = (e) => {
         e.preventDefault()
-        // let newErrors = []
-        // if (!name) {
-        //     newErrors.push("Please provide a name for your new list item.")
-        // }
-        // if (!newErrors.length) {
+        let newErrors = []
+        if (!itemName) {
+            newErrors.push("Please provide a name for your new list item.")
+        }
+        if (!newErrors.length) {
             const newItem = {
-                // name,
-                // notes,
-                list_id
+                itemName: name,
+                itemNotes: notes,
+                list_id: list_id
             }
         setEditing(false)
         dispatch(addItem(newItem))
@@ -128,12 +133,12 @@ export const EditItem = ({ item, list_id, setEditing }) => {
             <div className="form-container">
                 <form onSubmit={() => onItemSubmit} className="item-form">
                     <div className="item-form_section">
-                        <label htmlFor="name">Item Name: </label>
-                        <input type="text" id="name" name="name" value={name} onChange={updatename} />
+                        <label htmlFor="itemName">Item Name: </label>
+                        <input type="text" id="itemName" name="itemName" value={name} onChange={updatename} />
                     </div>
                     <div className="item-form_section">
-                        <label htmlFor="notes">Item Notes: </label>
-                        <textarea type="text" id="notes" name="notes" value={notes} onChange={updateNotes} maxLength={500} />
+                        <label htmlFor="itemNotes: notes">Item Notes: </label>
+                        <textarea type="text" id="itemNotes: notes" name="itemNotes: notes" value={notes} onChange={updateNotes} maxLength={500} />
                     </div>
                     <div className="item-form_submit-button-container">
                         <button type="submit">Add It To The List!</button>

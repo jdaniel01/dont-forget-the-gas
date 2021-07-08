@@ -7,7 +7,7 @@ import { NewItem, EditItem } from "../Item/Forms"
 import Item from "../Item"
 
 const ItemDetails = ({ item }) => {
-    const dispatch = useDispatch()
+
     const [editing, setEditing] = useState(false)
     const updateEditing = (value) => {
         setEditing(value)
@@ -44,19 +44,21 @@ const ItemDetails = ({ item }) => {
 const List = () => {
 
     const dispatch = useDispatch();
-    const listId = useParams();
+    const listid = useParams();
+    const listId = Number(listid);
     const list = useSelector(state => state.list.list)
-    const items = useSelector(state => state.item.items)
+// need to accept new list data type
 
     const [adding, setAdding] = useState(false)
 
-    useEffect(() => {
-        if (!items) {
-            dispatch(getItems(listId))
-        }
-    }, [dispatch])
+    // useEffect(() => {
+    //     if (!items) {
+    //         dispatch(getItems(listId))
+    //     }
+    // }, [dispatch, items])
 
     const updateItems = (value) => {
+        console.log("###############$#$#$#", listid, listId, list)
         setAdding(value)
     }
 
@@ -71,12 +73,16 @@ const List = () => {
                     <div>{list.notes}</div>
                 </div>
                 <div className="list_add-item-container">
-                    <button onClick={() => updateItems(true)}>Add an Item</button>
+                    <button onClick={() => updateItems(true)} hidden={adding}>Add an Item</button>
+                </div>
+
+                <div className="list_add-item-container">
+                    <button onClick={() => updateItems(false)} hidden={!adding}>cancel</button>
                 </div>
             </div>
             {!adding &&
                 <div>
-                    {items.map(item =>
+                {list.items.map(item =>
                         <ItemDetails key={item.id} item={item} />
                     )}
                 </div>

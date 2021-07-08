@@ -4,6 +4,6 @@ from wtforms.validators import DataRequired
 
 class ItemForm(FlaskForm):
     
-    # name = StringField("name", validators=[DataRequired()])
+    itemName = StringField("itemName", validators=[DataRequired()])
     list_id = IntegerField("list_id", validators=[DataRequired()])
-    # notes = TextAreaField("notes")
+    itemNotes = TextAreaField("itemNotes")

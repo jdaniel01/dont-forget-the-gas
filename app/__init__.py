@@ -39,7 +39,10 @@ app.register_blueprint(trip_routes, url_prefix='/api/trips')
 app.register_blueprint(item_routes, url_prefix='/api/items')
 
 db.init_app(app)
+
+#Alembic is finicky with some changes.
 Migrate(app, db)
+
 
 # Application Security
 CORS(app)

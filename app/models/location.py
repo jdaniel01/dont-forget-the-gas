@@ -8,7 +8,7 @@ class Location(db.Model):
     lat = db.Column(db.Numeric(scale=13, asdecimal=False), nullable=False)
     lng = db.Column(db.Numeric(scale=13, asdecimal=False), nullable=False)
     name = db.Column(db.String(100), unique=True, nullable=False)
-    description = db.Column(db.Text, nullable=False)
+    description = db.Column(db.Text(), nullable=False)
 
     stop = db.relationship("Stop", back_populates="location")
 

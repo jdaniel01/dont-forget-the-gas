@@ -25,19 +25,20 @@ def user(id):
 @user_routes.route('/<int:id>/lists', methods=["GET", "POST"])
 @login_required
 def addAndAllLists(id):
+    if request.method == "POST":
+        form = ListForm()
+        form['csrf_token'].data = request.cookies['csrf_token']
+        if form.validate_on_submit():
+            newList = List()
+            form.populate_obj(newList)
+            print("######/users/id/lists########### populated new object preparing to commit.")
+            db.session.add(newList)
+            db.session.commit()  
+            print("#########users/id/lists########## SUCCESS! ADDED NEW LIST")
+        else:
+            print("#####ERROR FORM DID NOT VALIDATE####")
+            #NOTE Need to come back and add query below to show all lists for user id in 'params' so friends can see their friends profiles.
 
-    form = ListForm()
-    form['csrf_token'].data = request.cookies['csrf_token']
-    if form.validate_on_submit():
-        newList = List()
-        form.populate_obj(newList)
-        print("######/users/id/lists########### populated new object preparing to commit.")
-        db.session.add(newList)
-        db.session.commit()  
-        print("#########users/id/lists########## SUCCESS! ADDED NEW LIST")
-    else:
-        print("#####ERROR FORM DID NOT VALIDATE####")
-        #NOTE Need to come back and add query below to show all lists for user id in 'params' so friends can see their friends profiles.
     lists = List.query.filter_by(owner_id=current_user.id).all()
     return {"lists": [aList.to_dict() for aList in lists]}
 

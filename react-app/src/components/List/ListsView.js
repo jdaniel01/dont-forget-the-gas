@@ -29,7 +29,7 @@ const ListsView = () => {
         if (!user) {
             dispatch(getUser(user.id))
         }
-        if (!lists.length) {
+        if (!lists) {
             dispatch(getLists(user.id))
         }
         if (!types) {
@@ -66,7 +66,7 @@ const ListsView = () => {
 
     useEffect(() => {
         setAdding(false)
-    }, [lists.length])
+    }, [lists])
 
     return (
         <div className="lists-view-container">

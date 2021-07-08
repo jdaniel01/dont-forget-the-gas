@@ -11,7 +11,7 @@ class Stop(db.Model):
     name = db.Column(db.String(100), nullable=False)
     is_start = db.Column(db.Boolean)
     is_end = db.Column(db.Boolean)
-    description = db.Column(db.Text)
+    description = db.Column(db.Text())
 
     location = db.relationship("Location", back_populates="stop")
 
