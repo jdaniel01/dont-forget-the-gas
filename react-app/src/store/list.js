@@ -99,7 +99,7 @@ export const dropList = (list) => async (dispatch) => {
 }
 
 
-function listReducer(state = { lists: [], types: [], list: {} }, action) {
+function listReducer(state = { lists: [], list: {} }, action) {
     switch (action.type) {
         case SET_LISTS:
             let newLists = []
@@ -109,12 +109,6 @@ function listReducer(state = { lists: [], types: [], list: {} }, action) {
             return { ...state, lists: newLists }
         case SET_LIST:
             return { ...state, list: action.list }
-        case SET_TYPES:
-            let newTypes = []
-            for (let i = 0; i < action.types.length; i++) {
-                newTypes.push(action.types[i])
-            }
-            return { ...state, types: newTypes }
         default:
             return state;
     }

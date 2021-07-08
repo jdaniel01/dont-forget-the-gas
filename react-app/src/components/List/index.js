@@ -8,7 +8,6 @@ import Item from "../Item"
 const ItemDetails = ({ item }) => {
     const dispatch = useDispatch()
     const [editing, setEditing] = useState(false)
-
     const updateEditing = (value) => {
         setEditing(value)
     }
