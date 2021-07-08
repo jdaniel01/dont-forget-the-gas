@@ -19,13 +19,13 @@ export const addItem = (item) => async (dispatch) => {
     const res = await fetch(`/api/lists/${item.list_id}/items`, {
         method: "POST",
         headers: {
-            "Content_Type": "application/json"
+            "Content-Type": "application/json"
         },
         body: JSON.stringify(item)
     })
     if (res.ok) {
         const items = await res.json()
-        dispatch(setItems(items))
+        dispatch(setItems(items.items))
     }
 }
 
@@ -39,6 +39,8 @@ export const editItem = (item) => async (dispatch) => {
     })
     if (res.ok) {
         const items = await res.json()
+        console.log("####################RES#OK###############", items)
+
         dispatch(setItems(items))
     }
 }

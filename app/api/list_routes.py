@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from sqlalchemy import desc
 from app.models import List, Item
+from app.forms import ItemForm
 
 
 list_routes = Blueprint("lists", __name__)
@@ -22,6 +23,22 @@ def getAllTypes():
 @login_required
 def getListItems(id):
     print("######LIST##id######", alist, id)
+    items = Item.query.filter_by(list_id=id).all()
+    return {"items": [item.to_dict() for item in items]}
+
+
+@list_routes.route('/<int:id>/items')
+@login_required
+def addItem(id):
+    form = ItemForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        newItem = Item()
+        form.populate_obj(newItem)
+        print("$$$$$$$$$$$$$$$$$$IIIITTTTEEEEEMMMM$$$$$$$$$$$$$$", newItem.to_dict())
+        db.session.add(newItem)
+        db.session.commit()
+
     items = Item.query.filter_by(list_id=id).all()
     return {"items": [item.to_dict() for item in items]}
 

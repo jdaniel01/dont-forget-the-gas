@@ -2,11 +2,17 @@ import React, { useState, useEffect } from "react";
 import { Redirect, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getList, addItem, dropItem, getItems } from "../../store/list";
-import ItemForm from "../Item/ItemForm"
+import { NewItem, EditItem } from "../Item/Forms"
 import Item from "../Item"
 
-const ItemDetails = ({ item, updateAdding }) => {
+const ItemDetails = ({ item }) => {
+    const dispatch = useDispatch()
+    const [editing, setEditing] = useState(false)
 
+    const updateEditing = (value) => {
+        setEditing(value)
+    }
+    if (!editing) {
         return (
             <div className="list_items-container">
                 <div className="list_item-section">
@@ -17,12 +23,17 @@ const ItemDetails = ({ item, updateAdding }) => {
                         <div>{item.notes}</div>
                     </div>
                 </div>
-                <div className="list_item-edit-button" onClick={updateAdding(true)}>
+                <div className="list_item-edit-button" onClick={updateEditing(true)}>
                     Edit Item
                 </div>
             </div>
         )
-    // }
+    }
+    else {
+        return (
+            <EditItem item={item} list_id={item.list_id} />
+        )
+    }
 
 }
 
@@ -46,6 +57,7 @@ const List = () => {
         setAdding(value)
     }
 
+
     return (
         <div className="list-container">
             <div className="list_details-container">
@@ -59,16 +71,18 @@ const List = () => {
                     <button onClick={() => updateItems(true)}>Add an Item</button>
                 </div>
             </div>
-            {adding &&
-                <ItemForm />
+            {!adding &&
+                <div>
+                    {items.map(item =>
+                        <ItemDetails key={item.id} item={item} />
+                    )}
+                </div>
             }
-            {!adding && items.map(item =>
-                <>
-                    <ItemDetails key={item.id} item={item} updateItems={updateItems} />
-                </>
-            )}
-
+            {adding &&
+                <NewItem list_id={listId} updateItems={updateItems} />
+            }
         </div>
     )
+
 }
 export default List;

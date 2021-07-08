@@ -80,6 +80,9 @@ function App() {
         <ProtectedRoute path="/trips/:tripId" exact={true} authenticated={authenticated}>
           <Trip />
         </ProtectedRoute>
+        {/* <ProtectedRoute path="/items/:itemId" exact={true} authenticated={authenticated}>
+          <Forms
+        </ProtectedRoute> */}
         <ProtectedRoute path="/users/:userId" exact={true} authenticated={authenticated}>
           <Profile />
         </ProtectedRoute>
