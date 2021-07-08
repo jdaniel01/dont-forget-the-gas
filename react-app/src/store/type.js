@@ -12,10 +12,10 @@ const setList = (list) => ({
 })
 
 export const getTypes = (userId) => async (dispatch) => {
-    const res = await fetch(`/api/users/${userId}/lists`)
+    const res = await fetch(`/api/users/${userId}/types`)
     if (res.ok) {
-        const lists = await res.json()
-        dispatch(setTypes(lists))
+        const types = await res.json()
+        dispatch(setTypes(types))
     }
 }
 

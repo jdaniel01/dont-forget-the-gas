@@ -25,6 +25,13 @@ export const setTypes = (types) => async (dispatch) => {
 
 }
 
+export const getTypes = () => async (dispatch) => {
+    const res = await fetch('/api/lists/types')
+    const types = await res.json()
+    dispatch(set_Types(types))
+
+}
+
 export const setLists = (lists) => async (dispatch) => {
 
     // async (dispatch) => {
@@ -32,6 +39,16 @@ export const setLists = (lists) => async (dispatch) => {
     // if (res.ok) {
     //     const lists = await res.json()
     dispatch(setAll(lists))
+
+}
+
+export const getLists = (id) => async (dispatch) => {
+
+    const res = await fetch(`/api/users/${id}/lists`)
+    if (res.ok) {
+        const lists = await res.json()
+        dispatch(setAll(lists))
+    }
 
 }
 
@@ -46,13 +63,13 @@ export const addList = (list) => async (dispatch) => {
     const res = await fetch(`/api/users/${list.owner_id}/lists`, {
         method: "POST",
         headers: {
-            "Content_Type": "application/json"
+            "Content-Type": "application/json"
         },
         body: JSON.stringify(list)
     })
     if (res.ok) {
         const lists = await res.json()
-        dispatch(setAll(lists))
+        dispatch(setAll(lists.lists))
     }
 }
 
@@ -81,7 +98,7 @@ export const dropList = (list) => async (dispatch) => {
 }
 
 
-function listReducer(state = { lists: [], types: [] }, action) {
+function listReducer(state = { lists: [], types: [], list: {} }, action) {
     switch (action.type) {
         case SET_LISTS:
             let newLists = []

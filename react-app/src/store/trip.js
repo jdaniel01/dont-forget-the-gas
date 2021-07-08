@@ -39,7 +39,7 @@ export const addtrip = (trip) => async (dispatch) => {
     })
     if (res.ok) {
         const trips = await res.json()
-        dispatch(setTrips(trips))
+        dispatch(setTrips(trips.trips))
     }
 }
 

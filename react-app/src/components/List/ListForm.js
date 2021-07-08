@@ -12,7 +12,7 @@ const ListForm = ({ setAdding }) => {
     const lists = useSelector(state => state.list.lists)
 
     const [name, setName] = useState("");
-    const [typeId, setTypeId] = useState();
+    const [typeId, setTypeId] = useState(types[0].id);
     const [notes, setNotes] = useState("");
     const [errors, setErrors] = useState([]);
     const [wasAlerted, setAlerted] = useState(false)
@@ -39,6 +39,7 @@ const ListForm = ({ setAdding }) => {
         if (!errors.length) {
             dispatch(addList({ "name": name, "type_id": typeId, "owner_id": ownerId, "notes": notes }))
             setAdding(false)
+
         }
     }
 
@@ -75,7 +76,7 @@ const ListForm = ({ setAdding }) => {
                 <h2>The List Form</h2>
             </div>
             <div className="list-form_errors-container">
-                {errors && errors.map(error => <li className="list-form_error">{error}</li>)}
+                {errors && errors.map(error => <li key={error} className="list-form_error">{error}</li>)}
             </div>
             <div className="list-form_form-container">
                 <form onSubmit={onSubmit} className="list-form">
@@ -87,7 +88,7 @@ const ListForm = ({ setAdding }) => {
                         <label htmlFor="type_id">List Type: </label>
                         <select id="type_id" name="type_id" value={typeId} onChange={(e) => updateType(e.target.value)}>
                             {types && types.map(listType =>
-                                <option value={listType.id}>{listType.name}</option>
+                                <option key={listType.id} value={listType.id}>{listType.name}</option>
                             )}
                         </select>
                     </div>

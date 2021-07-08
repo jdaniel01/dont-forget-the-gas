@@ -6,16 +6,11 @@ const setItems = (items) => ({
     items
 })
 
-const setItem = (item) => ({
-    type: SET_ITEM,
-    item
-})
-
 export const getItems = (listId) => async (dispatch) => {
-    const res = await fetch(`/api/lists/${listId}/items`)
+    const res = await fetch(`/api/lists/${listId}`)
     if (res.ok) {
         const items = await res.json()
-        dispatch(setItems(items))
+        dispatch(setItems(items.items))
     }
 }
 
