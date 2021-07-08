@@ -7,7 +7,7 @@ const setItems = (items) => ({
 })
 
 export const getItems = (listId) => async (dispatch) => {
-    const res = await fetch(`/api/lists/${listId}`)
+    const res = await fetch(`/api/lists/${listId}/items`)
     if (res.ok) {
         const items = await res.json()
         dispatch(setItems(items.items))
@@ -41,7 +41,7 @@ export const editItem = (item) => async (dispatch) => {
         const items = await res.json()
         console.log("####################RES#OK###############", items)
 
-        dispatch(setItems(items))
+        dispatch(setItems(items.items))
     }
 }
 
@@ -51,7 +51,7 @@ export const dropItem = (item) => async (dispatch) => {
     })
     if (res.ok) {
         const items = await res.json()
-        dispatch(setItems(items))
+        dispatch(setItems(items.items))
     }
 }
 
@@ -60,8 +60,8 @@ function itemReducer(state = { items: [], item: {} }, action) {
     switch (action.type) {
         case SET_ITEMS:
             let newItems = []
-            for (let item in action.items) {
-                newItems.push(action.items[item])
+            for (let i = 0; i < action.items.length; i++) {
+                newItems.push(action.items[i])
             }
             return { ...state, items: newItems }
         case SET_ITEM:

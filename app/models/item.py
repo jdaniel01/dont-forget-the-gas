@@ -17,17 +17,18 @@ class Item(db.Model):
     def to_dict(self):
         return {
             "id": self.id,
-            "name": self.name,
-            "notes": self.notes
+            "list_id": self.list_id
+            # "name": self.name,
+            # "notes": self.notes
         }
 
     @property
-    def title(self):
-        return self.title
+    def name(self):
+        return self.name
     
-    @title.setter
-    def title(self, title):
-        self.title = title
+    @name.setter
+    def name(self, name):
+        self.name = name
     
     @property
     def notes(self):

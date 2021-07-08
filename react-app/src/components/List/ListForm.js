@@ -5,7 +5,7 @@ import { addList, getLists } from "../../store/list";
 import { getUser } from "../../store/user";
 import { getTypes } from "../../store/type";
 
-const ListForm = () => {
+const ListForm = ({ setAdding }) => {
 
     const dispatch = useDispatch();
 
@@ -42,6 +42,8 @@ const ListForm = () => {
         e.preventDefault()
         if (!errors.length) {
             dispatch(addList({ "name": name, "type_id": typeId, "owner_id": user.id, "notes": notes }))
+            setAdding(false)
+
         }
     }
 

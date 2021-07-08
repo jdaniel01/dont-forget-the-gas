@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from sqlalchemy import desc
 from app.models import User, List, Vehicle, db
-from app.forms import ListForm, VehicleForm
+from app.forms import ListForm, VehicleForm, TripForm
 
 
 user_routes = Blueprint('users', __name__)
@@ -37,7 +37,6 @@ def addAndAllLists(id):
         print("#########users/id/lists########## SUCCESS! ADDED NEW LIST")
     else:
         print("#####ERROR FORM DID NOT VALIDATE####")
-        return "Error: Form did not validate or no form was submitted"
         #NOTE Need to come back and add query below to show all lists for user id in 'params' so friends can see their friends profiles.
     lists = List.query.filter_by(owner_id=current_user.id).all()
     return {"lists": [aList.to_dict() for aList in lists]}
@@ -59,7 +58,6 @@ def addAndAllTrips(id):
         print("#########users/id/trips########## SUCCESS! ADDED NEW TRIP")
     else:
         print("#####ERROR FORM DID NOT VALIDATE####")
-        return "Error: Form did not validate or no form was submitted"
         #NOTE Need to come back and add query below to show all trips for user id in 'params' so friends can see their friends profiles.
     trips = Trip.query.filter_by(lead_id=current_user.id).all()
     return {"trips": [trip.to_dict() for trip in trips]}
@@ -69,19 +67,17 @@ def addAndAllTrips(id):
 @user_routes.route('/<int:id>/vehicles', methods=["GET", "POST"])
 @login_required
 def addAndAllVehicles(id):
-    print("^^^^^^^^^^^^^^IN VEHICLE ROUTE", request.body)
-    form = VehicleForm()
-    form['csrf_token'].data = request.cookies['csrf_token']
-    if form.validate_on_submit():
-        newVehicle = Vehicle()
-        form.populate_obj(newVehicle)
-        print("######/users/id/vehicles########### populated new object preparing to commit.", newVehicle)
-        db.session.add(newVehicle)
-        db.session.commit()  
-        print("#########users/id/vehicles########## SUCCESS! ADDED NEW Vehicle")
-    else:
-        print("#####ERROR FORM DID NOT VALIDATE####")
-        return "Error: Form did not validate or no form was submitted"
-        #NOTE Need to come back and add query below to show all vehicles for user id in 'params' so friends can see their friends profiles.
+    if request.methods == "POST":
+        form = VehicleForm()
+        form['csrf_token'].data = request.cookies['csrf_token']
+        if form.validate_on_submit():
+            # print("^^^^^^^^^^^^^^IN VEHICLE ROUTE", request.body)
+            newVehicle = Vehicle()
+            form.populate_obj(newVehicle)
+            # print("######/users/id/vehicles########### populated new object preparing to commit.", newVehicle)
+            db.session.add(newVehicle)
+            db.session.commit()  
+            # print("#########users/id/vehicles########## SUCCESS! ADDED NEW Vehicle")
+        
     vehicles = Vehicle.query.filter_by(owner_id=current_user.id).all()
     return {"vehicles": [vehicle.to_dict() for vehicle in vehicles]}

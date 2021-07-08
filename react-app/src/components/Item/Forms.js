@@ -13,7 +13,7 @@ export const NewItem = ({ item, list_id, updateItems }) => {
     const history = useHistory()
     const user = useSelector(state => state.user.user)
 
-    const [title, setTitle] = useState("")
+    const [name, setName] = useState("")
     const [notes, setNotes] = useState("")
 
 
@@ -23,8 +23,8 @@ export const NewItem = ({ item, list_id, updateItems }) => {
         }
     }, [dispatch, item])
 
-    const updateTitle = (e) => {
-        setTitle(e.target.value)
+    const updatename = (e) => {
+        setName(e.target.value)
     }
     const updateNotes = (e) => {
         setNotes(e.target.value)
@@ -33,13 +33,13 @@ export const NewItem = ({ item, list_id, updateItems }) => {
     const onItemSubmit = (e) => {
         e.preventDefault()
         let newErrors = []
-        if (!title) {
-            newErrors.push("Please provide a title for your new list item.")
+        if (!name) {
+            newErrors.push("Please provide a name for your new list item.")
         }
         if (!newErrors.length) {
             const newItem = {
-                title,
-                notes,
+                // name: name,
+                // notes,
                 list_id
             }
             dispatch(addItem(newItem))
@@ -58,8 +58,8 @@ export const NewItem = ({ item, list_id, updateItems }) => {
             <div className="form-container">
                 <form onSubmit={() => onItemSubmit} className="item-form">
                     <div className="item-form_section">
-                        <label htmlFor="title">Item Name: </label>
-                        <input type="text" id="title" name="title" value={title} onChange={updateTitle} />
+                        <label htmlFor="name">Item Name: </label>
+                        <input type="text" id="name" name="name" value={name} onChange={updatename} />
                     </div>
                     <div className="item-form_section">
                         <label htmlFor="notes">Item Notes: </label>
@@ -75,7 +75,7 @@ export const NewItem = ({ item, list_id, updateItems }) => {
 }
 
 
-export const EditItem = ({ item, list_id }) => {
+export const EditItem = ({ item, list_id, setEditing }) => {
 
     const dispatch = useDispatch()
 
@@ -83,7 +83,7 @@ export const EditItem = ({ item, list_id }) => {
 
     const { itemId } = useParams()
 
-    const [title, setTitle] = useState(item.title)
+    const [name, setName] = useState(item.name)
     const [notes, setNotes] = useState(item.notes)
 
     useEffect(() => {
@@ -92,8 +92,8 @@ export const EditItem = ({ item, list_id }) => {
         }
     }, [dispatch, item])
 
-    const updateTitle = (e) => {
-        setTitle(e.target.value)
+    const updatename = (e) => {
+        setName(e.target.value)
     }
     const updateNotes = (e) => {
         setNotes(e.target.value)
@@ -101,18 +101,19 @@ export const EditItem = ({ item, list_id }) => {
 
     const onItemSubmit = (e) => {
         e.preventDefault()
-        let newErrors = []
-        if (!title) {
-            newErrors.push("Please provide a title for your new list item.")
-        }
-        if (!newErrors.length) {
+        // let newErrors = []
+        // if (!name) {
+        //     newErrors.push("Please provide a name for your new list item.")
+        // }
+        // if (!newErrors.length) {
             const newItem = {
-                title,
-                notes,
+                // name,
+                // notes,
                 list_id
             }
-            dispatch(addItem(newItem))
-        }
+        setEditing(false)
+        dispatch(addItem(newItem))
+        // }
     }
 
     const deleteItem = () => {
@@ -127,8 +128,8 @@ export const EditItem = ({ item, list_id }) => {
             <div className="form-container">
                 <form onSubmit={() => onItemSubmit} className="item-form">
                     <div className="item-form_section">
-                        <label htmlFor="title">Item Name: </label>
-                        <input type="text" id="title" name="title" value={title} onChange={updateTitle} />
+                        <label htmlFor="name">Item Name: </label>
+                        <input type="text" id="name" name="name" value={name} onChange={updatename} />
                     </div>
                     <div className="item-form_section">
                         <label htmlFor="notes">Item Notes: </label>

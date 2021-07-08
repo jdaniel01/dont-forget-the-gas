@@ -16,10 +16,10 @@ import Splash from "./components/Splash";
 import Trip from "./components/Trip"
 import TripsView from "./components/Trip/TripsView"
 import { setUser } from "./store/user";
-import { setLists } from "./store/list";
-import { setTrips } from "./store/trip";
-import { setVehicles } from "./store/user";
-import { setTypes } from "./store/list";
+import { getLists } from "./store/list";
+import { getTrips } from "./store/trip";
+import { getVehicles } from "./store/vehicle";
+import { getTypes } from "./store/type";
 
 import { authenticate } from "./services/auth";
 import "./index.css"
@@ -38,6 +38,10 @@ function App() {
       console.log("******************USER******", user)
       if (!user.errors) {
         dispatch(setUser(user))
+        // dispatch(getLists(user.id))
+        // dispatch(getTypes())
+        // dispatch(getVehicles(user.id))
+        // dispatch(getTrips(user.id))
         setAuthenticated(true);
       }
       setLoaded(true);

@@ -1,8 +1,7 @@
 const SET_LISTS = "list/SET_LISTS"
 const SET_LIST = 'list/SET_LIST'
-const SET_TYPES = 'list/SET_TYPES'
 
-const setAll = (lists) => ({
+const setLists = (lists) => ({
     type: SET_LISTS,
     lists
 })
@@ -10,11 +9,6 @@ const setAll = (lists) => ({
 const setList = (list) => ({
     type: SET_LIST,
     list
-})
-
-const set_Types = (types) => ({
-    type: SET_TYPES,
-    types
 })
 
 // export const setTypes = (types) => async (dispatch) => {
@@ -32,22 +26,22 @@ const set_Types = (types) => ({
 
 // }
 
-export const setLists = (lists) => async (dispatch) => {
+// export const setLists = (lists) => async (dispatch) => {
 
-    // async (dispatch) => {
-    // const res = await fetch(`/api/users/${userId}/lists`)
-    // if (res.ok) {
-    //     const lists = await res.json()
-    dispatch(setAll(lists))
+//     // async (dispatch) => {
+//     // const res = await fetch(`/api/users/${userId}/lists`)
+//     // if (res.ok) {
+//     //     const lists = await res.json()
+//     dispatch(setLists(lists))
 
-}
+// }
 
 export const getLists = (id) => async (dispatch) => {
 
     const res = await fetch(`/api/users/${id}/lists`)
     if (res.ok) {
         const lists = await res.json()
-        dispatch(setAll(lists.lists))
+        dispatch(setLists(lists.lists))
     }
 
 }
@@ -69,7 +63,7 @@ export const addList = (list) => async (dispatch) => {
     })
     if (res.ok) {
         const lists = await res.json()
-        dispatch(setAll(lists.lists))
+        dispatch(setLists(lists.lists))
     }
 }
 
@@ -94,7 +88,7 @@ export const dropList = (list) => async (dispatch) => {
     })
     if (res.ok) {
         const lists = await res.json()
-        dispatch(setAll(lists.lists))
+        dispatch(setLists(lists.lists))
     }
 }
 

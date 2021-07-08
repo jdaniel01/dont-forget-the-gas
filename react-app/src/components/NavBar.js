@@ -7,18 +7,14 @@ import "../index.css";
 
 const NavBar = ({ setAuthenticated, authenticated }) => {
   const dispatch = useDispatch();
+
   const user = useSelector(state => state.user.user)
 
   const onLogout = async () => {
-    dispatch(logout())
+    logout()
     setAuthenticated(false)
   }
 
-  useEffect(() => {
-    if (!user) {
-      dispatch(getUser())
-    }
-  })
 
   return (
     <nav className="navbar">

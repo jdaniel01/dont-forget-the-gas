@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Redirect, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getList, addItem, dropItem, getItems } from "../../store/list";
+import { getList, addItem, dropItem } from "../../store/list";
+import { getItems } from "../../store/item";
 import { NewItem, EditItem } from "../Item/Forms"
 import Item from "../Item"
 
@@ -15,11 +16,14 @@ const ItemDetails = ({ item }) => {
         return (
             <div className="list_items-container">
                 <div className="list_item-section">
-                    <div className="list_item_header-container">
-                        <h3>{item.title}</h3>
+                    {/* <div className="list_item_header-container">
+                        <h3>{item.name}</h3>
                     </div>
                     <div className="list_item_notes-container">
                         <div>{item.notes}</div>
+                    </div> */}
+                    <div className="list_item-section">
+                        {item.list_id}
                     </div>
                 </div>
                 <div className="list_item-edit-button" onClick={updateEditing(true)}>
@@ -30,7 +34,7 @@ const ItemDetails = ({ item }) => {
     }
     else {
         return (
-            <EditItem item={item} list_id={item.list_id} />
+            <EditItem item={item} list_id={item.list_id} setEditing={setEditing} />
         )
     }
 
@@ -47,8 +51,8 @@ const List = () => {
     const [adding, setAdding] = useState(false)
 
     useEffect(() => {
-        if (!list) {
-            dispatch(getList(listId))
+        if (!items) {
+            dispatch(getItems(listId))
         }
     }, [dispatch])
 

@@ -5,7 +5,7 @@ class Comment(db.Model):
     __tablename__ = "comments"
 
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String, nullable=False)
+    name = db.Column(db.String, nullable=False)
     body = db.Column(db.Text, nullable=False)
     # photo_id = db.Column(db.Integer, db.ForeignKey("photos.id"))
     list_id = db.Column(db.Integer, db.ForeignKey("lists.id"), primary_key=True, nullable=True if not self.trip_id else False)
@@ -21,7 +21,7 @@ class Comment(db.Model):
     def to_dict(self):
         return {
             "id": self.id,
-            "title": self.title,
+            "name": self.name,
             "body": self.body,
             "author": self.author.to_dict()
         }

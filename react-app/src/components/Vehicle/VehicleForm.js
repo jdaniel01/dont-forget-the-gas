@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Redirect, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { addVehicle, dropVehicle, editVehicle, getUser } from "../../store/user";
-
+import { addVehicle, dropVehicle, editVehicle } from "../../store/vehicle";
+import { getUser } from "../../store/user"
 
 
 function VehicleForm() {

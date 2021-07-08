@@ -27,9 +27,9 @@ const ListsView = () => {
 
     useEffect(() => {
         if (!user) {
-            dispatch(getUser())
+            dispatch(getUser(user.id))
         }
-        if (!lists) {
+        if (!lists.length) {
             dispatch(getLists(user.id))
         }
         if (!types) {
@@ -39,7 +39,9 @@ const ListsView = () => {
 
     const selectedType = (list) => {
         for (let i = 0; i < types.length; i++) {
-            if (types[i].id === list.type_id) return types[i].name
+            if (types[i].id === list.type_id) {
+                return types[i].name
+            }
         }
         return "ERROR";
     }
@@ -64,7 +66,7 @@ const ListsView = () => {
 
     useEffect(() => {
         setAdding(false)
-    }, [lists])
+    }, [lists.length])
 
     return (
         <div className="lists-view-container">

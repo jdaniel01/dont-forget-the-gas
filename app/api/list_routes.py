@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from sqlalchemy import desc
 from app.models import List, Item, ListType
-from app.forms import ItemForm
+from app.forms import ItemForm, ListForm
 
 
 list_routes = Blueprint("lists", __name__)
@@ -28,19 +28,23 @@ def getListItems(id):
     return {"items": [item.to_dict() for item in items]}
 
 
-@list_routes.route('/<int:id>/items')
+@list_routes.route('/<int:id>/items', methods=["POST"])
 @login_required
 def addItem(id):
+    print("############IN List Routes Add Item",  id, type(id))
     form = ItemForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
-        newItem = Item()
-        form.populate_obj(newItem)
+        newItem = Item(
+            list_id=form.data["list_id"]
+        )
         db.session.add(newItem)
         db.session.commit()
 
-    items = Item.query.filter_by(list_id=id).all()
-    return {"items": [item.to_dict() for item in items]}
+        items = Item.query.filter_by(list_id=id).all()
+        return {"items": [item.to_dict() for item in items]}
+    return "ERROR: THIS IS A LONG ERROR NOT TO BE MISSED"
+
 
 @list_routes.route('/<int:id>', methods=["PUT", "DELETE"])
 @login_required

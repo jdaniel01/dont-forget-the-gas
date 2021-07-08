@@ -13,13 +13,13 @@ const setTrip = (trip) => ({
 
 
 
-export const setTrips = (trips) => async (dispatch) => {
-    // const res = await fetch(`/api/users/${userId}/trips`)
-    // if (res.ok) {
-    //     const trips = await res.json()
-    //     console.log('TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT', trips, typeof trips)
-    dispatch(set_Trips(trips))
-
+export const getTrips = (userId) => async (dispatch) => {
+    const res = await fetch(`/api/users/${userId}/trips`)
+    if (res.ok) {
+        const trips = await res.json()
+        //     console.log('TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT', trips, typeof trips)
+        dispatch(set_Trips(trips.trips))
+    }
 }
 
 export const getTrip = (id) => async (dispatch) => {
@@ -39,7 +39,7 @@ export const addtrip = (trip) => async (dispatch) => {
     })
     if (res.ok) {
         const trips = await res.json()
-        dispatch(setTrips(trips.trips))
+        dispatch(set_Trips(trips.trips))
     }
 }
 
@@ -53,7 +53,7 @@ export const editTrip = (trip) => async (dispatch) => {
     })
     if (res.ok) {
         const trips = await res.json()
-        dispatch(setTrips(trips))
+        dispatch(set_Trips(trips.trips))
     }
 }
 
@@ -63,7 +63,7 @@ export const droptrip = (trip) => async (dispatch) => {
     })
     if (res.ok) {
         const trips = await res.json()
-        dispatch(setTrips(trips))
+        dispatch(set_Trips(trips))
     }
 }
 
@@ -72,8 +72,8 @@ function tripReducer(state = { trips: [], trip: {} }, action) {
     switch (action.type) {
         case SET_TRIPS:
             let newtrips = []
-            for (let trip in action.trips) {
-                newtrips.push(action.trips[trip.to_dict()])
+            for (let i = 0; i < action.trips.length; i++) {
+                newtrips.push(action.trips[i])
             }
             return { ...state, trips: newtrips }
         case SET_TRIP:
