@@ -10,13 +10,13 @@ const NavBar = ({ setAuthenticated, authenticated }) => {
   const user = useSelector(state => state.user.user)
 
   const onLogout = async () => {
-    await logout()
+    dispatch(logout())
     setAuthenticated(false)
   }
 
   useEffect(() => {
     if (!user) {
-      dispatch(getUser(user))
+      dispatch(getUser())
     }
   })
 

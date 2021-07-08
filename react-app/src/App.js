@@ -37,11 +37,7 @@ function App() {
       const user = await authenticate();
       console.log("******************USER******", user)
       if (!user.errors) {
-        dispatch(setUser(user.user))
-        dispatch(setLists(user.lists))
-        dispatch(setVehicles(user.vehicles))
-        dispatch(setTrips(user.trips))
-        dispatch(setTypes(user.types))
+        dispatch(setUser(user))
         setAuthenticated(true);
       }
       setLoaded(true);

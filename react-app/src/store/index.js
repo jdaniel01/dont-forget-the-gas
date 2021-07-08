@@ -4,12 +4,14 @@ import userReducer from './user';
 import listReducer from './list';
 import tripReducer from './trip';
 import itemReducer from "./item";
+import typeReducer from './type';
 
 const rootReducer = combineReducers({
     user: userReducer,
     list: listReducer,
     trip: tripReducer,
-    item: itemReducer
+    item: itemReducer,
+    type: typeReducer
 })
 
 let enhancer;

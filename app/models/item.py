@@ -5,19 +5,19 @@ class Item(db.Model):
     __tablename__ = "items"
 
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String, nullable=False)
+    name = db.Column(db.String, nullable=False)
     list_id = db.Column(db.Integer, db.ForeignKey("lists.id"), nullable=False)
-    notes = db.Column(db.Text(500))
+    notes = db.Column(db.Text, nullable=True)
 
 #1
-    # list_info = db.relationship("List", back_populates="items")
+    lists = db.relationship("List", back_populates="items")
 #2
     # list_info = db.relationship("List")
 
     def to_dict(self):
         return {
             "id": self.id,
-            "title": self.title,
+            "name": self.name,
             "notes": self.notes
         }
 

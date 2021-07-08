@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { addList, dropList, getList, getLists, getTypes } from "../../store/list";
+import { addList, dropList, getList, getLists } from "../../store/list";
+import { getTypes } from "../../store/type";
 import { getUser } from "../../store/user";
 import ListForm from "./ListForm";
 
@@ -12,22 +13,33 @@ const ListsView = () => {
     const dispatch = useDispatch();
 
     const history = useHistory();
-    const types = useSelector(state => state.list.types)
+
+    const types = useSelector(state => state.type.types)
     const lists = useSelector(state => state.list.lists)
     const user = useSelector(state => state.user.user)
 
     const [adding, setAdding] = useState(false)
 
     const updateAdding = () => {
-        dispatch(getLists(user.id))
         setAdding(true)
     }
 
-    // 333333333333333333333333333333333333333333//
+
+    useEffect(() => {
+        if (!user) {
+            dispatch(getUser())
+        }
+        if (!lists) {
+            dispatch(getLists(user.id))
+        }
+        if (!types) {
+            dispatch(getTypes())
+        }
+    }, [dispatch, lists, user, types])
 
     const selectedType = (list) => {
         for (let i = 0; i < types.length; i++) {
-            if (types[i].id === list.type_id) return types[i]
+            if (types[i].id === list.type_id) return types[i].name
         }
         return "ERROR";
     }
@@ -49,17 +61,6 @@ const ListsView = () => {
                     //     }
                     // }
 
-    useEffect(() => {
-        if (!user) {
-            dispatch(getUser())
-        }
-    }, [dispatch])
-
-    useEffect(() => {
-        if (!lists && user) {
-            dispatch(getLists(user.id))
-        }
-    }, [dispatch])
 
     useEffect(() => {
         setAdding(false)
@@ -84,7 +85,7 @@ const ListsView = () => {
                             <h3>{list.name}</h3>
                         </div>
                         <div className="list-peek_details-container">
-                            <div>{selectedType(list).name}</div>
+                            <div>{selectedType(list)}</div>
                         </div>
                         <div className="list-peek_notes-container">
                             <div>{list.notes}</div>

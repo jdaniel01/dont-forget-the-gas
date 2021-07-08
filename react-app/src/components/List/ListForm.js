@@ -1,45 +1,47 @@
 import React, { useState, useEffect } from "react";
 import { Redirect, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { addList } from "../../store/list";
+import { addList, getLists } from "../../store/list";
+import { getUser } from "../../store/user";
+import { getTypes } from "../../store/type";
 
-const ListForm = ({ setAdding }) => {
+const ListForm = () => {
 
     const dispatch = useDispatch();
 
     const user = useSelector(state => state.user.user);
-    const types = useSelector(state => state.list.types);
-    const lists = useSelector(state => state.list.lists)
-
+    const types = useSelector(state => state.type.types);
     const [name, setName] = useState("");
-    const [typeId, setTypeId] = useState(types[0].id);
+    const [typeId, setTypeId] = useState();
     const [notes, setNotes] = useState("");
     const [errors, setErrors] = useState([]);
-    const [wasAlerted, setAlerted] = useState(false)
-    const [ownerId, setOwnerId] = useState(user.id)
 
-    const updateName = (someText) => {
-        setName(someText)
+    useEffect(() => {
+        if (!user) {
+            dispatch(getUser())
+            console.log("$$$$$$$$$$$$$$$$USER$$$$$$$$$$$$$", user)
+        }
+        if (!typeId || !types) {
+            dispatch(getTypes())
+        }
+    }, [dispatch, typeId, user])
+
+    const updateName = (e) => {
+        setName(e.target.value)
     }
 
-    const updateType = (someType) => {
-        setTypeId(someType)
+    const updateType = (e) => {
+        setTypeId(e.target.value)
     }
 
-    const updateNotes = (someNotes) => {
-        setNotes(someNotes)
-    }
-
-    const updateOwner = (someOwner) => {
-        setOwnerId(user.id)
+    const updateNotes = (e) => {
+        setNotes(e.target.value)
     }
 
     const onSubmit = (e) => {
         e.preventDefault()
         if (!errors.length) {
-            dispatch(addList({ "name": name, "type_id": typeId, "owner_id": ownerId, "notes": notes }))
-            setAdding(false)
-
+            dispatch(addList({ "name": name, "type_id": typeId, "owner_id": user.id, "notes": notes }))
         }
     }
 
@@ -64,9 +66,6 @@ const ListForm = ({ setAdding }) => {
         setErrors(newErrors)
     }, [name, typeId])
 
-    useEffect(() => {
-        setOwnerId(user.id)
-    }, [user])
 
 
 
@@ -76,25 +75,25 @@ const ListForm = ({ setAdding }) => {
                 <h2>The List Form</h2>
             </div>
             <div className="list-form_errors-container">
-                {errors && errors.map(error => <li key={error} className="list-form_error">{error}</li>)}
+                {errors.length > 0 && errors.map(error => <li key={error} className="list-form_error">{error}</li>)}
             </div>
             <div className="list-form_form-container">
                 <form onSubmit={onSubmit} className="list-form">
                     <div className="list-form_field-container">
                         <label htmlFor="name">List Name: </label>
-                        <input name="name" id="name" placeholder="Your List Name Here..." onChange={(e) => updateName(e.target.value)} value={name} />
+                        <input name="name" id="name" placeholder="Your List Name Here..." onChange={updateName} value={name} />
                     </div>
                     <div className="list-form_field-container">
                         <label htmlFor="type_id">List Type: </label>
-                        <select id="type_id" name="type_id" value={typeId} onChange={(e) => updateType(e.target.value)}>
-                            {types && types.map(listType =>
-                                <option key={listType.id} value={listType.id}>{listType.name}</option>
+                        <select id="type_id" name="type_id" value={typeId} onChange={updateType}>
+                            {types.map(type =>
+                                <option key={type.id} value={type.id}>{type.name}</option>
                             )}
                         </select>
                     </div>
                     <div className="list-form_field-container">
                         <label htmlFor="notes">List Notes: </label>
-                        <textarea type="text" id="notes" name="notes" value={notes} onChange={(e) => updateNotes(e.target.value)} />
+                        <textarea type="text" id="notes" name="notes" value={notes} onChange={updateNotes} />
                     </div>
                     <div className="list-form_submit-button-container">
                         <button type="submit">Confirm New List</button>

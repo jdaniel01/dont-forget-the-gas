@@ -1,66 +1,85 @@
 const SET_TYPES = "type/SET_TYPES"
 const SET_TYPE = 'type/SET_TYPE'
 
-const setTypes = (collection) => ({
+const setTypes = (types) => ({
     type: SET_TYPES,
-    collection
+    types
 })
 
-const setList = (list) => ({
+const setType = (type) => ({
     type: SET_TYPE,
-    list
+    type
 })
 
-export const getTypes = (userId) => async (dispatch) => {
-    const res = await fetch(`/api/users/${userId}/types`)
+export const getTypes = () => async (dispatch) => {
+    const res = await fetch(`/api/lists/types`)
     if (res.ok) {
         const types = await res.json()
-        dispatch(setTypes(types))
+        console.log(types.types)
+        dispatch(setTypes(types.types))
     }
 }
 
-export const getList = (id) => async (dispatch) => {
-    const res = await fetch(`/api/lists/${id}`)
-    const aList = await res.json()
-    dispatch(setList(aList))
-}
 
 
-export const addList = (list) => async (dispatch) => {
-    const res = await fetch(`/api/users/${list.owner_id}/lists`, {
+export const addType = (type) => async (dispatch) => {
+    const res = await fetch(`/api/lists/types`, {
         method: "POST",
         headers: {
-            "Content_Type": "application/json"
+            "Content-Type": "application/json"
         },
-        body: JSON.stringify(list)
+        body: JSON.stringify(type)
     })
     if (res.ok) {
-        const lists = await res.json()
-        dispatch(setTypes(lists))
+        const types = await res.json()
+        dispatch(setTypes(types.types))
     }
 }
 
-export const editList = (list) => async (dispatch) => {
-    const res = await fetch(`/api/users/${list.owner_id}/lists/${list.id}`, {
+export const editType = (type) => async (dispatch) => {
+    const res = await fetch(`/api/lists/${type.id}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify(list)
+        body: JSON.stringify(type)
     })
     if (res.ok) {
-        const lists = await res.json()
-        dispatch(setTypes(lists))
+        const types = await res.json()
+        dispatch(setTypes(types.types))
     }
 }
 
-export const dropList = (list) => async (dispatch) => {
-    const res = await fetch(`/api/users/${list.owner_id}/lists/${list.id}`, {
+export const dropType = (type) => async (dispatch) => {
+    const res = await fetch(`/api/types/${type.id}`, {
         method: "DELETE"
     })
     if (res.ok) {
-        const lists = await res.json()
-        dispatch(setTypes(lists))
+        const types = await res.json()
+        dispatch(setTypes(types.types))
     }
 }
+
+function typeReducer(state = { types: [] }, action) {
+    switch (action.type) {
+        case SET_TYPES:
+            // let newTypes = []
+            // for (let i = 0; i < action.types.length; i++) {
+            //     newTypes.push(action.types[i])
+            // }
+            return { types: action.types }
+        case SET_TYPE:
+            return action.type
+        case SET_TYPES:
+            let newTypes2 = []
+            for (let i = 0; i < action.types.length; i++) {
+                newTypes2.push(action.types[i])
+            }
+            return { types: newTypes2 }
+        default:
+            return state;
+    }
+}
+
+export default typeReducer;
 

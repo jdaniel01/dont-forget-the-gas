@@ -13,7 +13,7 @@ class List(db.Model):
 
     owner = db.relationship("User", back_populates="lists")
     # type_of = db.relationship("ListType", back_populates="lists")
-    items = db.relationship("Item", backref="list")
+    items = db.relationship("Item", back_populates="lists")
 
     def to_dict(self):
         return {
@@ -21,6 +21,5 @@ class List(db.Model):
             "name": self.name,
             "type_id": self.type_id,
             "owner_id": self.owner_id,
-            "notes": self.notes,
-            "type_of": self.type_of.to_dict()
+            "notes": self.notes
         }

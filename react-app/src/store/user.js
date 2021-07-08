@@ -50,7 +50,6 @@ export const addVehicle = (vehicle) => async (dispatch) => {
         let newCars = await res.json()
         console.log(newCars)
         dispatch(set_vehicles(newCars.vehicles))
-        return Redirect(`/users/${newCars.vehicles[0].owner_id}`)
     }
 }
 

@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, session, request
-from app.models import User, db, List, Trip, Vehicle, ListType
+from app.models import User, db
 from app.forms import LoginForm
 from app.forms import SignUpForm
 from flask_login import current_user, login_user, logout_user, login_required
@@ -25,23 +25,21 @@ def authenticate():
     Authenticates a user.
     """
     if current_user.is_authenticated:
-        # print("$$$$$$$444444444444 USER AUTHENTICATED, AUTH ROUTES /", current_user, type(current_user), current_user)
         
-        trips = Trip.query.filter_by(lead_id=current_user.id).all()
-        lists = List.query.filter_by(owner_id=current_user.id).all()
-        vehicles = Vehicle.query.filter_by(owner_id=current_user.id).all()
-        types = ListType.query.all()
-        user = current_user.to_dict()
-
-        test = {
-            "user": user, 
-            "trips": [trip.to_dict() for trip in trips], 
-            "lists": [aList.to_dict() for aList in lists], 
-            "vehicles": [vehicle.to_dict() for vehicle in vehicles],
-            "types": [typer.to_dict() for typer in types]
-            }
-        print("###########TEST$$$$$$$$$$$$", test)
-        return test
+        # trips = Trip.query.filter_by(lead_id=current_user.id).all()
+        # lists = List.query.filter_by(owner_id=current_user.id).all()
+        # vehicles = Vehicle.query.filter_by(owner_id=current_user.id).all()
+        # types = ListType.query.all()
+        # user = current_user.to_dict()
+        # test = {
+        #     "user": user, 
+        #     "trips": [trip.to_dict() for trip in trips], 
+        #     "lists": [aList.to_dict() for aList in lists], 
+        #     "vehicles": [vehicle.to_dict() for vehicle in vehicles],
+        #     "types": [typer.to_dict() for typer in types]
+        #     }
+        # print("###########TEST$$$$$$$$$$$$", test)
+        return current_user.to_dict()
     return {'errors': ['Unauthorized']}
 
 
@@ -58,8 +56,8 @@ def login():
     if form.validate_on_submit():
         # Add the user to the session, we are logged in!
         user = User.query.filter(User.email == form.data['email']).first()
-        print('UUUUSSSSSEEEEEERRRRRR', type(user), user.to_dict())
         login_user(user)
+
         return user.to_dict()
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
