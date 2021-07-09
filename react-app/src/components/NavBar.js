@@ -24,6 +24,7 @@ const NavBar = ({ setAuthenticated, authenticated }) => {
   return (
     <nav className="navbar">
       <div className="nav-links">
+        <div>Welcome: {user.username}</div>
         <div className="link_navlink">
           <NavLink to="/about" className="NavLink" exact={true} activeClassName="active">
             About

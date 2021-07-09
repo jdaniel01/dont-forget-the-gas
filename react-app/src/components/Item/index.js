@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 
-function Item() {
+function HoverDetails() {
 
     return (
         <div>
-            Item Component Here
+            Item details for hover here.
         </div>
     )
 }
 
-export default Item;
+export default HoverDetails;

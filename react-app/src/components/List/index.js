@@ -40,47 +40,44 @@ const ItemDetails = ({ item }) => {
 
 
 const List = () => {
-
     const dispatch = useDispatch();
-    const listid = useParams();
-    const listId = Number(listid);
 
     const aList = useSelector(state => state.list.list)
-
-// need to accept new list data type
 
     const [adding, setAdding] = useState(false)
     const [details, setDetails] = useState()
 
     useEffect(() => {
         if (!aList) {
-            dispatch(getList(listId))
-            console.log(aList)
+            dispatch(getList(aList.id))
         }
-    }, [dispatch, aList])
+    }, [dispatch])
 
-
+    const update = () => {
+        if (aList.items) {
+            setAdding(true)
+        }
+    }
+    const downdate = () => {
+        setAdding(false)
+    }
 
     useEffect(() => {
         if (!adding) {
             setDetails(
                 <>
-                    {aList.items.map(item =>
-                        <ItemDetails key={item.id} item={item} />
-                    )}
+
                 </>
             )
         }
         else if (adding) {
             setDetails(
-                <>
-                    <NewItem list_id={listId} setAdding={setAdding} />
-                </>
+
             )
 
         }
 
-    }, [adding])
+    }, [adding, aList, dispatch])
 
     return (
         <div className="list-container">
@@ -92,24 +89,24 @@ const List = () => {
                     <div>{aList.notes}</div>
                 </div>
                 <div className="list_add-item-container">
-                    <button onClick={() => setAdding(true)} hidden={adding}>Add an Item</button>
+                    <button onClick={update} hidden={adding}>Add an Item</button>
                 </div>
 
                 <div className="list_add-item-container">
-                    <button onClick={() => setAdding(false)} hidden={!adding}>cancel</button>
+                    <button onClick={downdate} hidden={!adding}>cancel</button>
                 </div>
             </div>
-            {!adding &&
-                aList.items.map(item =>
-                    <ItemDetails key={item.id} item={item} />)
-
-
+            <div>
+                {!adding && aList.items &&
+                    <div>
+                        {aList.items.map(item =>
+                            <ItemDetails key={item.id} item={item} />)}
+                    </div>
             }
             {adding &&
-                <>
-                    <NewItem list_id={listId} setAdding={setAdding} />
-                </>
+                    <NewItem list_id={aList.id} setAdding={setAdding} />
             }
+            </div>
         </div>
     )
 

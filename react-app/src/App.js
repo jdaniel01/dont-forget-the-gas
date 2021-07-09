@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import LoginForm from "./components/auth/LoginForm";
 import SignUpForm from "./components/auth/SignUpForm";
@@ -16,10 +16,10 @@ import Splash from "./components/Splash";
 import Trip from "./components/Trip"
 import TripsView from "./components/Trip/TripsView"
 import { setUser } from "./store/user";
-// import { getLists } from "./store/list";
-// import { getTrips } from "./store/trip";
-// import { getVehicles } from "./store/vehicle";
-// import { getTypes } from "./store/type";
+import { getLists } from "./store/list";
+import { getTrips } from "./store/trip";
+import { getVehicles } from "./store/vehicle";
+import { getTypes } from "./store/type";
 
 import { authenticate } from "./services/auth";
 import "./index.css"
@@ -27,23 +27,25 @@ import "./index.css"
 
 function App() {
   const dispatch = useDispatch()
+  const user = useSelector(state => state.user.user)
 
   const [authenticated, setAuthenticated] = useState(false);
   const [loaded, setLoaded] = useState(false);
 
-
   useEffect(() => {
     (async () => {
-      const user = await authenticate();
-      if (!user.errors) {
-        dispatch(setUser(user))
-        // dispatch(getLists(user.id))
-        // dispatch(getTypes())
-        // dispatch(getVehicles(user.id))
-        // dispatch(getTrips(user.id))
-        setAuthenticated(true);
+      if (!user.id) {
+        const user = await authenticate();
+        if (!user.errors) {
+          dispatch(setUser(user))
+          dispatch(getLists(user.id))
+          dispatch(getTypes())
+          dispatch(getVehicles(user.id))
+          dispatch(getTrips(user.id))
+          setAuthenticated(true);
+        }
+        setLoaded(true);
       }
-      setLoaded(true);
     })();
   }, []);
 

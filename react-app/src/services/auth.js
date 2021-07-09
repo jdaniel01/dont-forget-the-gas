@@ -1,7 +1,7 @@
-import { setLists } from "../store/list";
-import { setTrips } from "../store/trip";
-import { setVehicles } from "../store/vehicle";
-import { setUser } from "../store/user";
+// import { setLists } from "../store/list";
+// import { setTrips } from "../store/trip";
+// import { setVehicles } from "../store/vehicle";
+// import { setUser } from "../store/user";
 
 export const authenticate = async () => {
   const response = await fetch('/api/auth/',{
@@ -12,7 +12,7 @@ export const authenticate = async () => {
   return await response.json();
 }
 
-export const login = async (email, password, dispatch) => {
+export const login = async (email, password) => {
   const response = await fetch('/api/auth/login', {
     method: 'POST',
     headers: {
@@ -24,10 +24,11 @@ export const login = async (email, password, dispatch) => {
     })
   });
   const data = await response.json();
-  dispatch(setUser(data.user))
-  dispatch(setVehicles(data.vehicles))
-  dispatch(setTrips(data.trips))
-  dispatch(setLists(data.lists))
+  // dispatch(setUser(data.user))
+  // dispatch(setVehicles(data.vehicles))
+  // dispatch(setTrips(data.trips))
+  // dispatch(setLists(data.lists))
+  return data
 }
 
 export const logout = async () => {

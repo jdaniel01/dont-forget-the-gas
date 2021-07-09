@@ -12,7 +12,7 @@ const setType = (type) => ({
 })
 
 export const getTypes = () => async (dispatch) => {
-    const res = await fetch(`/api/types`)
+    const res = await fetch(`/api/lists/types`)
     if (res.ok) {
         const data = await res.json()
         console.log(data.types)
@@ -37,7 +37,7 @@ export const addType = (type) => async (dispatch) => {
 }
 
 export const editType = (type) => async (dispatch) => {
-    const res = await fetch(`/api/types/${type.id}`, {
+    const res = await fetch(`/api/lists/types/${type.id}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json"
@@ -51,7 +51,7 @@ export const editType = (type) => async (dispatch) => {
 }
 
 export const dropType = (typeId) => async (dispatch) => {
-    const res = await fetch(`/api/types/${typeId}`, {
+    const res = await fetch(`/api/lists/types/${typeId}`, {
         method: "DELETE"
     })
     // if (res.ok) {

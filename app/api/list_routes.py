@@ -18,7 +18,6 @@ def getList(id):
 @login_required
 def postDelete():
     types = ListType.query.all()
-    print("EEEEEEEEEEEEEEEEEE", types)
     return {"types": [typer.to_dict() for typer in types]}
 
 # @list_routes.route('/<int:id>/items')
@@ -63,7 +62,8 @@ def updateAndDeleteList(id):
                 oldList["notes"] = form["notes"]
                 db.session.commit()
                 print("####SUCCESS!! USER HAS BEEN UPDATED#####")
-
+                blist = List.query.get(id).to_dict()
+                return blist
         else:
             print("###ERROR##ERROR## unable to locate list by primary key")
     elif request.method == "DELETE":
@@ -71,5 +71,5 @@ def updateAndDeleteList(id):
         print("#####DELETING LIST #####", deleting)
         db.session.delete(deleting)
         db.session.commit()
-    lists = List.query.filter_by(desc(owner_id=current_user.id)).all()
+    lists = List.query.filter_by(owner_id=current_user.id).all()
     return lists

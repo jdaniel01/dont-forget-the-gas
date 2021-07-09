@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useHistory, useParams, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { addItem, dropItem, editItem } from "../../store/item";
+import { getUser } from "../../store/user";
+import { getList } from "../../store/list";
 import { useLayoutEffect } from "react";
 
 
@@ -11,9 +13,29 @@ export const NewItem = ({ item, list_id, setAdding }) => {
     const dispatch = useDispatch()
     const history = useHistory()
 
+    const user = useSelector(state => state.user.user)
+    const list = useSelector(state => state.list.list)
+
     const [name, setName] = useState("")
     const [notes, setNotes] = useState("")
     const [errors, setErrors] = useState([])
+
+    useEffect(() => {
+        if (!list) {
+            dispatch(getList(list_id))
+        }
+        if (!user) {
+            dispatch(getUser())
+        }
+    }, [dispatch, list_id, user])
+
+    useEffect(() => {
+        let newErrors = []
+        if (!name) {
+            newErrors.push("Please provide a name for your new list item.")
+        }
+        setErrors(newErrors)
+    })
 
     const updatename = (e) => {
         setName(e.target.value)
@@ -25,22 +47,16 @@ export const NewItem = ({ item, list_id, setAdding }) => {
     const onItemSubmit = (e) => {
         e.preventDefault()
         console.log("################$$$$$$$$", notes, name, list_id)
-        let newErrors = []
-        if (!name) {
-            newErrors.push("Please provide a name for your new list item.")
-        }
-        if (!newErrors.length) {
+        if (!errors.length) {
             const newItem = {
                 itemName: name,
                 itemNotes: notes,
-                list_id: list_id
+                list_id: list.id
             }
-
             console.log("$$$$$$$$$$$$$$$$$$$$$$$$", list_id)
             dispatch(addItem(newItem))
             setAdding(false)
         }
-        setErrors(newErrors)
     }
 
     return (
@@ -108,7 +124,7 @@ export const EditItem = ({ item, list_id, setAdding }) => {
             const newItem = {
                 itemName: name,
                 itemNotes: notes,
-                list_id: list_id
+                list_id: itemb.list_id
             }
             setAdding(false)
             dispatch(addItem(newItem))
@@ -139,7 +155,7 @@ export const EditItem = ({ item, list_id, setAdding }) => {
                         <button type="submit">Add It To The List!</button>
                     </div>
                     <div className="item-form_delete-button-container">
-                        <button type="button" id={item.id} onClick={deleteItem}>Delete This Item</button>
+                        <button type="button" id={itemb.id} onClick={deleteItem}>Delete This Item</button>
                     </div>
                 </form>
             </div>

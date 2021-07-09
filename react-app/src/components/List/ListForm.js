@@ -11,8 +11,9 @@ const ListForm = ({ setAdding }) => {
 
     const user = useSelector(state => state.user.user);
     const types = useSelector(state => state.type.types);
+
     const [name, setName] = useState("");
-    const [typeId, setTypeId] = useState();
+    const [typeId, setTypeId] = useState(0);
     const [notes, setNotes] = useState("");
     const [errors, setErrors] = useState([]);
 
@@ -25,6 +26,12 @@ const ListForm = ({ setAdding }) => {
             dispatch(getTypes())
         }
     }, [dispatch, typeId, user])
+
+    // useEffect(() => {
+    //     if (!typeId) {
+    //         setTypeId(types[0].id)
+    //     }
+    // })
 
     const updateName = (e) => {
         setName(e.target.value)
@@ -87,7 +94,7 @@ const ListForm = ({ setAdding }) => {
                     </div>
                     <div className="list-form_field-container">
                         <label htmlFor="type_id">List Type: </label>
-                        <select id="type_id" name="type_id" value={typeId} onChange={updateType}>
+                        <select id="type_id" name="type_id" value={typeId} onChange={updateType} >
                             {types.map(type =>
                                 <option key={type.id} value={type.id}>{type.name}</option>
                             )}

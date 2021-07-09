@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { addList, dropList, getList, getLists } from "../../store/list";
+import { addList, dropList, getList, getLists, setList } from "../../store/list";
 import { getTypes } from "../../store/type";
 import { getUser } from "../../store/user";
 import ListForm from "./ListForm";
@@ -21,11 +21,14 @@ const ListsView = () => {
     const [adding, setAdding] = useState(false)
 
     const updateAdding = () => {
-        setAdding(true)
+        setAdding(!adding)
     }
 
 
     useEffect(() => {
+        if (!user) {
+            dispatch(getUser())
+        }
         if (!lists) {
             dispatch(getLists(user.id))
         }
@@ -61,9 +64,10 @@ const ListsView = () => {
                     // }
 
 
-    useEffect(() => {
-        setAdding(false)
-    }, [lists])
+    const goToList = async (list) => {
+        dispatch(setList(list))
+        history.push(`/lists/${list.id}`)
+    }
 
     return (
         <div className="lists-view-container">
@@ -73,13 +77,13 @@ const ListsView = () => {
             <div className="new-list-button" onClick={updateAdding} hidden={adding}>
                 Add New List
             </div>
-            <div className="new-list_cancel-button" onClick={() => setAdding(false)} hidden={!adding}>
+            <div className="new-list_cancel-button" onClick={updateAdding} hidden={!adding}>
                 Cancel
             </div>
             {!adding &&
                 <div className="lists-container">
                 {lists && lists.map(list =>
-                    <div className="list-peek_row-container" onClick={() => history.push(`/lists/${list.id}`)}>
+                    <div key={list.id} className="list-peek_row-container">
                         <div className="list-peek_header-container">
                             <h3>{list.name}</h3>
                         </div>
@@ -89,6 +93,9 @@ const ListsView = () => {
                         </div>
                         <div className="list-peek_notes-container">
                             <div>{list.notes}</div>
+                        </div>
+                        <div>
+                            <button type="button" onClick={() => goToList(list)}> See Details</button>
                         </div>
                     </div>
 

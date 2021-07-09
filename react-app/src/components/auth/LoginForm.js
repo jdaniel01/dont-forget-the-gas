@@ -23,8 +23,8 @@ const LoginForm = ({ authenticated, setAuthenticated }) => {
   const onLogin = async (e) => {
     console.log(sessionUser)
     e.preventDefault();
-    const data = login(email, password, dispatch)
-    console.log("3333333333333333333333333", data)
+    const data = await login(email, password)
+    // console.log("3333333333333333333333333", data)
     if (!data.errors) {
 
       dispatch(setUser(data.user))

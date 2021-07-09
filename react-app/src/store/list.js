@@ -6,18 +6,18 @@ const set_Lists = (lists) => ({
     lists
 })
 
-const setList = (list) => ({
+const set_list = (list) => ({
     type: SET_LIST,
     list
 })
 
-// export const setTypes = (types) => async (dispatch) => {
-//     // const res = await fetch('/api/lists/types')
-//     // dispatch(set_Types(await res.json()))
-//     // return await res.json()
-//     dispatch(set_Types(types))
+export const setList = (list) => async (dispatch) => {
+    // const res = await fetch('/api/lists/types')
+    // dispatch(set_Types(await res.json()))
+    // return await res.json()
+    dispatch(set_list(list))
 
-// }
+}
 
 // export const getTypes = () => async (dispatch) => {
 //     const res = await fetch('/api/lists/types')
@@ -49,7 +49,7 @@ export const getLists = (id) => async (dispatch) => {
 export const getList = (id) => async (dispatch) => {
     const res = await fetch(`/api/lists/${id}`)
     const aList = await res.json()
-    dispatch(setList(aList))
+    dispatch(set_list(aList))
 }
 
 
@@ -76,9 +76,8 @@ export const editList = (list) => async (dispatch) => {
         body: JSON.stringify(list)
     })
     if (res.ok) {
-        const data = await res.json()
-        dispatch(setList(data.list))
-        dispatch(set_Lists(data.lists))
+        const alist = await res.json()
+        dispatch(set_list(alist))
     }
 }
 
