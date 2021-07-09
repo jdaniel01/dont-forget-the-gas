@@ -15,6 +15,11 @@ const NavBar = ({ setAuthenticated, authenticated }) => {
     setAuthenticated(false)
   }
 
+  useEffect(() => {
+    if (!user) {
+      dispatch(getUser())
+    }
+  }, [dispatch, user])
 
   return (
     <nav className="navbar">

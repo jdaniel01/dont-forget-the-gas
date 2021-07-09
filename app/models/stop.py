@@ -13,8 +13,8 @@ class Stop(db.Model):
     is_end = db.Column(db.Boolean)
     description = db.Column(db.Text())
 
-    location = db.relationship("Location", back_populates="stop")
-
+    location = db.relationship("Location", back_populates="stops")
+    trip = db.relationship("Trip", back_populates="stops")
 
     def to_dict(self):
         return {

@@ -12,18 +12,18 @@ const setType = (type) => ({
 })
 
 export const getTypes = () => async (dispatch) => {
-    const res = await fetch(`/api/lists/types`)
+    const res = await fetch(`/api/types`)
     if (res.ok) {
-        const types = await res.json()
-        console.log(types.types)
-        dispatch(setTypes(types.types))
+        const data = await res.json()
+        console.log(data.types)
+        dispatch(setTypes(data.types))
     }
 }
 
 
 
 export const addType = (type) => async (dispatch) => {
-    const res = await fetch(`/api/lists/types`, {
+    const res = await fetch(`/api/types`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -31,13 +31,13 @@ export const addType = (type) => async (dispatch) => {
         body: JSON.stringify(type)
     })
     if (res.ok) {
-        const types = await res.json()
-        dispatch(setTypes(types.types))
+        const data = await res.json()
+        dispatch(setTypes(data.types))
     }
 }
 
 export const editType = (type) => async (dispatch) => {
-    const res = await fetch(`/api/lists/${type.id}`, {
+    const res = await fetch(`/api/types/${type.id}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json"
@@ -45,37 +45,31 @@ export const editType = (type) => async (dispatch) => {
         body: JSON.stringify(type)
     })
     if (res.ok) {
-        const types = await res.json()
-        dispatch(setTypes(types.types))
+        const data = await res.json()
+        dispatch(setTypes(data.types))
     }
 }
 
-export const dropType = (type) => async (dispatch) => {
-    const res = await fetch(`/api/types/${type.id}`, {
+export const dropType = (typeId) => async (dispatch) => {
+    const res = await fetch(`/api/types/${typeId}`, {
         method: "DELETE"
     })
-    if (res.ok) {
-        const types = await res.json()
-        dispatch(setTypes(types.types))
-    }
+    // if (res.ok) {
+    //     const data = await res.json()
+    //     dispatch(setTypes(data.types))
+    // }
 }
 
-function typeReducer(state = { types: [] }, action) {
+function typeReducer(state = { types: [], type: {} }, action) {
     switch (action.type) {
         case SET_TYPES:
-            // let newTypes = []
-            // for (let i = 0; i < action.types.length; i++) {
-            //     newTypes.push(action.types[i])
-            // }
-            return { types: action.types }
-        case SET_TYPE:
-            return action.type
-        case SET_TYPES:
-            let newTypes2 = []
+            let newTypes = []
             for (let i = 0; i < action.types.length; i++) {
-                newTypes2.push(action.types[i])
+                newTypes.push(action.types[i])
             }
-            return { types: newTypes2 }
+            return { ...state, types: action.types }
+        case SET_TYPE:
+            return { ...state, type: action.type }
         default:
             return state;
     }

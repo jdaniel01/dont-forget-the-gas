@@ -29,5 +29,5 @@ def seed_list_types():
 # TRUNCATE Removes all the data from the table, and resets
 # the auto incrementing primary key
 def undo_list_types():
-    db.session.execute('TRUNCATE list_types CASCADE;')
+    db.session.execute('TRUNCATE TABLE list_types RESTART IDENTITY CASCADE;')    
     db.session.commit()

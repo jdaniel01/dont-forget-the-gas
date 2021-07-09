@@ -26,9 +26,6 @@ const ListsView = () => {
 
 
     useEffect(() => {
-        if (!user) {
-            dispatch(getUser(user.id))
-        }
         if (!lists) {
             dispatch(getLists(user.id))
         }
@@ -37,14 +34,14 @@ const ListsView = () => {
         }
     }, [dispatch, lists, user, types])
 
-    const selectedType = (list) => {
-        for (let i = 0; i < types.length; i++) {
-            if (types[i].id === list.type_id) {
-                return types[i].name
-            }
-        }
-        return "ERROR";
-    }
+    // const selectedType = (list) => {
+    //     for (let i = 0; i < types.length; i++) {
+    //         if (types[i].id === list.type_id) {
+    //             return types[i].name
+    //         }
+    //     }
+    //     return "ERROR";
+    // }
     // const goToPage = () => {
     //     const page = `/lists/${list.id}`
     //     history.push(`/lists/${list.id}`);
@@ -87,7 +84,8 @@ const ListsView = () => {
                             <h3>{list.name}</h3>
                         </div>
                         <div className="list-peek_details-container">
-                            <div>{selectedType(list)}</div>
+                            {/* <div>{selectedType(list)}</div> */}
+                            <div>{list.type_of.name}</div>
                         </div>
                         <div className="list-peek_notes-container">
                             <div>{list.notes}</div>

@@ -1,13 +1,23 @@
-const SET_VEHICLES = "user/SET_VEHICLES";
-const ADD_CAR = "user/ADD_CAR";
-const EDIT_CAR = 'user/EDIT_CAR';
-const DROP_CAR = 'user/DROP_CAR';
+const SET_VEHICLES = "vehicle/SET_VEHICLES";
+const SET_VEHICLE = "vehicle/SET_VEHICLES";
+// const ADD_CAR = "user/ADD_CAR";
+// const EDIT_CAR = 'user/EDIT_CAR';
+// const DROP_CAR = 'user/DROP_CAR';
 
 const set_vehicles = (vehicles) => ({
     type: SET_VEHICLES,
     vehicles
 })
 
+const set_vehicle = (vehicle) => ({
+    type: SET_VEHICLE,
+    vehicle
+})
+
+export const setVehicles = (vehicles) => async (dispatch) => {
+    console.log("############################VEHICLES", vehicles)
+    dispatch(set_vehicles(vehicles))
+}
 
 export const addVehicle = (vehicle) => async (dispatch) => {
     console.log("^^^^^^^^^^^^^^^^Vehicle", vehicle)
@@ -19,17 +29,18 @@ export const addVehicle = (vehicle) => async (dispatch) => {
         body: JSON.stringify(vehicle)
     })
     if (res.ok) {
-        let newCars = await res.json()
-        console.log(newCars)
-        dispatch(set_vehicles(newCars.vehicles))
+        let data = await res.json()
+        console.log(data)
+        dispatch(set_vehicles(data.vehicles))
     }
 }
 
 export const getVehicles = (userId) => async (dispatch) => {
     const res = await fetch(`/api/users/${userId}/vehicles`)
-    const vehicles = await res.json()
 
-    dispatch(set_vehicles(vehicles.vehicles))
+    const data = await res.json()
+
+    dispatch(set_vehicles(data.vehicles))
 }
 
 
@@ -41,8 +52,8 @@ function vehicleReducer(state = { vehicle: {}, vehicles: [] }, action) {
                 newVehicles.push(action.vehicles[i])
             }
             return { ...state, vehicles: newVehicles }
-        case ADD_CAR:
-            return { ...state, vehicles: [...state.vehicles, action.car] }
+        case SET_VEHICLE:
+            return { ...state, vehicle: action.vehicle }
         default:
             return state
 

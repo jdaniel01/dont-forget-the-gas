@@ -16,10 +16,10 @@ import Splash from "./components/Splash";
 import Trip from "./components/Trip"
 import TripsView from "./components/Trip/TripsView"
 import { setUser } from "./store/user";
-import { getLists } from "./store/list";
-import { getTrips } from "./store/trip";
-import { getVehicles } from "./store/vehicle";
-import { getTypes } from "./store/type";
+// import { getLists } from "./store/list";
+// import { getTrips } from "./store/trip";
+// import { getVehicles } from "./store/vehicle";
+// import { getTypes } from "./store/type";
 
 import { authenticate } from "./services/auth";
 import "./index.css"

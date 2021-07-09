@@ -11,6 +11,9 @@ const setTrip = (trip) => ({
     trip
 })
 
+export const setTrips = (trips) => async (dispatch) => {
+    dispatch(set_Trips(trips))
+}
 
 
 export const getTrips = (userId) => async (dispatch) => {
@@ -38,8 +41,8 @@ export const addtrip = (trip) => async (dispatch) => {
         body: JSON.stringify(trip)
     })
     if (res.ok) {
-        const trips = await res.json()
-        dispatch(set_Trips(trips.trips))
+        const data = await res.json()
+        dispatch(set_Trips(data.trips))
     }
 }
 

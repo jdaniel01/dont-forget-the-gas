@@ -9,8 +9,9 @@ const setItems = (items) => ({
 export const getItems = (listId) => async (dispatch) => {
     const res = await fetch(`/api/lists/${listId}/items`)
     if (res.ok) {
-        const items = await res.json()
-        dispatch(setItems(items.items))
+        console.log("############GOT ITEMS######## store")
+        const data = await res.json()
+        dispatch(setItems(data.items))
     }
 }
 
@@ -24,8 +25,8 @@ export const addItem = (item) => async (dispatch) => {
         body: JSON.stringify(item)
     })
     if (res.ok) {
-        const items = await res.json()
-        dispatch(setItems(items.items))
+        const data = await res.json()
+        dispatch(setItems(data.items))
     }
 }
 
@@ -38,10 +39,10 @@ export const editItem = (item) => async (dispatch) => {
         body: JSON.stringify(item)
     })
     if (res.ok) {
-        const items = await res.json()
-        console.log("####################RES#OK###############", items)
+        const data = await res.json()
+        console.log("####################RES#OK###############", data.items)
 
-        dispatch(setItems(items.items))
+        dispatch(setItems(data.items))
     }
 }
 
@@ -50,8 +51,8 @@ export const dropItem = (item) => async (dispatch) => {
         method: "DELETE"
     })
     if (res.ok) {
-        const items = await res.json()
-        dispatch(setItems(items.items))
+        const data = await res.json()
+        dispatch(setItems(data.items))
     }
 }
 

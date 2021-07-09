@@ -39,6 +39,7 @@ class User(db.Model, UserMixin):
             "email": self.email,
             "on_trip": self.on_trip,
             "about": self.about
+           
         }
 
 
@@ -50,7 +51,7 @@ class User(db.Model, UserMixin):
             "email": self.email,
             "on_trip": self.on_trip,
             "about": self.about,
-            "vehicles": self.vehicles,
-            "trips": self.trips,
-            "lists": self.lists
+            "lists": [alist.to_dict() for alist in self.lists],
+            "trips": [trip.to_dict() for trip in self.trips],
+            "vehicles": [vehicle.to_dict() for vehicle in self.vehicles]
         }

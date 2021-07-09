@@ -1,5 +1,4 @@
 const SET_USER = "user/SET_USER";
-const EDIT_USER = "user/EDIT_USER";
 
 const set_User = (user) => ({
     type: SET_USER,
@@ -45,7 +44,7 @@ export const editUser = (user) => async (dispatch) => {
     })
     if (res.ok) {
         const user = await res.json()
-        if (user.errors.length) {
+        if (user.errors) {
             return user
         }
         dispatch(set_User(user))
@@ -56,8 +55,8 @@ function userReducer(state = { user: {}, users: [] }, action) {
     switch (action.type) {
         case SET_USER:
             return { ...state, user: action.user }
-        case EDIT_USER:
-            return { ...state, user: action.user }
+        // case EDIT_USER:
+        //     return { ...state, user: action.user }
         default:
             return state;
     }

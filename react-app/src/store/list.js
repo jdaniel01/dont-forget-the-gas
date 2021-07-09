@@ -1,7 +1,7 @@
 const SET_LISTS = "list/SET_LISTS"
 const SET_LIST = 'list/SET_LIST'
 
-const setLists = (lists) => ({
+const set_Lists = (lists) => ({
     type: SET_LISTS,
     lists
 })
@@ -26,22 +26,22 @@ const setList = (list) => ({
 
 // }
 
-// export const setLists = (lists) => async (dispatch) => {
+export const setLists = (lists) => async (dispatch) => {
 
-//     // async (dispatch) => {
-//     // const res = await fetch(`/api/users/${userId}/lists`)
-//     // if (res.ok) {
-//     //     const lists = await res.json()
-//     dispatch(setLists(lists))
+    // async (dispatch) => {
+    // const res = await fetch(`/api/users/${userId}/lists`)
+    // if (res.ok) {
+    //     const lists = await res.json()
+    dispatch(set_Lists(lists))
 
-// }
+}
 
 export const getLists = (id) => async (dispatch) => {
 
     const res = await fetch(`/api/users/${id}/lists`)
     if (res.ok) {
         const lists = await res.json()
-        dispatch(setLists(lists.lists))
+        dispatch(set_Lists(lists.lists))
     }
 
 }
@@ -62,8 +62,8 @@ export const addList = (list) => async (dispatch) => {
         body: JSON.stringify(list)
     })
     if (res.ok) {
-        const lists = await res.json()
-        dispatch(setLists(lists.lists))
+        const data = await res.json()
+        dispatch(set_Lists(data.lists))
     }
 }
 
@@ -76,19 +76,19 @@ export const editList = (list) => async (dispatch) => {
         body: JSON.stringify(list)
     })
     if (res.ok) {
-        const lists = await res.json()
-        dispatch(setList(lists.lists[0]))
-        dispatch(setLists(lists.lists))
+        const data = await res.json()
+        dispatch(setList(data.list))
+        dispatch(set_Lists(data.lists))
     }
 }
 
-export const dropList = (list) => async (dispatch) => {
-    const res = await fetch(`/api/lists/${list.id}`, {
+export const dropList = (listId) => async (dispatch) => {
+    const res = await fetch(`/api/lists/${listId}`, {
         method: "DELETE"
     })
     if (res.ok) {
         const lists = await res.json()
-        dispatch(setLists(lists.lists))
+        dispatch(set_Lists(lists.lists))
     }
 }
 

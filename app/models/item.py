@@ -13,7 +13,7 @@ class Item(db.Model):
 
 
 #1
-    lists = db.relationship("List", back_populates="listItems")
+    list = db.relationship("List", back_populates="listItems")
 #2
     # list_info = db.relationship("List")
 
@@ -21,7 +21,7 @@ class Item(db.Model):
         return {
             "id": self.id,
             "list_id": self.list_id,
-            "name": self.itemName,
+            "itemName": self.itemName,
             "itemNotes": self.itemNotes
         }
 

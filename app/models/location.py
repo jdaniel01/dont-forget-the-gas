@@ -10,7 +10,7 @@ class Location(db.Model):
     name = db.Column(db.String(100), unique=True, nullable=False)
     description = db.Column(db.Text(), nullable=False)
 
-    stop = db.relationship("Stop", back_populates="location")
+    stops = db.relationship("Stop", back_populates="location")
 
     def to_dict(self):
         return {

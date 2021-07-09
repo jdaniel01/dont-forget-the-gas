@@ -9,24 +9,22 @@ import Item from "../Item"
 const ItemDetails = ({ item }) => {
 
     const [editing, setEditing] = useState(false)
-    const updateEditing = (value) => {
-        setEditing(value)
-    }
+
     if (!editing) {
         return (
             <div className="list_items-container">
                 <div className="list_item-section">
-                    {/* <div className="list_item_header-container">
-                        <h3>{item.name}</h3>
+                    <div className="list_item_header-container">
+                        <h3>{item.itemName}</h3>
                     </div>
                     <div className="list_item_notes-container">
-                        <div>{item.notes}</div>
-                    </div> */}
+                        <div>{item.itemNotes}</div>
+                    </div>
                     <div className="list_item-section">
                         {item.list_id}
                     </div>
                 </div>
-                <div className="list_item-edit-button" onClick={updateEditing(true)}>
+                <div className="list_item-edit-button" onClick={() => setEditing(true)}>
                     Edit Item
                 </div>
             </div>
@@ -46,49 +44,71 @@ const List = () => {
     const dispatch = useDispatch();
     const listid = useParams();
     const listId = Number(listid);
-    const list = useSelector(state => state.list.list)
+
+    const aList = useSelector(state => state.list.list)
+
 // need to accept new list data type
 
     const [adding, setAdding] = useState(false)
+    const [details, setDetails] = useState()
 
-    // useEffect(() => {
-    //     if (!items) {
-    //         dispatch(getItems(listId))
-    //     }
-    // }, [dispatch, items])
+    useEffect(() => {
+        if (!aList) {
+            dispatch(getList(listId))
+            console.log(aList)
+        }
+    }, [dispatch, aList])
 
-    const updateItems = (value) => {
-        console.log("###############$#$#$#", listid, listId, list)
-        setAdding(value)
-    }
 
+
+    useEffect(() => {
+        if (!adding) {
+            setDetails(
+                <>
+                    {aList.items.map(item =>
+                        <ItemDetails key={item.id} item={item} />
+                    )}
+                </>
+            )
+        }
+        else if (adding) {
+            setDetails(
+                <>
+                    <NewItem list_id={listId} setAdding={setAdding} />
+                </>
+            )
+
+        }
+
+    }, [adding])
 
     return (
         <div className="list-container">
             <div className="list_details-container">
                 <div className="list_name-container">
-                    <h3>{list.name}</h3>
+                    <h3>{aList.name}</h3>
                 </div>
                 <div className="list_notes-container">
-                    <div>{list.notes}</div>
+                    <div>{aList.notes}</div>
                 </div>
                 <div className="list_add-item-container">
-                    <button onClick={() => updateItems(true)} hidden={adding}>Add an Item</button>
+                    <button onClick={() => setAdding(true)} hidden={adding}>Add an Item</button>
                 </div>
 
                 <div className="list_add-item-container">
-                    <button onClick={() => updateItems(false)} hidden={!adding}>cancel</button>
+                    <button onClick={() => setAdding(false)} hidden={!adding}>cancel</button>
                 </div>
             </div>
             {!adding &&
-                <div>
-                {list.items.map(item =>
-                        <ItemDetails key={item.id} item={item} />
-                    )}
-                </div>
+                aList.items.map(item =>
+                    <ItemDetails key={item.id} item={item} />)
+
+
             }
             {adding &&
-                <NewItem list_id={listId} updateItems={updateItems} />
+                <>
+                    <NewItem list_id={listId} setAdding={setAdding} />
+                </>
             }
         </div>
     )
