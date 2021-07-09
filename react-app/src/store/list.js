@@ -64,6 +64,7 @@ export const addList = (list) => async (dispatch) => {
     if (res.ok) {
         const data = await res.json()
         dispatch(set_Lists(data.lists))
+        console.log("hi")
     }
 }
 
