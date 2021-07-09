@@ -1,4 +1,9 @@
-export const authenticate = async() => {
+import { setLists } from "../store/list";
+import { setTrips } from "../store/trip";
+import { setVehicles } from "../store/vehicle";
+import { setUser } from "../store/user";
+
+export const authenticate = async () => {
   const response = await fetch('/api/auth/',{
     headers: {
       'Content-Type': 'application/json'
@@ -7,7 +12,7 @@ export const authenticate = async() => {
   return await response.json();
 }
 
-export const login = async (email, password) => {
+export const login = async (email, password, dispatch) => {
   const response = await fetch('/api/auth/login', {
     method: 'POST',
     headers: {
@@ -18,8 +23,11 @@ export const login = async (email, password) => {
       password
     })
   });
-
-  return await response.json();
+  const data = await response.json();
+  dispatch(setUser(data.user))
+  dispatch(setVehicles(data.vehicles))
+  dispatch(setTrips(data.trips))
+  dispatch(setLists(data.lists))
 }
 
 export const logout = async () => {

@@ -18,6 +18,7 @@ export const setUser = (user) => async (dispatch) => {
     //     if (user.errors) {
     //         return user
     //     }
+    console.log(user)
     dispatch(set_User(user))
     // }
 }

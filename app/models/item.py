@@ -22,7 +22,7 @@ class Item(db.Model):
             "id": self.id,
             "list_id": self.list_id,
             "itemName": self.itemName,
-            "itemNotes": self.itemNotes
+            "itemNotes": self.itemNotes,
         }
 
     @property

@@ -35,7 +35,6 @@ function App() {
   useEffect(() => {
     (async () => {
       const user = await authenticate();
-      console.log("******************USER******", user)
       if (!user.errors) {
         dispatch(setUser(user))
         // dispatch(getLists(user.id))

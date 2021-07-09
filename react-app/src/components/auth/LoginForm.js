@@ -21,8 +21,9 @@ const LoginForm = ({ authenticated, setAuthenticated }) => {
   const [password, setPassword] = useState("");
 
   const onLogin = async (e) => {
+    console.log(sessionUser)
     e.preventDefault();
-    const data = await login(email, password);
+    const data = login(email, password, dispatch)
     console.log("3333333333333333333333333", data)
     if (!data.errors) {
 

@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, session, request
-from app.models import User, db
+from app.models import User, db, List, Vehicle, Trip
 from app.forms import LoginForm
 from app.forms import SignUpForm
 from flask_login import current_user, login_user, logout_user, login_required
@@ -38,7 +38,7 @@ def authenticate():
         #     "vehicles": [vehicle.to_dict() for vehicle in vehicles],
         #     "types": [typer.to_dict() for typer in types]
         #     }
-        # print("###########TEST$$$$$$$$$$$$", test)
+        print("###########Authorized$$$$$$$$$$$$", current_user.to_dict())
         return current_user.to_dict()
     return {'errors': ['Unauthorized']}
 
@@ -57,8 +57,20 @@ def login():
         # Add the user to the session, we are logged in!
         user = User.query.filter(User.email == form.data['email']).first()
         login_user(user)
-        print("########auth login route##$$$$$$$$$$$####@@3232322323", user.to_profile())
-        return user.to_profile()
+
+        lists = List.query.filter(List.owner_id == user.id).all()
+        print(len(lists), lists)
+        trips = Trip.query.filter(Trip.lead_id == user.id).all()
+        vehicles = Vehicle.query.filter(Vehicle.owner_id == user.id).all()
+        data = {
+            "user": user.to_dict(),
+            "vehicles": [vehicle.to_dict() for vehicle in vehicles],
+            "trips": [trip.to_dict() for trip in trips],
+            "lists": [alist.to_dict() for alist in lists]
+        }
+        print("########auth login route##$$$$$$$$$$$####@@3232322323", data)
+        
+        return data
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 
