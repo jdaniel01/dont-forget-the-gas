@@ -31,12 +31,14 @@ def postDelete():
 @list_routes.route('/<int:id>/items', methods=["POST"])
 @login_required
 def addItem(id):
-    print("############IN List Routes Add Item",  id, type(id))
+    print("############IN List Routes Add Item", id)
     form = ItemForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         newItem = Item(
-            list_id=form.data["list_id"]
+            itemName=form.data["itemName"],
+            list_id=form.data["list_id"],
+            itemNotes=form.data["itemNotes"]
         )
         db.session.add(newItem)
         db.session.commit()

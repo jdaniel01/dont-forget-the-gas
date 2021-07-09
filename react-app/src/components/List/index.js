@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { Redirect, useParams } from "react-router-dom";
+import { Redirect, useParams, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getList, addItem, dropItem } from "../../store/list";
 import { getItems } from "../../store/item";
 import { NewItem, EditItem } from "../Item/Forms"
 import Item from "../Item"
 
-const ItemDetails = ({ item }) => {
+const ItemDetails = ({ item, setAdding, adding }) => {
 
     const [editing, setEditing] = useState(false)
+    const listId = useSelector(state => state.item.item.list_id)
+    const items = useSelector(state => state.item.items)
 
-    if (!editing) {
+    if (!adding) {
         return (
             <div className="list_items-container">
                 <div className="list_item-section">
@@ -32,7 +34,7 @@ const ItemDetails = ({ item }) => {
     }
     else {
         return (
-            <EditItem item={item} list_id={item.list_id} setEditing={setEditing} />
+            <EditItem item={item} list_id={item.list_id} setAdding={setAdding} />
         )
     }
 
@@ -41,43 +43,21 @@ const ItemDetails = ({ item }) => {
 
 const List = () => {
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const aList = useSelector(state => state.list.list)
+    const items = useSelector(state => state.list.list.items)
 
     const [adding, setAdding] = useState(false)
-    const [details, setDetails] = useState()
+
 
     useEffect(() => {
         if (!aList) {
             dispatch(getList(aList.id))
+            console.log(aList.id)
         }
     }, [dispatch])
 
-    const update = () => {
-        if (aList.items) {
-            setAdding(true)
-        }
-    }
-    const downdate = () => {
-        setAdding(false)
-    }
-
-    useEffect(() => {
-        if (!adding) {
-            setDetails(
-                <>
-
-                </>
-            )
-        }
-        else if (adding) {
-            setDetails(
-
-            )
-
-        }
-
-    }, [adding, aList, dispatch])
 
     return (
         <div className="list-container">
@@ -89,23 +69,23 @@ const List = () => {
                     <div>{aList.notes}</div>
                 </div>
                 <div className="list_add-item-container">
-                    <button onClick={update} hidden={adding}>Add an Item</button>
+                    <button onClick={() => setAdding(true)} hidden={adding}>Add an Item</button>
                 </div>
 
                 <div className="list_add-item-container">
-                    <button onClick={downdate} hidden={!adding}>cancel</button>
+                    <button onClick={() => setAdding(false)} hidden={!adding}>cancel</button>
                 </div>
             </div>
             <div>
                 {!adding && aList.items &&
                     <div>
                         {aList.items.map(item =>
-                            <ItemDetails key={item.id} item={item} />)}
+                            <ItemDetails key={item.id} item={item} setAdding={setAdding} adding={adding} />)}
                     </div>
-            }
-            {adding &&
-                    <NewItem list_id={aList.id} setAdding={setAdding} />
-            }
+                }
+                {adding &&
+                    <NewItem alist={aList.id} setAdding={setAdding} />
+                }
             </div>
         </div>
     )

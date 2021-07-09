@@ -12,7 +12,7 @@ item_routes = Blueprint("items", __name__)
 def getItem(id):
     anItem = Item.query.get(id)
     listId = anItem.list_id
-    if request.methods == "PUT":
+    if request.method == "PUT":
         form = ItemForm()
         form['csrf_token'].data = request.cookies['csrf_token']
         if form.validate_on_submit():
