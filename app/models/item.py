@@ -13,7 +13,7 @@ class Item(db.Model):
 
 
 #1
-    list = db.relationship("List", back_populates="listItems")
+    list_info = db.relationship("List", back_populates="listItems")
 #2
     # list_info = db.relationship("List")
 
@@ -22,7 +22,7 @@ class Item(db.Model):
             "id": self.id,
             "list_id": self.list_id,
             "itemName": self.itemName,
-            "itemNotes": self.itemNotes,
+            "itemNotes": self.itemNotes
         }
 
     @property
@@ -30,13 +30,13 @@ class Item(db.Model):
         return self.itemName
     
     @itemName.setter
-    def itemName(self, name):
-        self.itemName = name
+    def itemName(self, iName):
+        self.itemName = iName
     
     @property
     def itemNotes(self):
         return self.itemNotes
 
     @itemNotes.setter
-    def itemNotes(self, notes):
-        self.itemNotes = notes
+    def itemNotes(self, iNotes):
+        self.itemNotes = iNotes

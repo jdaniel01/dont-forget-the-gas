@@ -1,9 +1,14 @@
 const SET_ITEMS = "item/SET_ITEMS"
 const SET_ITEM = 'item/SET_ITEM'
 
-const setItems = (items) => ({
+const set_items = (items) => ({
     type: SET_ITEMS,
     items
+})
+
+const set_item = (item) => ({
+    type: SET_ITEM,
+    item
 })
 
 export const getItems = (listId) => async (dispatch) => {
@@ -11,8 +16,16 @@ export const getItems = (listId) => async (dispatch) => {
     if (res.ok) {
         console.log("############GOT ITEMS######## store")
         const data = await res.json()
-        dispatch(setItems(data.items))
+        dispatch(set_items(data.items))
     }
+}
+
+export const setItem = (item) => async (dispatch) => {
+    dispatch(set_item(item))
+}
+
+export const setItems = (item) => async (dispatch) => {
+    dispatch(set_items(item))
 }
 
 
@@ -26,7 +39,7 @@ export const addItem = (item) => async (dispatch) => {
     })
     if (res.ok) {
         const data = await res.json()
-        dispatch(setItems(data.items))
+        dispatch(set_items(data.items))
     }
 }
 
@@ -42,7 +55,7 @@ export const editItem = (item) => async (dispatch) => {
         const data = await res.json()
         console.log("####################RES#OK###############", data.items)
 
-        dispatch(setItems(data.items))
+        dispatch(set_items(data.items))
     }
 }
 
@@ -52,7 +65,7 @@ export const dropItem = (item) => async (dispatch) => {
     })
     if (res.ok) {
         const data = await res.json()
-        dispatch(setItems(data.items))
+        dispatch(set_items(data.items))
     }
 }
 

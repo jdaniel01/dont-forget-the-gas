@@ -68,7 +68,7 @@ def addAndAllTrips(id):
 @user_routes.route('/<int:id>/vehicles', methods=["GET", "POST"])
 @login_required
 def addAndAllVehicles(id):
-    if request.methods == "POST":
+    if request.method == "POST":
         form = VehicleForm()
         form['csrf_token'].data = request.cookies['csrf_token']
         if form.validate_on_submit():
@@ -79,6 +79,5 @@ def addAndAllVehicles(id):
             db.session.add(newVehicle)
             db.session.commit()  
             # print("#########users/id/vehicles########## SUCCESS! ADDED NEW Vehicle")
-        
     vehicles = Vehicle.query.filter_by(owner_id=current_user.id).all()
     return {"vehicles": [vehicle.to_dict() for vehicle in vehicles]}

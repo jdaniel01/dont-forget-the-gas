@@ -8,26 +8,18 @@ import { useLayoutEffect } from "react";
 
 
 
-export const NewItem = ({ item, list_id, setAdding }) => {
+export const NewItem = ({ setAdding, }) => {
 
     const dispatch = useDispatch()
     const history = useHistory()
 
-    const user = useSelector(state => state.user.user)
-    const list = useSelector(state => state.list.list)
+    const { listId } = useParams()
+    // const aList = useSelector(state => state.list.list)
 
     const [name, setName] = useState("")
     const [notes, setNotes] = useState("")
     const [errors, setErrors] = useState([])
 
-    useEffect(() => {
-        if (!list) {
-            dispatch(getList(list_id))
-        }
-        if (!user) {
-            dispatch(getUser())
-        }
-    }, [dispatch, list_id, user])
 
     useEffect(() => {
         let newErrors = []
@@ -35,27 +27,29 @@ export const NewItem = ({ item, list_id, setAdding }) => {
             newErrors.push("Please provide a name for your new list item.")
         }
         setErrors(newErrors)
-    })
+    }, [name])
 
     const updatename = (e) => {
         setName(e.target.value)
+        // console.log(name)
     }
     const updateNotes = (e) => {
         setNotes(e.target.value)
+        // console.log(notes)
+        console.log(listId)
     }
 
     const onItemSubmit = (e) => {
         e.preventDefault()
-        console.log("################$$$$$$$$", notes, name, list_id)
         if (!errors.length) {
             const newItem = {
                 itemName: name,
                 itemNotes: notes,
-                list_id: list.id
+                list_id: listId
             }
-            console.log("$$$$$$$$$$$$$$$$$$$$$$$$", list_id)
             dispatch(addItem(newItem))
             setAdding(false)
+            history.push(`/lists/${listId}`)
         }
     }
 
@@ -64,10 +58,11 @@ export const NewItem = ({ item, list_id, setAdding }) => {
             <div className="item-form_header-container">
                 <h2>Adding To The List.</h2>
             </div>
-            <div onClick={setAdding(false)}>
+            <div onClick={() => setAdding(false)}>
                 Cancel
             </div>
             <div className="form-container">
+                {errors && errors.map(error => <div key={error}>{error}</div>)}
                 <form onSubmit={onItemSubmit} className="item-form">
                     <div className="item-form_section">
                         <label htmlFor="itemName">Item Name: </label>
@@ -90,10 +85,12 @@ export const NewItem = ({ item, list_id, setAdding }) => {
 export const EditItem = ({ item, list_id, setAdding }) => {
 
     const dispatch = useDispatch()
+    const { listId } = useParams()
 
     const user = useSelector(state => state.user.user)
     const itemb = useSelector(state => state.item.item)
-    const [name, setName] = useState(item.name)
+
+    const [name, setName] = useState(itemb.name)
     const [notes, setNotes] = useState(item.notes)
     const [errors, setErrors] = useState([])
 
@@ -121,10 +118,10 @@ export const EditItem = ({ item, list_id, setAdding }) => {
     const onItemSubmit = (e) => {
         e.preventDefault()
         if (!errors.length) {
-            const newItem = {
+            let newItem = {
                 itemName: name,
                 itemNotes: notes,
-                list_id: itemb.list_id
+                list_id: listId
             }
             setAdding(false)
             dispatch(addItem(newItem))
