@@ -85,10 +85,12 @@ export const NewItem = ({ setAdding, }) => {
 export const EditItem = ({ item, list_id, setAdding }) => {
 
     const dispatch = useDispatch()
+    const { listId } = useParams()
 
     const user = useSelector(state => state.user.user)
     const itemb = useSelector(state => state.item.item)
-    const [name, setName] = useState(item.name)
+
+    const [name, setName] = useState(itemb.name)
     const [notes, setNotes] = useState(item.notes)
     const [errors, setErrors] = useState([])
 
@@ -116,10 +118,10 @@ export const EditItem = ({ item, list_id, setAdding }) => {
     const onItemSubmit = (e) => {
         e.preventDefault()
         if (!errors.length) {
-            const newItem = {
+            let newItem = {
                 itemName: name,
                 itemNotes: notes,
-                list_id: itemb.list_id
+                list_id: listId
             }
             setAdding(false)
             dispatch(addItem(newItem))
