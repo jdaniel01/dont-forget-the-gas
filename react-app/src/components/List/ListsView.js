@@ -21,10 +21,6 @@ const ListsView = () => {
 
     const [adding, setAdding] = useState(false)
 
-    const updateAdding = () => {
-        setAdding(!adding)
-    }
-
 
     useEffect(() => {
         if (!user.username) {
@@ -50,10 +46,10 @@ const ListsView = () => {
             <div className="lists-view_header-container">
                 <h2>Your Lists</h2>
             </div>
-            <div className="new-list-button" onClick={updateAdding} hidden={adding}>
+            <div className="new-list-button" onClick={() => setAdding(true)} hidden={adding}>
                 Add New List
             </div>
-            <div className="new-list_cancel-button" onClick={updateAdding} hidden={!adding}>
+            <div className="new-list_cancel-button" onClick={() => setAdding(false)} hidden={!adding}>
                 Cancel
             </div>
             {!adding &&

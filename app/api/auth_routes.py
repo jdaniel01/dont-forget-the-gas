@@ -59,7 +59,6 @@ def login():
         login_user(user)
 
         lists = List.query.filter(List.owner_id == user.id).all()
-        print(len(lists), lists)
         trips = Trip.query.filter(Trip.lead_id == user.id).all()
         vehicles = Vehicle.query.filter(Vehicle.owner_id == user.id).all()
         data = {

@@ -3,14 +3,14 @@ from app.models import db, Item
 # Adds a demo user, you can add other users here if you want
 def seed_items():
 
-    demo = Item(itemName="Stuff for the trip", itemNotes="", Item_id=8, )
-    demo2 = Item(itemName="Things for taconight", itemNotes="Don't forget to get a desert", Item_id=7, )
-    demo3 = Item(itemName="Only the cheap stuff", itemNotes="That wine was hard to find.", Item_id=6, )
-    demo4 = Item(itemName="Reasearch Topics", itemNotes="I'm never going to Lowes again! ", Item_id=5, )
-    demo5 = Item(itemName="Favorite Chips", itemNotes="So glad I packed my nose hair clippers.", Item_id=4, )
-    demo6 = Item(itemName="My dog's muddiest moments", itemNotes="I knew we should've packed dramamine", Item_id=3, )
-    demo7 = Item(itemName="Best barbers in town", itemNotes="", Item_id=2, )
-    demo8 = Item(itemName="Wedding Venues", itemNotes="", Item_id=1, )
+    demo = Item(itemName="Stuff for the trip", itemNotes="", list_id=8, )
+    demo2 = Item(itemName="Things for taconight", itemNotes="Don't forget to get a desert", list_id=7, )
+    demo3 = Item(itemName="Only the cheap stuff", itemNotes="That wine was hard to find.", list_id=6, )
+    demo4 = Item(itemName="Reasearch Topics", itemNotes="I'm never going to Lowes again! ", list_id=5, )
+    demo5 = Item(itemName="Favorite Chips", itemNotes="So glad I packed my nose hair clippers.", list_id=4, )
+    demo6 = Item(itemName="My dog's muddiest moments", itemNotes="I knew we should've packed dramamine", list_id=3, )
+    demo7 = Item(itemName="Best barbers in town", itemNotes="", list_id=2, )
+    demo8 = Item(itemName="Wedding Venues", itemNotes="", list_id=1, )
     
     
     db.session.add(demo)
