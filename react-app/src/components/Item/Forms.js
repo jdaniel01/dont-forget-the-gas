@@ -8,7 +8,7 @@ import { useLayoutEffect } from "react";
 
 
 
-export const NewItem = ({ setAdding, }) => {
+export const NewItem = ({ setAdding }) => {
 
     const dispatch = useDispatch()
     const history = useHistory()
@@ -36,20 +36,21 @@ export const NewItem = ({ setAdding, }) => {
     const updateNotes = (e) => {
         setNotes(e.target.value)
         // console.log(notes)
-        console.log(listId)
+        console.log(Number(listId))
     }
 
     const onItemSubmit = (e) => {
+        const id = Number(listId)
         e.preventDefault()
         if (!errors.length) {
             const newItem = {
                 itemName: name,
                 itemNotes: notes,
-                list_id: listId
+                list_id: id
             }
             dispatch(addItem(newItem))
             setAdding(false)
-            history.push(`/lists/${listId}`)
+            // dispatch(getList(Number(listId)))
         }
     }
 
@@ -72,6 +73,9 @@ export const NewItem = ({ setAdding, }) => {
                         <label htmlFor="itemNotes">Item Notes: </label>
                         <textarea type="text" id="itemNotes" name="itemNotes" value={notes} onChange={updateNotes} maxLength={500} />
                     </div>
+                    <div>
+                        <input hidden readOnly name="list_id" id="list_id" value={listId} />
+                    </div>
                     <div className="item-form_submit-button-container">
                         <button type="submit">Add It To The List!</button>
                     </div>
@@ -82,8 +86,9 @@ export const NewItem = ({ setAdding, }) => {
 }
 
 
-export const EditItem = ({ item, list_id, setAdding }) => {
+export const EditItem = ({ item, list_id, setEditing }) => {
 
+    const history = useHistory()
     const dispatch = useDispatch()
     const { listId } = useParams()
 
@@ -121,10 +126,12 @@ export const EditItem = ({ item, list_id, setAdding }) => {
             let newItem = {
                 itemName: name,
                 itemNotes: notes,
-                list_id: listId
+                list_id: Number(listId)
             }
-            setAdding(false)
+            setEditing(false)
             dispatch(addItem(newItem))
+            dispatch(getList(Number(listId)))
+            history.push(`/lists/${Number(listId)}`)
             // }
         }
     }
@@ -139,6 +146,9 @@ export const EditItem = ({ item, list_id, setAdding }) => {
                 <h2>Editting An Item.</h2>
             </div>
             <div className="form-container">
+                <div>
+                    <button className="button" onClick={() => setEditing(false)}>Cancel Edit</button>
+                </div >
                 <form onSubmit={onItemSubmit} className="item-form">
                     <div className="item-form_section">
                         <label htmlFor="itemName">Item Name: </label>

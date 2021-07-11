@@ -1,7 +1,7 @@
 from flask.cli import AppGroup
 from .users import seed_users, undo_users
 from .types import seed_list_types, undo_list_types
-from .trips import seed_trips, undo_trips
+# from .trips import seed_trips, undo_trips
 from .items import seed_items, undo_items
 from .lists import seed_lists, undo_lists
 
@@ -16,15 +16,15 @@ def seed():
     seed_list_types()
     # seed_trips()
     seed_lists()
-    # seed_items()
+    seed_items()
     # Add other seed functions here
 
 # Creates the `flask seed undo` command
 @seed_commands.command('undo')
 def undo():
-    # undo_items()
+    undo_items()
     undo_lists()
-    # undo_trips()
+    undo_trips()
     undo_users()
     undo_list_types()
     # Add other undo functions here

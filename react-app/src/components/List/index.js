@@ -6,13 +6,24 @@ import { getItems } from "../../store/item";
 import { NewItem, EditItem } from "../Item/Forms"
 import Item from "../Item"
 
-const ItemDetails = ({ item, setAdding, adding }) => {
+const ItemDetails = ({ item, setAdding, adding, list_id }) => {
 
     const [editing, setEditing] = useState(false)
-    const listId = useSelector(state => state.item.item.list_id)
-    const items = useSelector(state => state.item.items)
+    const { listId } = useParams()
 
-    if (!adding) {
+    const dispatch = useDispatch()
+
+    const parentList = useSelector(state => state.list.list)
+    const itemb = useSelector(state => state.item.item)
+
+    useEffect(() => {
+        if (!parentList.id) {
+            dispatch(getList(list_id))
+        }
+    })
+
+
+    if (!editing) {
         return (
             <div className="list_items-container">
                 <div className="list_item-section">
@@ -32,9 +43,9 @@ const ItemDetails = ({ item, setAdding, adding }) => {
             </div>
         )
     }
-    else {
+    else if (editing) {
         return (
-            <EditItem item={item} list_id={item.list_id} setAdding={setAdding} />
+            <EditItem item={item} list_id={list_id} setEditing={setEditing} />
         )
     }
 
@@ -46,7 +57,7 @@ const List = () => {
     const history = useHistory();
 
     const aList = useSelector(state => state.list.list)
-    const items = useSelector(state => state.list.list.items)
+    const items = useSelector(state => state.item.items)
 
     const [adding, setAdding] = useState(false)
 
@@ -80,7 +91,7 @@ const List = () => {
                 {!adding && aList.items &&
                     <div>
                         {aList.items.map(item =>
-                            <ItemDetails key={item.id} item={item} setAdding={setAdding} adding={adding} />)}
+                            <ItemDetails key={item.id} item={item} setAdding={setAdding} adding={adding} list_id={item.list_id} />)}
                     </div>
                 }
                 {adding &&

@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from sqlalchemy import desc
-from app.models import List, Item, ListType
+from app.models import List, Item, ListType, db
 from app.forms import ItemForm, ListForm
 
 
@@ -35,6 +35,7 @@ def addItem(id):
     form = ItemForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
+        print("LLLLLLLLLLLLIIIIIISSSSST ITEM Validated")
         newItem = Item(
             itemName=form.data["itemName"],
             list_id=form.data["list_id"],
@@ -59,9 +60,9 @@ def updateAndDeleteList(id):
             print("####/lists/id######### UPDATING LIST")
             oldList = List.query.get(id)
             if oldList:
-                oldList["name"] = form["name"]
-                oldList["type_id"] = form["type_id"]
-                oldList["notes"] = form["notes"]
+                oldList["name"] = form.data["name"]
+                oldList["type_id"] = form.data["type_id"]
+                oldList["notes"] = form.data["notes"]
                 db.session.commit()
                 print("####SUCCESS!! USER HAS BEEN UPDATED#####")
                 blist = List.query.get(id).to_dict()

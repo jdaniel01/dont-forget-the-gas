@@ -54,10 +54,10 @@ export const dropType = (typeId) => async (dispatch) => {
     const res = await fetch(`/api/lists/types/${typeId}`, {
         method: "DELETE"
     })
-    // if (res.ok) {
-    //     const data = await res.json()
-    //     dispatch(setTypes(data.types))
-    // }
+    if (res.ok) {
+        const data = await res.json()
+        dispatch(setTypes(data.types))
+    }
 }
 
 function typeReducer(state = { types: [], type: {} }, action) {

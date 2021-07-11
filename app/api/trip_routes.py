@@ -13,7 +13,7 @@ trip_routes = Blueprint("trips", __name__)
 @login_required
 def getOneTrip(id):
     print("$$$$$$$$$$$TEST$$$$$$$$$", type(id))
-    aTrip = Trip.query.get(int(id))
+    aTrip = Trip.query.get(id)
     # print("######trip##id######", aTrip, id)
     return aTrip
 
@@ -26,7 +26,7 @@ def updateAndDeletetrip(id):
     if form.validate_on_submit():
         print("####/trips/id######### UPDATING trip")
 
-        oldTrip = Trip.query.get(int(id))
+        oldTrip = Trip.query.get(id)
         if oldTrip:
             #NOTE need to update later to allow the change of trip leads.
             oldTrip["departure"] = form["departure"]
@@ -41,9 +41,9 @@ def updateAndDeletetrip(id):
             print("###ERROR##ERROR## unable to locate trip by primary key")
             return "There was an Error"
     else:
-        deleting = Trip.query.get(int(id))
+        deleting = Trip.query.get(id)
         print("#####DELETING trip #####", deleting)
         db.session.delete(deleting)
         db.session.commit()
-    trips = Trip.query.filter_by(desc(lead_id=current_user.id)).all()
+    trips = Trip.query.filter_by(lead_id=current_user.id).all()
     return trips

@@ -39,6 +39,7 @@ export const addItem = (item) => async (dispatch) => {
     })
     if (res.ok) {
         const data = await res.json()
+        console.log("####################RES#OK###############", data.items)
         dispatch(set_items(data.items))
     }
 }
@@ -53,7 +54,6 @@ export const editItem = (item) => async (dispatch) => {
     })
     if (res.ok) {
         const data = await res.json()
-        console.log("####################RES#OK###############", data.items)
 
         dispatch(set_items(data.items))
     }
