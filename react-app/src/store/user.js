@@ -1,3 +1,7 @@
+import { setLists } from "./list";
+// import { setTrips } from "./trip";
+import { setVehicles } from "./vehicle";
+
 const SET_USER = "user/SET_USER";
 
 const set_User = (user) => ({
@@ -26,11 +30,14 @@ export const setUser = (user) => async (dispatch) => {
 export const getUser = () => async (dispatch) => {
     const res = await fetch(`/api/auth/`)
     if (res.ok) {
-        const user = await res.json();
-        if (user.errors) {
-            return user
+        const data = await res.json();
+        if (data.errors) {
+            return data
         }
-        dispatch(set_User(user))
+        dispatch(set_User(data.user))
+        dispatch(setLists(data.lists))
+        // dispatch(setTrips(data.trips))
+        dispatch(setVehicles(data.vehicles))
     }
 }
 

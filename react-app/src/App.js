@@ -41,7 +41,7 @@ function App() {
           dispatch(getLists(user.id))
           dispatch(getTypes())
           dispatch(getVehicles(user.id))
-          dispatch(getTrips(user.id))
+          // dispatch(getTrips(user.id))
           setAuthenticated(true);
         }
         setLoaded(true);

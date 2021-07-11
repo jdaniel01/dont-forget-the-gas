@@ -7,11 +7,6 @@ from app.forms import ItemForm, ListForm
 
 list_routes = Blueprint("lists", __name__)
 
-@list_routes.route('/<int:id>')
-@login_required
-def getList(id):
-    alist = ListType.query.get(id)
-    return alist.to_dict()
 
 # ^^^^^^^^^^^^^^^^^^^^^^to do add and delete types.^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 @list_routes.route('/types')
@@ -31,7 +26,7 @@ def postDelete():
 @list_routes.route('/<int:id>/items', methods=["POST"])
 @login_required
 def addItem(id):
-    print("############IN List Routes Add Item", id)
+    print("############IN List Routes Add Item", id, request.method)
     form = ItemForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
@@ -53,9 +48,9 @@ def addItem(id):
 @login_required
 def updateAndDeleteList(id):
 
-    form = ListForm()
-    form['csrf_token'].data = request.cookies['csrf_token']
     if request.method == "PUT":
+        form = ListForm()
+        form['csrf_token'].data = request.cookies['csrf_token']
         if form.validate_on_submit():
             print("####/lists/id######### UPDATING LIST")
             oldList = List.query.get(id)
@@ -65,14 +60,29 @@ def updateAndDeleteList(id):
                 oldList["notes"] = form.data["notes"]
                 db.session.commit()
                 print("####SUCCESS!! USER HAS BEEN UPDATED#####")
-                blist = List.query.get(id).to_dict()
-                return blist
-        else:
-            print("###ERROR##ERROR## unable to locate list by primary key")
+                # blist = List.query.get(id).to_dict()
+                # updated = List.query.filter(List.owner_id == blist.owner_id).all()
+                # return {"lists": [aList.to_dict() for aList in updated], "list": blist}
+            else:
+                print("###ERROR##ERROR## unable to locate list by primary key:=====>", id)
+
+        else: 
+            print("######ERROR /UNABLE TO VALIDATE FORM LIST/ROUTE########", form, form.data)
     elif request.method == "DELETE":
-        deleting = List.query.get(id)
-        print("#####DELETING LIST #####", deleting)
+        deleting = List.query.get(id).first()
+        print(f"#####DELETING LIST #####{id}", deleting.to_dict())
         db.session.delete(deleting)
         db.session.commit()
+    alist = ListType.query.get(id)
     lists = List.query.filter_by(owner_id=current_user.id).all()
-    return lists
+    return {"lists": [aList.to_dict() for aList in lists], "list": alist.to_dict()}
+
+
+@list_routes.route('/<int:id>')
+@login_required
+def getList(id):
+    alist = ListType.query.get(id)
+    lists = List.query.filter_by(owner_id=current_user.id).all()
+    print("###############LIST", alist.to_dict())
+    return {"lists": [aList.to_dict() for aList in lists], "list": alist.to_dict()}
+    

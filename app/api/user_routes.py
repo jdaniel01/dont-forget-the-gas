@@ -18,8 +18,9 @@ def users():
 @user_routes.route('/<int:id>')
 @login_required
 def user(id):
-    user = User.query.get(id)
-    return user.to_dict()
+    user = User.query.get(id).to_dict()
+    vehicles = Vehicle.query.filter_by(owner_id=user.id).to_dict()
+    return {"user": user, "vehicles": [vehicle.to_dict() for vehicle in vehicles]}
 
 
 @user_routes.route('/<int:id>/lists', methods=["GET", "POST"])

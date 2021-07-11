@@ -1,3 +1,5 @@
+import { setItems } from "./item"
+
 const SET_LISTS = "list/SET_LISTS"
 const SET_LIST = 'list/SET_LIST'
 
@@ -40,16 +42,21 @@ export const getLists = (id) => async (dispatch) => {
 
     const res = await fetch(`/api/users/${id}/lists`)
     if (res.ok) {
-        const lists = await res.json()
-        dispatch(set_Lists(lists.lists))
+        const data = await res.json()
+        dispatch(set_Lists(data.lists))
     }
 
 }
 
+
+
 export const getList = (id) => async (dispatch) => {
     const res = await fetch(`/api/lists/${id}`)
-    const aList = await res.json()
-    dispatch(set_list(aList))
+    const data = await res.json()
+    dispatch(set_list(data.list))
+    dispatch(set_Lists(data.lists))
+    dispatch(setItems(data.list.items))
+
 }
 
 
@@ -77,8 +84,8 @@ export const editList = (list) => async (dispatch) => {
         body: JSON.stringify(list)
     })
     if (res.ok) {
-        const alist = await res.json()
-        dispatch(set_list(alist))
+        const data = await res.json()
+        dispatch(set_list(data))
     }
 }
 
@@ -87,8 +94,8 @@ export const dropList = (listId) => async (dispatch) => {
         method: "DELETE"
     })
     if (res.ok) {
-        const lists = await res.json()
-        dispatch(set_Lists(lists.lists))
+        const data = await res.json()
+        dispatch(set_Lists(data.lists))
     }
 }
 

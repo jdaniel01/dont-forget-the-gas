@@ -24,7 +24,7 @@ def seed():
 def undo():
     undo_items()
     undo_lists()
-    undo_trips()
+    # undo_trips()
     undo_users()
     undo_list_types()
     # Add other undo functions here

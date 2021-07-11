@@ -13,15 +13,15 @@ const ItemDetails = ({ item, setAdding, adding, list_id }) => {
 
     const dispatch = useDispatch()
 
-    const parentList = useSelector(state => state.list.list)
+    const currList = useSelector(state => state.list.list)
     const itemb = useSelector(state => state.item.item)
 
     useEffect(() => {
-        if (!parentList.id) {
-            dispatch(getList(list_id))
-        }
-    })
+        if (adding && editing === false) {
 
+            setAdding(false)
+        }
+    }, [editing])
 
     if (!editing) {
         return (
@@ -55,6 +55,7 @@ const ItemDetails = ({ item, setAdding, adding, list_id }) => {
 const List = () => {
     const dispatch = useDispatch();
     const history = useHistory();
+    const { listId } = useParams()
 
     const aList = useSelector(state => state.list.list)
     const items = useSelector(state => state.item.items)
@@ -64,10 +65,10 @@ const List = () => {
 
     useEffect(() => {
         if (!aList) {
-            dispatch(getList(aList.id))
-            console.log(aList.id)
+            dispatch(getList(listId))
         }
-    }, [dispatch])
+
+    }, [dispatch, adding])
 
 
     return (
@@ -91,7 +92,7 @@ const List = () => {
                 {!adding && aList.items &&
                     <div>
                         {aList.items.map(item =>
-                            <ItemDetails key={item.id} item={item} setAdding={setAdding} adding={adding} list_id={item.list_id} />)}
+                            <ItemDetails key={item.id} item={item} setAdding={setAdding} adding={adding} list_id={aList.id} />)}
                     </div>
                 }
                 {adding &&
