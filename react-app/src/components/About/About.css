@@ -1,0 +1,32 @@
+.github-image{
+    border-radius: 7em;
+}
+
+/* .image-contaner{
+    border-radius: 15px;
+} */
+
+.about-header{
+    font-size: 5em;
+    display: flex;
+    justify-content: center;
+}
+
+.about-body{
+    padding: 2rem;
+}
+
+p {
+    font-size: 1.5rem;
+}
+
+h3{
+    font-size: 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+.image-container{
+    justify-content: center;
+    display: flex;
+}

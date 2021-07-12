@@ -5,7 +5,7 @@ import { addVehicle, dropVehicle, editVehicle } from "../../store/vehicle";
 import { getUser } from "../../store/user"
 
 
-function VehicleForm() {
+function VehicleForm({ adding, setAdding }) {
 
     const dispatch = useDispatch()
 
@@ -115,50 +115,54 @@ function VehicleForm() {
     }
 
     return (
-        <div className="vehicle-form-container">
-            <div className="vehicle-form_header-container">
-                <h2>Add A Vehicle</h2>
-            </div>
+        <div className="form-container">
+            {!adding &&
+                <h2 className="form-header">Add A Vehicle</h2>
+            }
+            {adding &&
+                <h2 className="form-header">Cancel</h2>
+
+            }
             <div className="form-container">
                 <form onSubmit={() => onVehicleSubmit} className="vehicle-form">
-                    <div className="vehicle-form_section">
+                    <div className="form-input-container">
                         <label htmlFor="make">Vehicle Make: </label>
                         <input type="text" id="make" name="make" value={make} onChange={updateMake} />
                     </div>
-                    <div className="vehicle-form_section">
+                    <div className="form-input-container">
                         <label htmlFor="model">Vehicle Model: </label>
                         <input type="text" id="model" name="model" value={model} onChange={updateModel} maxLength={500} />
                     </div>
-                    <div className="vehicle-form_section">
+                    <div className="form-input-container">
                         <label htmlFor="body">Body Style: </label>
                         <input type="text" id="body" name="body" value={body} onChange={updateBody} />
                     </div>
-                    <div className="vehicle-form_section">
+                    <div className="form-input-container">
                         <label htmlFor="storage">Storage Capacity: </label>
                         <input type="number" step={.1} id="storage" name="storage" value={storage} onChange={updateStorage} />
                     </div>
-                    <div className="vehicle-form_section">
+                    <div className="form-input-container">
                         <label htmlFor="color">Vehicle Color: </label>
                         <input type="text" id="color" name="color" value={color} onChange={updateColor} />
                     </div>
-                    <div className="vehicle-form_section">
+                    <div className="form-input-container">
                         <label htmlFor="total_miles">Odemeter: </label>
                         <input type="number" step={.1} id="total_miles" name="total_miles" value={miles} onChange={updateMiles} />
                     </div>
-                    <div className="vehicle-form_section">
+                    <div className="form-input-container">
                         <label htmlFor="fuel_type">Fuel Type: </label>
                         <input type="text" step={.1} id="fuel_type" name="fuel_type" value={fuelType} onChange={updateType} />
                     </div>
-                    <div className="vehicle-form_section">
+                    <div className="form-input-container">
                         <label htmlFor="fuel_tank">Fuel Capacity(gal): </label>
                         <input type="number" step={.1} id="fuel_tank" name="fuel_tank" value={fuelTank} onChange={updateTank} />
                     </div>
-                    <div className="vehicle-form_section">
+                    <div className="form-input-container">
                         <label htmlFor="avg_mpg">Average Miles Per Gallon(mpg): </label>
                         <input type="number" step={.1} id="avg_mpg" name="avg_mpg" value={mpg} onChange={updateMpg} />
                     </div>
-                    <div className="vehicle-form_submit-button-container">
-                        <button type="submit">Add It To The Garage!</button>
+                    <div className="form-button-container">
+                        <button className="form-button" type="submit">Park It</button>
                     </div>
                 </form>
             </div>

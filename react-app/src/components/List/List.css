@@ -195,8 +195,8 @@
 
     .list_item-section {
         display: flex;
-        flex-flow: row wrap;
-        justify-content: center;
+        flex-flow: column wrap;
+        justify-content: space-around;
         align-items: center;
         width: 100%;
     }

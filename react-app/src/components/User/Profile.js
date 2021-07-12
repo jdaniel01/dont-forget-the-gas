@@ -2,20 +2,24 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getUser } from "../../store/user"
+import { getVehicles } from '../../store/vehicle'
 import VehicleForm from "../Vehicle/VehicleForm";
-
+import './User.css';
 
 function Profile() {
     const dispatch = useDispatch();
+
     const user = useSelector(state => state.user.user)
-    const [vehicles, setVehicles] = useState(user.vehicles)
+    const vehicles = useSelector(state => state.vehicle.vehicles)
 
     const [viewingGarage, setViewingGarage] = useState(false)
 
     useEffect(() => {
         if (!user.id) {
             dispatch(getUser())
-            console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^USER^^^^^^^^", user)
+        }
+        if (!vehicles.length) {
+            dispatch(getVehicles(user.id))
         }
     }, [dispatch])
 
@@ -24,21 +28,26 @@ function Profile() {
     }
 
     return (
-        <div>
-            <div>
-                <div>{user.username}</div>
+        <div className="profile-container">
+            <div className="user_info">
+                <h2>{user.username}</h2>
                 <div>{user.email}</div>
                 <div>{user.on_trip}</div>
                 <div>{user.about}</div>
             </div>
-            <div>
-                <div>
-                    <h2>Vehicles</h2>
-                    <div onClick={enterGarage}>
+            <div className="garage-container">
+                <h2>Garage</h2>
+                {!viewingGarage &&
+                    <div className="form-button add-car-button" onClick={enterGarage}>
                         Add A Car
                     </div>
+                }
+                {viewingGarage &&
+                    <div className="form-button add-car-button" onClick={enterGarage}>
+                        Cancel
                 </div>
-                <div>
+                }
+
                     {user.vehicles && !viewingGarage &&
                         user.vehicles.map(vehicle =>
                             <div key={vehicle.id} hidden={true}>
@@ -59,8 +68,7 @@ function Profile() {
                         <div>
                             <VehicleForm />
                         </div>
-                    }
-                </div>
+                }
             </div>
         </div>
     )

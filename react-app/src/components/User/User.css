@@ -1,0 +1,40 @@
+.user_info{
+    display: flex;
+    flex-flow: column wrap;
+    align-items: flex-start;
+    margin-left: 3rem;
+    font-size: 3rem;
+    border-bottom: 3px solid darkseagreen;
+}
+
+.user_info.div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.user_info h2{
+    margin: none;
+}
+
+.profile_container{
+    display: flex;
+    justify-content: center;
+    flex-flow: column wrap;
+}
+
+.add-car-button {
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}
+
+.garage-container{
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+}
+
+.garage-container h2{
+    font-size: 3rem;
+}
+

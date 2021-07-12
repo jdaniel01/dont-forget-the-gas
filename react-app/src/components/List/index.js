@@ -14,28 +14,30 @@ const ItemDetails = ({ item, setAdding, setEditing, adding, list_id }) => {
     const currList = useSelector(state => state.list.list)
     const itemb = useSelector(state => state.item.item)
 
-    if (!adding) {
-        return (
-            <div className="list_item-container">
-                <div className="list_item-section">
-                    <h3 className="item-header">{item.itemName}</h3>
-                    <div className="list_item-notes">
-                        {item.itemNotes}
+
+    return (
+        <>
+            {!adding &&
+                <div className="list_item-container">
+                    <div className="list_item-section">
+                        <h3 className="item-header">{item.itemName}</h3>
+                        <div className="list_item-notes">
+                            {item.itemNotes}
+                        </div>
+                    </div>
+                    <div className="form-button-container">
+                        <button className="form-button" onClick={() => setEditing(true)}>Edit Item</button>
                     </div>
                 </div>
-                <div className="form-button-container">
-                    <button className="form-button" onClick={() => setEditing(true)}>Edit Item</button>
-                </div>
-            </div>
-        )
-    }
-    else {
-        return (
-            <EditItem item={item} list_id={list_id} setAdding={setAdding} setEditing={setEditing} />
-        )
-    }
-}
 
+            }
+            {adding &&
+                <EditItem item={item} list_id={list_id} setAdding={setAdding} setEditing={setEditing} />
+            }
+        </>
+    )
+
+}
 
 const List = () => {
     const dispatch = useDispatch();
