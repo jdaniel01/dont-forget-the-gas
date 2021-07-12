@@ -85,7 +85,8 @@ def updateAndDeleteList(id):
 @login_required
 def getList(id):
     alist = ListType.query.get(id)
-    lists = List.query.filter_by(owner_id=current_user.id).all()
+    lists = List.query.filter_by(owner_id=alist.owner_id).all()
+    items = Item.query.filter_by(list_id=id).all()
     print("###############LIST", alist.to_dict())
-    return {"lists": [aList.to_dict() for aList in lists], "list": alist.to_dict(), "items": [item.to_dict() for item in alist.items]}
+    return {"lists": [aList.to_dict() for aList in lists], "list": alist.to_dict(), "items": [item.to_dict() for item in items]}
     

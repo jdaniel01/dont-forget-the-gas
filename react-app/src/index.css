@@ -1,4 +1,4 @@
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 600px) {
     
 
 .navbar {
@@ -11,7 +11,6 @@
     margin: none;
     background-color: burlywood;
     position: sticky;
-    top: 0;
 }
 
 .nav-links{
@@ -27,6 +26,94 @@ body{
     color: black;
     font-family: Arial, Helvetica, sans-serif;
     padding: 1px;
+    margin: 0px;
+}
+.root{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.NavLink{
+    color: black;
+    text-decoration-line: none;
+    font-size: larger;
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+
+.NavLink:hover{
+    color: darkolivegreen;
+    text-decoration-line: none;
+    font-size: larger;
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+
+.link_navlink{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.6rem;
+}
+
+.NavLink.button {
+    border: none;
+    background-color: burlywood;
+    color: black;
+    text-decoration: none;
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+.NavLink.button:hover {
+    border: none;
+    background-color: burlywood;
+    color: darkseagreen;
+    text-decoration: none;
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+
+.logo-image-container {
+    display: flex;
+    max-height: 12rem;
+    max-width: 15rem;
+    height: auto;
+    width: auto;
+}
+.logo-image-container img {
+    /* width: fit-content;
+    height: fit-content; */
+    max-height: 100%;
+    max-width: 100%;
+}
+}
+
+
+@media screen and (max-width: 599px) {
+    
+
+.navbar {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: 0;
+    background-color: burlywood;
+}
+
+.nav-links{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+}
+
+body{
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
     margin: 0px;
 }
 .root{
@@ -246,4 +333,10 @@ body{
 .form-errors-container {
     color: red;
     font-size: 1.5rem;
+}
+
+.social-media-links {
+    display: flex;
+    justify-content: space-around;
+    flex-flow: row wrap;
 }

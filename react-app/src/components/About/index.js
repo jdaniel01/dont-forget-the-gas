@@ -12,8 +12,16 @@ function About() {
                 <h3>The Developer</h3>
                 <p>James Daniel began developing web applications in early 2021. James has exposure to Express, Node, React, Redux, Python, and Javascript among a few others. James spends his free time practicing Leetcodes and working past and future projects, and when James isn't coding he's riding BMX. If you like what you see and want to work with James, you can check him out on GitHub by clicking the image below.
                 </p>
-                <div className="image-container" onClick={() => window.open("https://github.com/jdaniel01")}>
-                    <img className="github-image" src="https://avatars.githubusercontent.com/u/77118646?v=4" style={{ height: "300px" }} />
+            </div>
+            <div className="social-media-links">
+                {/* <div className="social-media" onClick={() => window.open("")}>
+                    <img className="media-image " src="" style={{ height: "100px" }} />
+                </div> */}
+                <div className="social-media">
+                    <img className="github media-image" src='https://image.flaticon.com/icons/png/512/25/25231.png' style={{ height: "100px" }} onClick={() => window.open("https://github.com/jdaniel01")} />
+                </div>
+                <div className="social-media" onClick={() => window.open("https://www.linkedin.com/in/james-daniel-jr-403178189?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BVwQ9TThBT6OMT41JzUhOAw%3D%3D")}>
+                    <img className="media-image linked-in" src="https://image.flaticon.com/icons/png/512/174/174857.png" style={{ height: "100px" }} />
                 </div>
             </div>
 

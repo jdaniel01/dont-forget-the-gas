@@ -1,98 +1,42 @@
-# Flask React Project
 
-This is the backend for the Flask React project.
+Don't Forget The Gas (DFTG)
 
-## Getting started
+by James Daniel Jr.
 
-1. Clone this repository (only this branch)
 
-   ```bash
-   git clone https://github.com/appacademy-starters/python-project-starter.git
-   ```
+Table of Contents:
 
-2. Install dependencies
+- DFTG HL Overview
+- Architecture and Technologies
+- FrontEnd
+- BackEnd
+- Summary and Project Ambitions
 
-      ```bash
-      pipenv install --dev -r dev-requirements.txt && pipenv install -r requirements.txt
-      ```
 
-3. Create a **.env** file based on the example with proper settings for your
-   development environment
-4. Setup your PostgreSQL user, password and database and make sure it matches your **.env** file
 
-5. Get into your pipenv, migrate your database, seed your database, and run your flask app
+DFTG HL Overview:
 
-   ```bash
-   pipenv shell
-   ```
+DFTG is a simple web application that allows users to create lists to keep track of various items (task, objects, people, etc.) The application allows you to perform basic crud operations on lists as well as the list items themselves. Tee time change to 10:30? no problem, upate it by editing the item on your list of golf reservations.
 
-   ```bash
-   flask db upgrade
-   ```
+Lists are fun, but let's take it to the next level. let's keep track of our trips as well. Why not have the itinerary and the social media in the same place. Keep a track of trips by name, start/end dates, length of trip in days/miles, and more. Add stops which are linked to real geographic locations which allow you to add rename real places in your trip catalogue. 
 
-   ```bash
-   flask seed all
-   ```
 
-   ```bash
-   flask run
-   ```
 
-6. To run the React App in development, checkout the [README](./react-app/README.md) inside the `react-app` directory.
+2. Architecture and Technologies.
 
-***
-*IMPORTANT!*
-   If you add any python dependencies to your pipfiles, you'll need to regenerate your requirements.txt before deployment.
-   You can do this by running:
+DFTG is a Python led backend which relies on data queries to a Postgresql database with Flask SQLAlchemy class models and commands. I used alembic for migration management and Javascript for frontend database logic. To maintain stable rendering I utilized Redux state managment and API communications to deliver consistent data to React functional components. 
 
-   ```bash
-   pipenv lock -r > requirements.txt
-   ```
 
-*ALSO IMPORTANT!*
-   psycopg2-binary MUST remain a dev dependency because you can't install it on apline-linux.
-   There is a layer in the Dockerfile that will install psycopg2 (not binary) for us.
-***
 
-## Deploy to Heroku
+3. FrontEnd
 
-1. Create a new project on Heroku
-2. Under Resources click "Find more add-ons" and add the add on called "Heroku Postgres"
-3. Install the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-command-line)
-4. Run
+I began my coding career with JavaScript and enjoy using it for all of my projects. I utilized it's asynchronous nature to wait on make calls to the database so the data would be up to date before the user is redirected to the next page. Temporary state is stored using Redux the Thunks to eagerly update state and ensure a consistent user experience.
 
-   ```bash
-   heroku login
-   ```
+Lists were updated whenver a list, or item is updated. The last list the member was looking is also updated whenever any part of it or it's items are udated.  Trips are updated whenever trip or stop data has been updated.
 
-5. Login to the heroku container registry
+For a bit of flare I used InkScape to design the logo and favicon image.
 
-   ```bash
-   heroku container:login
-   ```
 
-6. Update the `REACT_APP_BASE_URL` variable in the Dockerfile.
-   This should be the full URL of your Heroku app: i.e. "https://flask-react-aa.herokuapp.com"
-7. Push your docker container to heroku from the root directory of your project.
-   This will build the dockerfile and push the image to your heroku container registry
+4. Postgres's ORM database was the choice for the project. With multiple connections between models object relational mapping was a good fit. Flask SQLAlchemy provided efficient database models frameworks with dynamic querys and simple implementations. Exploiting model relationships I am able to extract subqueries, saving time on wasted queries.
 
-   ```bash
-   heroku container:push web -a {NAME_OF_HEROKU_APP}
-   ```
-
-8. Release your docker container to heroku
-
-   ```bash
-   heroku container:release web -a {NAME_OF_HEROKU_APP}
-   ```
-
-9. set up your database:
-
-   ```bash
-   heroku run -a {NAME_OF_HEROKU_APP} flask db upgrade
-   heroku run -a {NAME_OF_HEROKU_APP} flask seed all
-   ```
-
-10. Under Settings find "Config Vars" and add any additional/secret .env variables.
-
-11. profit
+5. The next steps for DFTG are to flesh out any inconsistencies and implement Trips with Google mapping. I learned more about React and how to ensure state is consistently available for the user. There were many times I would discover an extra statement here and there that would loop my data. When recursive issues used to cause me much trouble, I'm finding them easier to debug.  I've enjoyed the challenges and of this project and look forward to building it out completely.
