@@ -9,6 +9,9 @@
         align-content: center;
 
     }
+    .lists-view_header-container {
+        font-size: 2rem;
+    }
     .list-buttons-container{
         display: flex;
         flex-flow: row wrap;
@@ -21,12 +24,58 @@
         justify-content: center;
     }
 
+    .list_name-container .list-name {
+        color:red;
+
+    }
+
     .lists-container{
         width: 85%;
         background-color: burlywood;
         justify-content: center;
         align-content: center;
-    
+
+    }
+
+    .new-list-button{
+        display: flex;
+        background-color: red;
+        color: white;
+        height: 4rem;
+        font-size: 3rem;
+        padding: .5rem;
+        border: .5px solid black;
+        justify-self: center;
+        margin-bottom: .5rem;
+    }
+
+    .new-list-button:hover {
+         border: none;
+        background-color: darkseagreen;
+        color: white;
+        height: 4rem;
+        font-size: 3rem;
+        border: .5px solid black;
+    }
+
+    .list_add-item-container button {
+        border: none;
+        background-color: red;
+        color: white;
+        height: 4rem;
+        width: 20rem;
+        font-size: 3rem;
+        border: .5px solid black
+    }
+
+    .list_add-item-container button:hover {
+        border: none;
+        background-color: darkseagreen;
+        color: white;
+        height: 4rem;
+        width: 20rem;
+        font-size: 3rem;
+        border: .5px solid black;
     }
 
     .list-peek_row-container{
@@ -50,15 +99,30 @@
     }
 
     .header {
+        display: flex;
         grid-area: ta;
         padding: 1rem;
         margin: 0;
         width: 100%;
         margin-right: -2rem;
+        font-size: 1.5rem;
+        justify-content: center;
+
     }
-  
+    
+    .list_item_notes-container{
+        display: flex;
+        justify-self: center;
+        align-items: center;
+        align-content: center;
+        justify-items: center;
+    }
     .list-peek_notes {
         grid-area: n;
+        font-size: 1.5rem;
+        display: flex;
+        justify-self: flex-start;
+        padding: .5rem;
     }
 
     .button {
@@ -67,5 +131,28 @@
         margin: 0;
         margin-left: 0;
         width: 100%;
+        background-color: red;
+        color: white;
+        font-weight: 550;
+        font-size: 1.5rem;
     }
+
+    .button:hover {
+        grid-area: b;
+        width: 12rem;
+        margin: 0;
+        margin-left: 0;
+        width: 100%;
+        background-color: darkseagreen;
+        color: black;
+        font-weight: 550;
+        font-size: 1.5rem;
+        border: none;
+    }
+
+
+
+    
+
+
 }

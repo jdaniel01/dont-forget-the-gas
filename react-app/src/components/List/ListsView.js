@@ -43,17 +43,26 @@ const ListsView = () => {
 
     return (
         <div className="lists-view-container">
-            <div className="lists-view_header-container">
-                <h2>Your Lists</h2>
-            </div>
-            <div className="list-button-container">
-                <div className="new-list-button" onClick={() => setAdding(true)} hidden={adding}>
+            {!adding &&
+                <>
+                <div className="lists-view_header-container">
+                    <h2>Your Lists</h2>
+                </div>
+                <div className="new-list-button" onClick={() => setAdding(true)}>
                     Add New List
                 </div>
-                <div className="new-list_cancel-button" onClick={() => setAdding(false)} hidden={!adding}>
-                    Cancel
-                </div>
-            </div>
+                </>
+            }
+            {adding &&
+                <>
+                    <div className="lists-view_header-container">
+                        <h2>New List Form</h2>
+                    </div>
+                    <div className="new-list-button" onClick={() => setAdding(false)}>
+                        Cancel
+                    </div>
+                </>
+            }
             {!adding &&
                 <div className="lists-container">
                 {lists && lists.map(list =>
@@ -66,7 +75,9 @@ const ListsView = () => {
                 </div>
             }
             {adding &&
+                <>
                 <ListForm setAdding={setAdding} />
+            </>
             }
         </div>
     )

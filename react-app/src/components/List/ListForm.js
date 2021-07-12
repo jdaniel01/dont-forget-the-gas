@@ -5,6 +5,7 @@ import { addList, getLists } from "../../store/list";
 import { getUser } from "../../store/user";
 import { getTypes } from "../../store/type";
 
+
 const ListForm = ({ setAdding }) => {
 
     const dispatch = useDispatch();
@@ -13,7 +14,7 @@ const ListForm = ({ setAdding }) => {
     const types = useSelector(state => state.type.types);
 
     const [name, setName] = useState("");
-    const [typeId, setTypeId] = useState(0);
+    const [typeId, setTypeId] = useState(types[0].id);
     const [notes, setNotes] = useState("");
     const [errors, setErrors] = useState([]);
 
@@ -79,36 +80,31 @@ const ListForm = ({ setAdding }) => {
 
 
     return (
-        <div className="list-form-container">
-            <div className="list-form_header-container">
-                <h2>The List Form</h2>
-            </div>
-            <div className="list-form_errors-container">
-                {errors.length > 0 && errors.map(error => <li key={error} className="list-form_error">{error}</li>)}
-            </div>
-            <div className="list-form_form-container">
-                <form onSubmit={onSubmit} className="list-form">
-                    <div className="list-form_field-container">
-                        <label htmlFor="name">List Name: </label>
-                        <input name="name" id="name" placeholder="Your List Name Here..." onChange={updateName} value={name} />
-                    </div>
-                    <div className="list-form_field-container">
-                        <label htmlFor="type_id">List Type: </label>
-                        <select id="type_id" name="type_id" value={typeId} onChange={updateType} >
-                            {types.map(type =>
-                                <option key={type.id} value={type.id}>{type.name}</option>
-                            )}
-                        </select>
-                    </div>
-                    <div className="list-form_field-container">
-                        <label htmlFor="notes">List Notes: </label>
-                        <textarea type="text" id="notes" name="notes" value={notes} onChange={updateNotes} />
-                    </div>
-                    <div className="list-form_submit-button-container">
-                        <button type="submit">Confirm New List</button>
-                    </div>
-                </form>
-            </div>
+        <div className="form-container">
+            <form onSubmit={onSubmit} className="list-form">
+                <div className="form-errors-container">
+                    {errors.length > 0 && errors.map(error => <li key={error} className="list-form_error">{error}</li>)}
+                </div>
+                <div className="form-input-container">
+                    <label htmlFor="name">List Name: </label>
+                    <input name="name" id="name" placeholder="Your List Name Here..." onChange={updateName} value={name} />
+                </div>
+                <div className="form-input-container">
+                    <label htmlFor="type_id">List Type: </label>
+                    <select id="type_id" name="type_id" value={typeId} onChange={updateType} >
+                        {types.map(type =>
+                            <option key={type.id} value={type.id}>{type.name}</option>
+                        )}
+                    </select>
+                </div>
+                <div className="form-input-container">
+                    <label htmlFor="notes">List Notes: </label>
+                    <textarea type="text" id="notes" name="notes" value={notes} onChange={updateNotes} />
+                </div>
+                <div className="form-button-container">
+                    <button className="form-button" type="submit">Add List</button>
+                </div>
+            </form>
         </div>
     )
 }

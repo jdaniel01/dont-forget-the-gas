@@ -9,7 +9,6 @@ import Item from "../Item"
 const ItemDetails = ({ item, setAdding, adding, list_id }) => {
 
     const [editing, setEditing] = useState(false)
-    const { listId } = useParams()
 
     const dispatch = useDispatch()
 
@@ -17,21 +16,22 @@ const ItemDetails = ({ item, setAdding, adding, list_id }) => {
     const itemb = useSelector(state => state.item.item)
 
     useEffect(() => {
-        if (adding && editing === false) {
+        if (adding && !editing) {
 
             setAdding(false)
         }
     }, [editing])
 
-    if (!editing) {
-        return (
+    return (
+        <>
+            {!editing &&
             <div className="list_items-container">
                 <div className="list_item-section">
                     <div className="list_item_header-container">
                         <h3>{item.itemName}</h3>
                     </div>
-                    <div className="list_item_notes-container">
-                        <div>{item.itemNotes}</div>
+                    <div className="list_item-secion">
+                        {item.itemNotes}
                     </div>
                     <div className="list_item-section">
                         {item.list_id}
@@ -41,14 +41,13 @@ const ItemDetails = ({ item, setAdding, adding, list_id }) => {
                     Edit Item
                 </div>
             </div>
-        )
-    }
-    else if (editing) {
-        return (
-            <EditItem item={item} list_id={list_id} setEditing={setEditing} />
-        )
-    }
 
+            }
+            {editing &&
+                <EditItem item={item} list_id={list_id} setEditing={setEditing} />
+            }
+        </>
+    )
 }
 
 
@@ -75,7 +74,7 @@ const List = () => {
         <div className="list-container">
             <div className="list_details-container">
                 <div className="list_name-container">
-                    <h3>{aList.name}</h3>
+                    <h3 className="list-name">{aList.name}</h3>
                 </div>
                 <div className="list_notes-container">
                     <div>{aList.notes}</div>

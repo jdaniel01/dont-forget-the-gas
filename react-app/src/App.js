@@ -88,8 +88,9 @@ function App() {
           <Profile />
         </ProtectedRoute>
         <ProtectedRoute path="/" exact={true} authenticated={authenticated}>
-          <h1>TODO: Create non-user splash</h1>
-          <Map />
+          {/* <h1>TODO: Create non-user splash</h1>
+          <Map /> */}
+          <ListsView />
         </ProtectedRoute>
         <Route path="/" exact={true}>
           <Splash />

@@ -48,8 +48,8 @@ export const NewItem = ({ setAdding }) => {
                 itemNotes: notes,
                 list_id: id
             }
-            dispatch(addItem(newItem))
             setAdding(false)
+            dispatch(addItem(newItem))
             // dispatch(getList(Number(listId)))
         }
     }
@@ -59,25 +59,26 @@ export const NewItem = ({ setAdding }) => {
             <div className="item-form_header-container">
                 <h2>Adding To The List.</h2>
             </div>
-            <div onClick={() => setAdding(false)}>
-                Cancel
-            </div>
             <div className="form-container">
-                {errors && errors.map(error => <div key={error}>{error}</div>)}
                 <form onSubmit={onItemSubmit} className="item-form">
-                    <div className="item-form_section">
+                    <div className="form-errors-container">
+                        {errors.map((error) => (
+                            <div key={error}>{error}</div>
+                        ))}
+                    </div>
+                    <div className="form-input-container">
                         <label htmlFor="itemName">Item Name: </label>
                         <input type="text" id="itemName" name="itemName" value={name} onChange={updatename} />
                     </div>
-                    <div className="item-form_section">
+                    <div className="form-input-container">
                         <label htmlFor="itemNotes">Item Notes: </label>
                         <textarea type="text" id="itemNotes" name="itemNotes" value={notes} onChange={updateNotes} maxLength={500} />
                     </div>
                     <div>
                         <input hidden readOnly name="list_id" id="list_id" value={listId} />
                     </div>
-                    <div className="item-form_submit-button-container">
-                        <button type="submit">Add It To The List!</button>
+                    <div className="form-button-container">
+                        <button className="form-button" type="submit">Add To List</button>
                     </div>
                 </form>
             </div>
@@ -150,11 +151,11 @@ export const EditItem = ({ item, list_id, setEditing }) => {
                     <button className="button" onClick={() => setEditing(false)}>Cancel Edit</button>
                 </div >
                 <form onSubmit={onItemSubmit} className="item-form">
-                    <div className="item-form_section">
+                    <div className="form-input-container">
                         <label htmlFor="itemName">Item Name: </label>
                         <input type="text" id="itemName" name="itemName" value={name} onChange={updatename} />
                     </div>
-                    <div className="item-form_section">
+                    <div className="form-input-container">
                         <label htmlFor="itemNotes">Item Notes: </label>
                         <textarea type="text" id="itemNotes" name="itemNotes" value={notes} onChange={updateNotes} maxLength={500} />
                     </div>
