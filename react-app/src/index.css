@@ -1,9 +1,13 @@
+@media screen and (min-width: 800px) {
+    
+
 .navbar {
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    height: 170px;
     margin: none;
     background-color: burlywood;
 }
@@ -20,7 +24,7 @@
 body{
     color: black;
     font-family: Arial, Helvetica, sans-serif;
-    padding: 0px;
+    padding: 1px;
     margin: 0px;
 }
 
@@ -28,16 +32,179 @@ body{
     color: black;
     text-decoration-line: none;
     font-size: larger;
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+
+.NavLink:hover{
+    color: darkolivegreen;
+    text-decoration-line: none;
+    font-size: larger;
+    font-size: 1.6rem;
+    font-weight: 700;
 }
 
 .link_navlink{
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 1.6rem;
 }
 
 .NavLink.button {
     border: none;
     background-color: burlywood;
     
+}
+
+.logo-image-container {
+    display: flex;
+    max-height: 12rem;
+    max-width: 15rem;
+    height: auto;
+    width: auto;
+}
+.logo-image-container img {
+    /* width: fit-content;
+    height: fit-content; */
+    max-height: 100%;
+    max-width: 100%;
+}
+}
+
+
+
+
+
+.form-container {
+    box-sizing: content-box;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3rem;
+    height: fit-content;
+    border-radius: .2em;
+}
+
+.form-container form {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    width: 50%;
+    min-width: 500px;
+    background-color: burlywood;
+    padding: 2rem;
+    align-items: center;
+    border-radius: .2rem;
+    border: .5px solid black;
+    box-shadow: 0rem 0rem 1rem 1rem rgba(119, 136, 153, .5);
+
+}
+
+.form-container form:hover {
+    border: .5px solid white;
+    box-shadow: 0rem 0rem 1rem 1rem rgba(85, 107, 47, .5);
+
+}
+
+.form-input-container {
+    display: flex;
+    flex-flow: column wrap;
+    margin-top: 2rem;
+    font-size: 1.6rem;
+    font-weight: 700;
+    justify-items: center;
+    align-items: center;
+}
+
+.form-input-container input::placeholder {
+    color: darkolivegreen;
+    font-size: 2rem;
+    height: 3rem;
+    margin: 0px;
+}
+
+.form-input-container input:focus::placeholder{
+    color: white;
+    font-size: 2rem;
+    height: 3rem;
+    margin: 0px;
+}
+
+.form-input-container input:focus {
+    background-color: darkseagreen;
+    color: white;
+    width: 25rem;
+    padding: 0px;
+    align-content: center;
+    justify-self: flex-end;
+    border-radius: .2rem;
+    padding: .25rem;
+}
+
+.form-input-container input{
+    height: 4rem;
+    width: 25rem;
+    padding: 0px;
+    align-content: center;
+    justify-self: flex-end;
+    font-size: 3rem;
+    border-radius: .2rem;
+    padding: .25rem;
+}
+
+
+
+.form-input-container textarea:focus {
+    background-color: darkseagreen;
+    color: white;
+    width: 25rem;
+    padding: 0px;
+    align-content: center;
+    justify-self: flex-end;
+    border-radius: .2rem;
+    padding: .25rem;
+}
+
+.form-input-container textarea{
+    height: 4rem;
+    width: 25rem;
+    padding: 0px;
+    align-content: center;
+    justify-self: flex-end;
+    font-size: 3rem;
+    border-radius: .2rem;
+    padding: .25rem;
+}
+
+
+
+
+.form-button-container {
+    padding-top: 2rem;
+}
+.form-button {
+    border: none;
+    background-color: rgb(204, 31, 31);
+    color: white;
+    height: 4rem;
+    width: 20rem;
+    font-size: 3rem;
+    border: .5px solid black
+}
+
+.form-button:hover {
+    border: none;
+    background-color: darkseagreen;
+    color: white;
+    height: 4rem;
+    width: 20rem;
+    font-size: 3rem;
+    border: .5px solid black;
+}
+
+.form-errors-container {
+    color: red;
+    font-size: 1.5rem;
 }

@@ -12,6 +12,12 @@ export const authenticate = async () => {
   return await response.json();
 }
 
+export const loginDemoUser = async () => {
+  const res = await fetch('/api/auth/demo')
+  const data = await res.json();
+  return data
+}
+
 export const login = async (email, password) => {
   const response = await fetch('/api/auth/login', {
     method: 'POST',

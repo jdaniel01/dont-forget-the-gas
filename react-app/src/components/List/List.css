@@ -1,0 +1,71 @@
+@media screen and (min-width: 600px) {
+    .lists-view-container{
+        display: flex;
+        flex-flow: column nowrap;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        background-color: white;
+        align-content: center;
+
+    }
+    .list-buttons-container{
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: center;
+    }
+
+    .list-buttons-container div{
+        display: flex;
+        flex-flow: column wrap;
+        justify-content: center;
+    }
+
+    .lists-container{
+        width: 85%;
+        background-color: burlywood;
+        justify-content: center;
+        align-content: center;
+    
+    }
+
+    .list-peek_row-container{
+        display: grid;
+        grid-template-areas:
+        " ta ta b "
+        "n n n";
+        grid-template-rows: 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
+        justify-content: center;
+        align-content: center;
+        justify-items: center;
+        flex-flow: column wrap;
+    }
+
+    .list-peek_row-container div{
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        justify-items: center;
+    }
+
+    .header {
+        grid-area: ta;
+        padding: 1rem;
+        margin: 0;
+        width: 100%;
+        margin-right: -2rem;
+    }
+  
+    .list-peek_notes {
+        grid-area: n;
+    }
+
+    .button {
+        grid-area: b;
+        width: 12rem;
+        margin: 0;
+        margin-left: 0;
+        width: 100%;
+    }
+}

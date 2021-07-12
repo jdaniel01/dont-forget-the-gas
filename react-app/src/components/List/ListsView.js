@@ -6,7 +6,7 @@ import { getTypes } from "../../store/type";
 import { getUser } from "../../store/user";
 import { setItems } from "../../store/item";
 import ListForm from "./ListForm";
-
+import "./List.css"
 
 
 const ListsView = () => {
@@ -46,31 +46,22 @@ const ListsView = () => {
             <div className="lists-view_header-container">
                 <h2>Your Lists</h2>
             </div>
-            <div className="new-list-button" onClick={() => setAdding(true)} hidden={adding}>
-                Add New List
-            </div>
-            <div className="new-list_cancel-button" onClick={() => setAdding(false)} hidden={!adding}>
-                Cancel
+            <div className="list-button-container">
+                <div className="new-list-button" onClick={() => setAdding(true)} hidden={adding}>
+                    Add New List
+                </div>
+                <div className="new-list_cancel-button" onClick={() => setAdding(false)} hidden={!adding}>
+                    Cancel
+                </div>
             </div>
             {!adding &&
                 <div className="lists-container">
                 {lists && lists.map(list =>
                     <div key={list.id} className="list-peek_row-container">
-                        <div className="list-peek_header-container">
-                            <h3>{list.name}</h3>
-                        </div>
-                        <div className="list-peek_details-container">
-                            {/* <div>{selectedType(list)}</div> */}
-                            <div>{list.type_of.name}</div>
-                        </div>
-                        <div className="list-peek_notes-container">
-                            <div>{list.notes}</div>
-                        </div>
-                        <div>
-                            <button type="button" onClick={() => goToList(list)}> See Details</button>
-                        </div>
+                        <h3 className='header' style={{ backgroundColor: list.type_of.color, color: "white" }}>{list.name}</h3>
+                        <div className="list-peek_notes">{list.notes}</div>
+                        <button type="button" className="button" onClick={() => goToList(list)}> See Details</button>
                     </div>
-
                 )}
                 </div>
             }

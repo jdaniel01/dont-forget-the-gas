@@ -57,7 +57,7 @@ def login():
         # Add the user to the session, we are logged in!
         user = User.query.filter(User.email == form.data['email']).first()
         login_user(user)
-
+        
         lists = List.query.filter(List.owner_id == user.id).all()
         trips = Trip.query.filter(Trip.lead_id == user.id).all()
         vehicles = Vehicle.query.filter(Vehicle.owner_id == user.id).all()
@@ -111,3 +111,27 @@ def unauthorized():
     Returns unauthorized JSON when flask-login authentication fails
     """
     return {'errors': ['Unauthorized']}, 401
+
+
+
+
+@auth_routes.route('/demo')
+def demoLogin():
+    """
+    Logs a demo user in
+    """
+    user = User.query.get(1)
+    login_user(user)
+
+    lists = List.query.filter(List.owner_id == 1).all()
+    trips = Trip.query.filter(Trip.lead_id == 1).all()
+    vehicles = Vehicle.query.filter(Vehicle.owner_id == 1).all()
+    data = {
+        "user": user.to_dict(),
+        "vehicles": [vehicle.to_dict() for vehicle in vehicles],
+        "trips": [trip.to_dict() for trip in trips],
+        "lists": [alist.to_dict() for alist in lists]
+    }
+    print("########Demo user Logged in#########")
+        
+    return data

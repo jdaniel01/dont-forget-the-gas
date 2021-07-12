@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
-import { login } from "../../services/auth";
+import { login, loginDemoUser } from "../../services/auth";
 import { setUser } from "../../store/user"
 import { setLists } from "../../store/list";
 import { setTrips } from "../../store/trip";
@@ -10,6 +10,7 @@ import { setVehicles } from "../../store/vehicle";
 const LoginForm = ({ authenticated, setAuthenticated }) => {
 
   const dispatch = useDispatch();
+  const history = useHistory()
 
   const sessionUser = useSelector(state => state.user.user);
   const lists = useSelector(state => state.list.lists)
@@ -46,18 +47,29 @@ const LoginForm = ({ authenticated, setAuthenticated }) => {
     setPassword(e.target.value);
   };
 
+  const demoLogin = async () => {
+    const demoUser = await loginDemoUser()
+    dispatch(setUser(demoUser.user))
+    dispatch(setLists(demoUser.lists))
+    dispatch(setTrips(demoUser.trips))
+    dispatch(setVehicles(demoUser.vehicles))
+
+    setAuthenticated(true)
+  }
+
   if (authenticated) {
     return <Redirect to="/" />;
   }
 
   return (
+    <div className="form-container">
     <form onSubmit={onLogin}>
-      <div>
+        <div className="form-errors-container">
         {errors.map((error) => (
           <div key={error}>{error}</div>
         ))}
       </div>
-      <div>
+        <div className="form-input-container">
         <label htmlFor="email">Email</label>
         <input
           name="email"
@@ -67,7 +79,7 @@ const LoginForm = ({ authenticated, setAuthenticated }) => {
           onChange={updateEmail}
         />
       </div>
-      <div>
+        <div className="form-input-container">
         <label htmlFor="password">Password</label>
         <input
           name="password"
@@ -75,10 +87,16 @@ const LoginForm = ({ authenticated, setAuthenticated }) => {
           placeholder="Password"
           value={password}
           onChange={updatePassword}
-        />
-        <button type="submit">Login</button>
-      </div>
-    </form>
+          />
+        </div>
+        <div className="form-button-container">
+          <button className="form-button" type="submit">Login</button>
+        </div>
+        <div className="form-button-container">
+          <button className="form-button demo" onClick={demoLogin}>Demo</button>
+        </div>
+      </form>
+    </div>
   );
 };
 

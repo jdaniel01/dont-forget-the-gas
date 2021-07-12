@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
+// import ImageView from './ImageView';
+import * as logo from './dftg-logo.png'
 import { logout } from "../services/auth";
-import { getUser } from "../store/user"
+import { getUser } from "../store/user";
 import "../index.css";
 
 const NavBar = ({ setAuthenticated, authenticated }) => {
   const dispatch = useDispatch();
 
+  const history = useHistory()
   const user = useSelector(state => state.user.user)
 
   const onLogout = async () => {
@@ -24,7 +27,9 @@ const NavBar = ({ setAuthenticated, authenticated }) => {
   return (
     <nav className="navbar">
       <div className="nav-links">
-        <div>Welcome: {user.username}</div>
+        <div className="logo-image-container" onClick={() => history.push('/')}>
+          <img src={logo} alt="Logo" />
+        </div>
         <div className="link_navlink">
           <NavLink to="/about" className="NavLink" exact={true} activeClassName="active">
             About
@@ -51,11 +56,6 @@ const NavBar = ({ setAuthenticated, authenticated }) => {
         }
         {authenticated &&
           <>
-            <div className="link_navlink">
-            <NavLink to="/" exact={true} className="NavLink" activeClassName="active">
-                Main
-              </NavLink>
-            </div>
             <div>
             <NavLink to={`/users/${user.id}/lists`} className="NavLink" exact={true} activeClassName="active">
                 Lists
