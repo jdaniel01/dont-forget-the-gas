@@ -10,6 +10,8 @@
     height: 170px;
     margin: none;
     background-color: burlywood;
+    position: sticky;
+    top: 0;
 }
 
 .nav-links{
