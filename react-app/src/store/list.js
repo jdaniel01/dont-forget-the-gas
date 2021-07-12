@@ -3,7 +3,7 @@ import { setItems } from "./item"
 const SET_LISTS = "list/SET_LISTS"
 const SET_LIST = 'list/SET_LIST'
 
-const set_Lists = (lists) => ({
+const set_lists = (lists) => ({
     type: SET_LISTS,
     lists
 })
@@ -18,6 +18,7 @@ export const setList = (list) => async (dispatch) => {
     // dispatch(set_Types(await res.json()))
     // return await res.json()
     dispatch(set_list(list))
+    dispatch(setItems(list.items))
 
 }
 
@@ -34,7 +35,7 @@ export const setLists = (lists) => async (dispatch) => {
     // const res = await fetch(`/api/users/${userId}/lists`)
     // if (res.ok) {
     //     const lists = await res.json()
-    dispatch(set_Lists(lists))
+    dispatch(set_lists(lists))
 
 }
 
@@ -43,7 +44,7 @@ export const getLists = (id) => async (dispatch) => {
     const res = await fetch(`/api/users/${id}/lists`)
     if (res.ok) {
         const data = await res.json()
-        dispatch(set_Lists(data.lists))
+        dispatch(set_lists(data.lists))
     }
 
 }
@@ -54,7 +55,7 @@ export const getList = (id) => async (dispatch) => {
     const res = await fetch(`/api/lists/${id}`)
     const data = await res.json()
     dispatch(set_list(data.list))
-    dispatch(set_Lists(data.lists))
+    dispatch(set_lists(data.lists))
     dispatch(setItems(data.list.items))
 
 }
@@ -70,7 +71,7 @@ export const addList = (list) => async (dispatch) => {
     })
     if (res.ok) {
         const data = await res.json()
-        dispatch(set_Lists(data.lists))
+        dispatch(set_lists(data.lists))
         console.log("hi")
     }
 }
@@ -85,7 +86,9 @@ export const editList = (list) => async (dispatch) => {
     })
     if (res.ok) {
         const data = await res.json()
-        dispatch(set_list(data))
+        dispatch(set_list(data.list))
+        dispatch(setItems(data.items))
+        dispatch(set_lists(data.lists))
     }
 }
 
@@ -95,7 +98,8 @@ export const dropList = (listId) => async (dispatch) => {
     })
     if (res.ok) {
         const data = await res.json()
-        dispatch(set_Lists(data.lists))
+        dispatch(set_lists(data.lists))
+        dispatch(set_list(data.list))
     }
 }
 

@@ -63,11 +63,10 @@ const List = () => {
 
 
     useEffect(() => {
-        if (!aList) {
+        if (!aList.name) {
             dispatch(getList(listId))
         }
-
-    }, [dispatch, adding])
+    }, [dispatch, adding, aList])
 
 
     return (

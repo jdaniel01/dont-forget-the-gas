@@ -1,3 +1,5 @@
+import { setLists, setList } from "./list"
+
 const SET_ITEMS = "item/SET_ITEMS"
 const SET_ITEM = 'item/SET_ITEM'
 
@@ -41,6 +43,9 @@ export const addItem = (item) => async (dispatch) => {
         const data = await res.json()
         console.log("####################RES#OK###############", data.items)
         dispatch(set_items(data.items))
+        dispatch(setLists(data.lists))
+        dispatch(setList(data.list))
+
     }
 }
 
@@ -54,8 +59,10 @@ export const editItem = (item) => async (dispatch) => {
     })
     if (res.ok) {
         const data = await res.json()
-
+        dispatch(set_item(data.item))
         dispatch(set_items(data.items))
+        dispatch(setList(data.list))
+        dispatch(setLists(data.lists))
     }
 }
 
@@ -66,6 +73,8 @@ export const dropItem = (item) => async (dispatch) => {
     if (res.ok) {
         const data = await res.json()
         dispatch(set_items(data.items))
+        dispatch(setList(data.list))
+        dispatch(setLists(data.lists))
     }
 }
 

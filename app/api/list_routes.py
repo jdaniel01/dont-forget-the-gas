@@ -40,7 +40,9 @@ def addItem(id):
         db.session.commit()
 
         items = Item.query.filter_by(list_id=id).all()
-        return {"items": [item.to_dict() for item in items]}
+        lists = List.query.filter_by(owner_id=current_user.id).all()
+        alist = List.query.get(id)
+        return {"items": [item.to_dict() for item in items], "list": alist.to_dict(), "lists": [dlist.to_dict() for dlist in lists]}
     print("ERROR: THIS IS A LONG ERROR NOT TO BE MISSED")
 
 
@@ -74,8 +76,9 @@ def updateAndDeleteList(id):
         db.session.delete(deleting)
         db.session.commit()
     alist = ListType.query.get(id)
+    items = Item.query.filter_by(list_id=id).all()
     lists = List.query.filter_by(owner_id=current_user.id).all()
-    return {"lists": [aList.to_dict() for aList in lists], "list": alist.to_dict()}
+    return {"lists": [aList.to_dict() for aList in lists], "list": alist.to_dict(), "items":[item.to_dict() for item in items]}
 
 
 @list_routes.route('/<int:id>')
@@ -84,5 +87,5 @@ def getList(id):
     alist = ListType.query.get(id)
     lists = List.query.filter_by(owner_id=current_user.id).all()
     print("###############LIST", alist.to_dict())
-    return {"lists": [aList.to_dict() for aList in lists], "list": alist.to_dict()}
+    return {"lists": [aList.to_dict() for aList in lists], "list": alist.to_dict(), "items": [item.to_dict() for item in alist.items]}
     
