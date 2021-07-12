@@ -8,7 +8,7 @@ import { useLayoutEffect } from "react";
 
 
 
-export const NewItem = ({ setAdding }) => {
+export const NewItem = ({ setAdding, alist }) => {
 
     const dispatch = useDispatch()
     const history = useHistory()
@@ -46,19 +46,16 @@ export const NewItem = ({ setAdding }) => {
             const newItem = {
                 itemName: name,
                 itemNotes: notes,
-                list_id: id
+                list_id: Number(listId)
             }
-            setAdding(false)
             dispatch(addItem(newItem))
+            setAdding(false)
             // dispatch(getList(Number(listId)))
         }
     }
 
     return (
         <div className="item-form-container">
-            <div className="item-form_header-container">
-                <h2>Adding To The List.</h2>
-            </div>
             <div className="form-container">
                 <form onSubmit={onItemSubmit} className="item-form">
                     <div className="form-errors-container">
@@ -87,7 +84,7 @@ export const NewItem = ({ setAdding }) => {
 }
 
 
-export const EditItem = ({ item, list_id, setEditing }) => {
+export const EditItem = ({ item, list_id, setAdding, adding, setEditing }) => {
 
     const history = useHistory()
     const dispatch = useDispatch()
@@ -96,15 +93,15 @@ export const EditItem = ({ item, list_id, setEditing }) => {
     const user = useSelector(state => state.user.user)
     const itemb = useSelector(state => state.item.item)
 
-    const [name, setName] = useState(itemb.name)
+    const [name, setName] = useState(item.name)
     const [notes, setNotes] = useState(item.notes)
     const [errors, setErrors] = useState([])
 
-    // useEffect(() => {
-    //     if (!user) {
-    //         dispatch(getUser())
-    //     }
-    // }, [dispatch, item])
+    useEffect(() => {
+        if (!user) {
+            dispatch(getUser())
+        }
+    }, [dispatch, item])
 
     const updatename = (e) => {
         setName(e.target.value)
@@ -127,12 +124,13 @@ export const EditItem = ({ item, list_id, setEditing }) => {
             let newItem = {
                 itemName: name,
                 itemNotes: notes,
-                list_id: Number(listId)
+                list_id: list_id
             }
-            setEditing(false)
             dispatch(addItem(newItem))
-            dispatch(getList(Number(listId)))
-            history.push(`/lists/${Number(listId)}`)
+            dispatch(getList(list_id))
+            setEditing(false)
+            setAdding(false)
+            history.push(`/lists/${list_id}`)
             // }
         }
     }
@@ -142,31 +140,27 @@ export const EditItem = ({ item, list_id, setEditing }) => {
     }
 
     return (
-        <div className="item-form-container">
-            <div className="item-form_header-container">
-                <h2>Editting An Item.</h2>
+        <div className="form-container">
+            <div className="form_header-container">
+                <h2>Editing An Item.</h2>
             </div>
-            <div className="form-container">
-                <div>
-                    <button className="button" onClick={() => setEditing(false)}>Cancel Edit</button>
-                </div >
-                <form onSubmit={onItemSubmit} className="item-form">
-                    <div className="form-input-container">
-                        <label htmlFor="itemName">Item Name: </label>
-                        <input type="text" id="itemName" name="itemName" value={name} onChange={updatename} />
-                    </div>
-                    <div className="form-input-container">
-                        <label htmlFor="itemNotes">Item Notes: </label>
-                        <textarea type="text" id="itemNotes" name="itemNotes" value={notes} onChange={updateNotes} maxLength={500} />
-                    </div>
-                    <div className="item-form_submit-button-container">
-                        <button type="submit">Add It To The List!</button>
-                    </div>
-                    <div className="item-form_delete-button-container">
-                        <button type="button" id={itemb.id} onClick={deleteItem}>Delete This Item</button>
-                    </div>
-                </form>
-            </div>
+            <form onSubmit={onItemSubmit} className="item-form">
+                <div className="form-input-container">
+                    <label htmlFor="itemName">Item Name: </label>
+                    <input type="text" id="itemName" name="itemName" value={name} onChange={updatename} />
+                </div>
+                <div className="form-input-container">
+                    <label htmlFor="itemNotes">Item Notes: </label>
+                    <textarea type="text" id="itemNotes" name="itemNotes" value={notes} onChange={updateNotes} maxLength={500} />
+                </div>
+                <input type="number" id="list_id" name="list_id" value={Number(listId)} hidden />
+                <div className="form-button-container">
+                    <button className="form-button" type="submit">Update Item</button>
+                </div>
+                <div className="form-button-container">
+                    <button className="form-button" type="button" id={itemb.id} onClick={deleteItem}>Delete Item</button>
+                </div>
+            </form>
         </div>
     )
 }

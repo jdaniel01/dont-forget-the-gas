@@ -61,11 +61,11 @@ const NavBar = ({ setAuthenticated, authenticated }) => {
                 Lists
               </NavLink>
             </div>
-            <div>
+          {/* <div>
             <NavLink to={`/users/${user.id}/trips`} className="NavLink" exact={true} activeClassName="active">
                 Trips
               </NavLink>
-          </div>
+          </div> */}
           <div>
             <NavLink to={`/users/${user.id}`} className="NavLink" exact={true} activeClassName="active">
               My Stuff
